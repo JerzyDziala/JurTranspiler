@@ -27,43 +27,15 @@ namespace JurTranspiler.compilerSource.semantic_model {
 		}
 
 
-		protected override bool IsAssignableToCore(Type type, HashSet<Error> errors) {
-			if (type is UndefinedType) return true;
-			if (type is PrimitiveType p) {
-				if (PrimitiveKind == p.PrimitiveKind) return true;
-			}
-			return false;
-		}
 
 
-		public override bool IsAssignableToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (IsAssignableTo(type, errors)) return true;
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-				return true;
-			}
-			return false;
-		}
 
-
-		public override bool IsEqualToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-				return true;
-			}
-			return Equals(type);
-		}
 
 
 		public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
 
 
-		public override string GetJsTypeCacheGetter() {
-			return $"cachedTypes$['{Name}']";
-		}
-
-
-		public override string GetDefaultValue() {
+        public override string GetDefaultValue() {
 			switch (PrimitiveKind) {
 				case PrimitiveKind.STRING: return "''";
 				case PrimitiveKind.BOOL:   return "false";

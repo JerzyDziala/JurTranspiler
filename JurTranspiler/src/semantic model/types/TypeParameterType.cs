@@ -53,33 +53,8 @@ namespace JurTranspiler.compilerSource.semantic_model {
 		}
 
 
-		protected override bool IsAssignableToCore(Type type, HashSet<Error> errors) {
-			if (type is UndefinedType) return true;
-			if (type is TypeParameterType t1) {
-				if (t1.Name == Name) return true;
-				if (GetAllConstraints().Any(c => c.Equals(t1))) return true;
-			}
-			return false;
-		}
 
 
-		public override bool IsAssignableToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is UndefinedType) return true;
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-				return true;
-			}
-			return false;
-		}
-
-
-		public override bool IsEqualToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-				return true;
-			}
-			return false;
-		}
 
 
 		public bool Equals(TypeParameterType other) {
@@ -108,12 +83,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
 			return typeMap.First(substitution => substitution.typeParameter.Equals(this)).typeArgument;
 		}
 
-
-		public override string GetJsTypeCacheGetter() {
-			return $"fullName: {Name},"
-			     + $"name: {Name}";
-		}
-
-	}
+    }
 
 }

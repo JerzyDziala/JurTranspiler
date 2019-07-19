@@ -20,17 +20,8 @@ namespace JurTranspiler.compilerSource.semantic_model {
 		}
 
 
-		protected override bool IsAssignableToCore(Type type, HashSet<Error> errors) => type is VoidType;
 
 
-		public override bool IsAssignableToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			return false;
-		}
-
-
-		public override bool IsEqualToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			return false;
-		}
 
 
 		public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
@@ -41,12 +32,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
 		}
 
 
-		public override string GetJsTypeCacheGetter() {
-			throw new NotImplementedException();
-		}
-
-
-		public bool Equals(VoidType other) {
+        public bool Equals(VoidType other) {
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
 			return string.Equals(Name, other.Name);

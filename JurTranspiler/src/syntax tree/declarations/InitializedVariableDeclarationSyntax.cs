@@ -42,15 +42,8 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public Type GetDeclaredType(HashSet<Error> errors, Binder binder) => binder.BindType(Type, errors);
-
-		public Type GetLeftType(HashSet<Error> errors, Binder binder) => GetDeclaredType(errors, binder);
-
-		public Type GetRightType(HashSet<Error> errors, Binder binder) => Initializer.Evaluate(errors, binder);
-
-
-		public string ToJs(Binder binder) {
-			return $"let {Name} = {Initializer.ToJs(binder)}";
+                public string ToJs(Knowledge knowledge) {
+			return $"let {Name} = {Initializer.ToJs(knowledge)};\n";
 		}
 
 	}

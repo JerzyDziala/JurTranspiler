@@ -36,7 +36,7 @@ namespace JurTranspiler.src.syntax_tree.types {
             AllChildren = this.GetAllChildren();
         }
 
-        public string ToJs(Binder binder) {
+        public string ToJs(Knowledge knowledge) {
             throw new NotImplementedException();
         }
 

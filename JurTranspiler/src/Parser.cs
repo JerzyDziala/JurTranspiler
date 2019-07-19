@@ -21,6 +21,24 @@ namespace JurTranspiler.compilerSource {
             return errors.Any() ? null : new SyntaxTree(parsedProgram);
 
         }
+
+
+        public static SyntaxTree ParseFiles(HashSet<Error> errors, IEnumerable<(string code, string file)> files) {
+
+            List<(JurParser.ProgramContext, string)> parsedFiles = new List<(JurParser.ProgramContext, string)>();
+
+            foreach (var (code, file) in files) {
+                var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(code))));
+
+                parser.RemoveErrorListeners();
+                parser.AddErrorListener(new ParserErrorListener(file, errors));
+
+                parsedFiles.Add((parser.program(), file));
+
+            }
+            return errors.Any() ? null : new SyntaxTree(parsedFiles);
+
+        }
     }
 
 }

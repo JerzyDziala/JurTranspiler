@@ -31,54 +31,12 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        protected override bool IsAssignableToCore(Type type, HashSet<Error> errors) {
-			if (type is UndefinedType) return true;
-            if (type is FunctionPointerType func && ReturnType.IsAssignableTo(func.ReturnType, errors)) {
-                if (Parameters.Count != func.Parameters.Count) return false;
-                return func.Parameters.Where((t, i) => {
-                    var isNot = !t.IsAssignableTo(Parameters[i], errors);
-                    return isNot;
-                }).None();
-            }
-            return false;
-        }
 
-        public override bool IsAssignableToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-            if (type is TypeParameterType typeParameterType) {
-                substitutions.Add(new Substitution(typeParameterType, this));
-                return true;
-            }
-			if (type is UndefinedType) return true;
-            if (type is FunctionPointerType func && ReturnType.IsAssignableToWithSubstitutions(func.ReturnType,substitutions, errors)) {
-                if (Parameters.Count != func.Parameters.Count) return false;
-                return func.Parameters.Where((t, i) => {
-                    var isNot = !t.IsAssignableToWithSubstitutions(Parameters[i],substitutions, errors);
-                    return isNot;
-                }).None();
-            }
-            return false;
-        }
 
-        public override bool IsEqualToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-            if (type is TypeParameterType typeParameterType) {
-                substitutions.Add(new Substitution(typeParameterType, this));
-                return true;
-            }
-            if (type is FunctionPointerType func && ReturnType.IsEqualToWithSubstitutions(func.ReturnType,substitutions, errors)) {
-                if (Parameters.Count != func.Parameters.Count) return false;
-                return func.Parameters.All((t, i) => t.IsEqualToWithSubstitutions(Parameters[i],substitutions, errors));
-            }
-            return false;
-        }
         public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) {
             return new FunctionPointerType(ReturnType.WithSubstitutedTypes(typeMap),
                                            Parameters.Select(x => x.WithSubstitutedTypes(typeMap)).ToImmutableList());
         }
-
-        public override string GetJsTypeCacheGetter() {
-            return "cachedTypes$['function']";
-        }
-
 
 
         public bool Equals(FunctionPointerType other) {

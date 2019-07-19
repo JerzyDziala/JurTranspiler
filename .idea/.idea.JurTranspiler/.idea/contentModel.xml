@@ -9,6 +9,7 @@
         <e p="AssignmentsAndConversionsTests.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="CodeGenerationTests.cs" t="Include" />
+        <e p="ForLoopTests.cs" t="Include" />
         <e p="FunctionCallsTests.cs" t="Include" />
         <e p="FunctionDeclarationsTests.cs" t="Include" />
         <e p="JurTests.csproj" t="IncludeRecursive" />
@@ -38,10 +39,16 @@
           <e p="Analysis" t="Include">
             <e p="Analyser.cs" t="Include" />
             <e p="Binder" t="Include">
+              <e p="Binder.Assignability.cs" t="Include" />
+              <e p="Binder.Assignments.cs" t="Include" />
               <e p="Binder.Calls.cs" t="Include" />
               <e p="Binder.cs" t="Include" />
+              <e p="Binder.Equality.cs" t="Include" />
+              <e p="Binder.Evaluation.cs" t="Include" />
+              <e p="Binder.Fields.cs" t="Include" />
               <e p="Binder.NameMangler.cs" t="Include" />
               <e p="Binder.OverloadResolution.cs" t="Include" />
+              <e p="Binder.Substitutions.cs" t="Include" />
               <e p="Binder.Types.cs" t="Include" />
               <e p="Binder.Variables.cs" t="Include" />
             </e>
@@ -75,7 +82,19 @@
               <e p="UseOfUndeclaredType.cs" t="Include" />
               <e p="UseOfUndeclaredVariable.cs" t="Include" />
             </e>
-            <e p="SymbolTable.cs" t="Include" />
+            <e p="Knowledge.cs" t="Include" />
+            <e p="SymbolTable" t="Include">
+              <e p="SymbolTable.AssignabilityBindings.cs" t="Include" />
+              <e p="SymbolTable.ExpressionsBindings.cs" t="Include" />
+              <e p="SymbolTable.FieldsBindings.cs" t="Include" />
+              <e p="SymbolTable.FunctionCallsBindings.cs" t="Include" />
+              <e p="SymbolTable.FunctionSignaturesBindings.cs" t="Include" />
+              <e p="SymbolTable.NewNames.cs" t="Include" />
+              <e p="SymbolTable.OpenStructsBinding.cs" t="Include" />
+              <e p="SymbolTable.Searching.cs" t="Include" />
+              <e p="SymbolTable.ToKnowledge.cs" t="Include" />
+              <e p="SymbolTable.TypesBindings.cs" t="Include" />
+            </e>
           </e>
           <e p="ANTLR" t="Include">
             <e p="Jur.g4" t="Include" />
@@ -89,6 +108,7 @@
           </e>
           <e p="CodeGeneration" t="Include">
             <e p="Generator.cs" t="Include" />
+            <e p="JsStrings.cs" t="Include" />
           </e>
           <e p="Compiler.cs" t="Include" />
           <e p="Parser.cs" t="Include" />
@@ -158,17 +178,13 @@
               <e p="ITreeNode.cs" t="Include" />
               <e p="IVariableDeclarationSyntax.cs" t="Include" />
             </e>
-            <e p="searching" t="Include">
-              <e p="TreeSearchingExtensions.cs" t="Include" />
-            </e>
             <e p="statements" t="Include">
               <e p="AssignmentStatementSyntax.cs" t="Include" />
               <e p="BlockStatement.cs" t="Include" />
               <e p="BreakStatementSyntax.cs" t="Include" />
               <e p="ContinueStatementSyntax.cs" t="Include" />
-              <e p="ExitStatement.cs" t="Include" />
+              <e p="ExitStatementSyntax.cs" t="Include" />
               <e p="ExpressionStatementSyntax.cs" t="Include" />
-              <e p="ForEachStatementSyntax.cs" t="Include" />
               <e p="ForStatementSyntax.cs" t="Include" />
               <e p="GeneratedScopeSyntax.cs" t="Include" />
               <e p="IfStatementSyntax.cs" t="Include" />

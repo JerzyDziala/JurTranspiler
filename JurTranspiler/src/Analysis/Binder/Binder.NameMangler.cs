@@ -15,7 +15,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         private object o = new object();
 
 
-        public int GetUniqueId() {
+        private int GetUniqueId() {
             lock (o) {
                 incr++;
                 return incr;
@@ -23,10 +23,8 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Dictionary<ICallable, string> NewNames = new Dictionary<ICallable, string>();
-
-
         public void GenerateNewCallableNames() {
+            //TODO: check for mistakes
             int id;
             symbols.FunctionSignaturesBindings.Values.ToImmutableList()
                    .Where(x => !x.IsExtern)
@@ -34,58 +32,9 @@ namespace JurTranspiler.compilerSource.Analysis {
                    .ToList()
                    .ForEach(g => {
                        id = 0;
-                       foreach (var f in g) NewNames.Add(f, f.Name + "$" + id++);
+                       foreach (var f in g) symbols.NewNames.Add(f, f.Name + "$" + GetUniqueId());
                    });
         }
-
-
-        public string GetNewNameFor(FunctionDefinitionSyntax definition) {
-            return definition.IsExtern
-                       ? definition.Name
-                       : NewNames[symbols.FunctionSignaturesBindings[definition]];
-        }
-
-
-        public string GetNewNameFor(FunctionCallSyntax call, HashSet<Error> errors = null) {
-            var callable = BindFunctionCall(call, errors ?? new HashSet<Error>());
-
-            if (callable is Dispatcher d) return d.Name + $"$Arity_{d.Arity}_dispatcher";
-
-            if (callable is FunctionPointer pointer) return pointer.Name;
-
-            if (callable is FunctionSignature signature) {
-                return signature.IsExtern ? signature.Name : NewNames[signature];
-            }
-
-            throw new Exception("impossible");
-        }
-
-
-        /*
-         * stringify<poly>(someExpression());
-         * -----
-         * stringify_Arity_1_dispatcher$([someExpression()])
-         *
-         * ...
-         * stringify_Arity_1_dispatcher$(argsList) {
-         *    const argsTypes = argsList.map(x->getType$(x));
-         * 	  return stringify
-         * }
-         *
-         * getType$(value){
-         * 	  if(typeof value === 'string') return new PrimitiveType('string');
-         * 	  if(typeof value === 'number') return new PrimitiveType('num');
-         * 	  if(typeof value === 'boolean') return new PrimitiveType('bool');
-         * 	  if(typeof value === 'object') return value.type$;
-         * }
-         * ...
-         *
-         * stringify$1(s) {}
-         *
-         * stringify$2(a) {}
-         *
-         * stringify$3(l) {}
-         */
 
     }
 

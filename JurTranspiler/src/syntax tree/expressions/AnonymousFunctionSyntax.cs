@@ -54,26 +54,8 @@ namespace JurTranspiler.compilerSource.nodes {
 
 		}
 
-
-		public override Type Evaluate(HashSet<Error> errors, Binder binder) {
-
-			Type returnType;
-			if (IsExpressionStatementLambda) {
-				returnType = ((ExpressionStatementSyntax) Body).ExpressionSyntax.Evaluate(errors, binder);
-			}
-			else {
-				var returnStatement = ((BlockStatement) Body).Body.LastOrDefault(statement => statement is ReturnStatementSyntax) as ReturnStatementSyntax;
-				returnType = returnStatement != null && !returnStatement.IsVoid
-					             ? returnStatement.ReturnValue.Evaluate(errors, binder)
-					             : new VoidType();
-			}
-
-			return new FunctionPointerType(returnType, Parameters.Select(x => binder.BindType(x.Type, errors)));
-		}
-
-
-		public override string ToJs(Binder binder) {
-			return $"function({Parameters.Select(x => x.Name).Glue(", ")}){{\n{Body.ToJs(binder)}}}";
+                public override string ToJs(Knowledge knowledge) {
+			return $"function({Parameters.Select(x => x.Name).Glue(", ")}){{\n{Body.ToJs(knowledge)}}}";
 		}
 
 	}

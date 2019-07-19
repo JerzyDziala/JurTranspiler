@@ -12,8 +12,6 @@ namespace JurTranspiler.src.syntax_tree.types {
         public virtual ISyntaxNode Root { get; }
         public virtual ISyntaxNode Parent { get; }
         public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-
-
         public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
         public virtual ImmutableList<ITreeNode> AllChildren { get; }
         public virtual string File { get; }
@@ -62,7 +60,7 @@ namespace JurTranspiler.src.syntax_tree.types {
 
         }
 
-        public string ToJs(Binder binder) => Name;
+        public string ToJs(Knowledge knowledge) => Name;
 
 
         public bool Equals(TypeParameterSyntax other) {

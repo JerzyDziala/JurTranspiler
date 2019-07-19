@@ -5,9 +5,6 @@ using JurTranspiler.compilerSource.semantic_model;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public interface IAssignment : IStatementSyntax{
-        Type GetLeftType(HashSet<Error> errors, Binder binder);
-        Type GetRightType(HashSet<Error> errors, Binder binder);
-    }
+    public interface IAssignment : IStatementSyntax{ }
 
 }

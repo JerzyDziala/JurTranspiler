@@ -18,8 +18,7 @@ namespace JurTranspiler.compilerSource.nodes {
         public abstract ImmutableList<ITreeNode> ImmediateChildren { get; }
         public abstract ImmutableList<ITreeNode> AllChildren { get; }
 
-        public abstract Type Evaluate(HashSet<Error> diagnosticBag, Binder binder);
-        public abstract string ToJs(Binder binder);
+        public abstract string ToJs(Knowledge knowledge);
     }
 
 }

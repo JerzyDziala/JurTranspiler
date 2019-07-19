@@ -44,17 +44,10 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public override Type Evaluate(HashSet<Error> errors, Binder binder) {
-			var ownerType = Array.Evaluate(errors, binder);
-			if (ownerType is ArrayType arrayType) return arrayType.ElementType;
-
-			//Error: index access on nonArray
-			else return new UndefinedType();
-		}
 
 
-		public override string ToJs(Binder binder) {
-			return $"{Array.ToJs(binder)}[{Index.ToJs(binder)}]";
+                public override string ToJs(Knowledge knowledge) {
+			return $"{Array.ToJs(knowledge)}[{Index.ToJs(knowledge)}]";
 		}
 
 	}

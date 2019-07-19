@@ -12,11 +12,6 @@ namespace JurTranspiler.src.syntax_tree.types {
         public virtual ISyntaxNode Root { get; }
         public virtual ISyntaxNode Parent { get; }
         public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-        public string ToJs(Binder binder) {
-            throw new NotImplementedException();
-        }
-
-
         public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
         public virtual ImmutableList<ITreeNode> AllChildren { get; }
         public virtual string File { get; }
@@ -44,6 +39,11 @@ namespace JurTranspiler.src.syntax_tree.types {
             AllChildren = this.GetAllChildren();
 
         }
+
+        public string ToJs(Knowledge knowledge) {
+            throw new NotImplementedException();
+        }
+
 
         public bool Equals(ArrayTypeSyntax other) {
             if (ReferenceEquals(null, other)) return false;

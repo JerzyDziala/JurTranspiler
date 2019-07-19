@@ -40,7 +40,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
 
 
-		public string ToJs(Binder binder) {
+                public string ToJs(Knowledge knowledge) {
 			throw new NotImplementedException();
 		}
 

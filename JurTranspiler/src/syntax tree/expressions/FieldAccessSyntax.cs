@@ -42,35 +42,10 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public override Type Evaluate(HashSet<Error> errors, Binder binder) {
-			var ownerType = Owner.Evaluate(errors, binder);
-			if (ownerType is StructType structType) {
-				var fields = structType.GetAllFields(errors);
-				var matchingFields = fields.Where(field => field.Name == Name).ToList();
-				if (matchingFields.None()) {
-					//error: no matching field
-					errors.Add(new NoMatchingFieldFound(file: File,
-					                                    line: Line,
-					                                    fieldName: Name,
-					                                    typeName: ownerType.Name));
-					return new UndefinedType();
-				}
-				if (matchingFields.Count > 1) {
-					//error: ambiguous field reference
-					errors.Add(new AmbiguousFieldReference(file: File,
-					                                       line: Line,
-					                                       fieldName: Name,
-					                                       typeName: ownerType.Name));
-					return new UndefinedType();
-				}
-				else return matchingFields.First().Type;
-			}
-			return new UndefinedType();
-		}
 
 
-		public override string ToJs(Binder binder) {
-			return $"{Owner.ToJs(binder)}.{Name}";
+                public override string ToJs(Knowledge knowledge) {
+			return $"{Owner.ToJs(knowledge)}.{Name}";
 		}
 
 	}

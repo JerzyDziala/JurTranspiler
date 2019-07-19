@@ -43,7 +43,6 @@ namespace JurTranspilerTests {
                     bool i12 = h is null;
                     bool i13 = c != d;
                     bool i14 = i != null || a <= b && a >= b;
-                    bool i15 = i != null or a <= b and a >= b;
         		}
         ";
             var (errors, _) = Compiler.Compile(code);

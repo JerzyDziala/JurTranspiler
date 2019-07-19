@@ -13,8 +13,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        private Callable CheckConstraintsAndReturn(OverloadCompatibility compatibility, CallLocation location, HashSet<Error> errors) {
-            if (RespectsAllConstraints(compatibility.Substitutions, errors)) {
+        private Callable CheckConstraintsAndReturn(OverloadCompatibility compatibility, CallLocation location) {
+            if (RespectsAllConstraints(compatibility.Substitutions)) {
                 return AfterSubstitution(compatibility);
             }
 
@@ -26,14 +26,13 @@ namespace JurTranspiler.compilerSource.Analysis {
         private IEnumerable<OverloadCompatibility> GetOverloadsCompatibilityInfo(IReadOnlyList<Type> explicitTypeArguments,
                                                                                  IReadOnlyList<Type> argumentsTypes,
                                                                                  IEnumerable<Callable> overloads,
-                                                                                 bool isPoly,
-                                                                                 HashSet<Error> errors) {
+                                                                                 bool isPoly) {
 
             return overloads.Select(overload => GetOverloadCompatibility(explicitTypeArguments: explicitTypeArguments,
                                                                          argumentsTypes: argumentsTypes,
                                                                          isPoly: isPoly,
-                                                                         checkParamArgCompileTimeCompatibilityAndSubstitute: (par, arg, subs) => arg.IsAssignableToWithSubstitutions(par, subs, errors),
-                                                                         checkParamArgRuntimeCompatibility: (par, arg) => symbols.TypesBindings.Values.Any(t => t.IsAssignableTo(arg, errors) && t.IsAssignableTo(par, errors)),
+                                                                         checkParamArgCompileTimeCompatibilityAndSubstitute: (par, arg, subs) => IsAssignableToWithSubstitutions(arg, par, subs),
+                                                                         checkParamArgRuntimeCompatibility: (par, arg) => symbols.TypesBindings.Values.Any(t => IsAssignableTo(t, arg) && IsAssignableTo(t, par)),
                                                                          overload: overload));
         }
 
@@ -85,15 +84,15 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private List<Callable> GetOverloadsFor(FunctionCallSyntax syntax, HashSet<Error> errors) {
+        private List<Callable> GetOverloadsFor(FunctionCallSyntax syntax) {
             var potentialFunctions = symbols.GetVisibleDefinitionsFor(syntax)
-                                            .Select(x => BindFunctionDefinition(x, errors));
+                                            .Select(BindFunctionDefinition);
 
             var potentialFunctionPointers = symbols.GetVisibleVariablesInScope(syntax)
-                                                   .Where(variable => BindVariableType(variable, errors) is FunctionPointerType pointerType
+                                                   .Where(variable => BindVariableType(variable) is FunctionPointerType pointerType
                                                                    && pointerType.Parameters.Count == syntax.Arguments.Count)
                                                    .Select(pointerVariable => {
-                                                       var pointerType = (FunctionPointerType) BindVariableType(pointerVariable, errors);
+                                                       var pointerType = (FunctionPointerType) BindVariableType(pointerVariable);
                                                        return new FunctionPointer(name: pointerVariable.Name,
                                                                                   parametersTypes: pointerType.Parameters,
                                                                                   returnType: pointerType.ReturnType);
@@ -103,8 +102,11 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool RespectsAllConstraints(ImmutableHashSet<Substitution> substitutions, HashSet<Error> errors) {
-            return substitutions.All(substitution => substitution.typeParameter.GetAllConstraints().All(constraint => substitution.typeArgument.IsAssignableTo(substitutions.First(sub => sub.typeParameter.Equals(constraint)).typeArgument, errors)));
+        private bool RespectsAllConstraints(ImmutableHashSet<Substitution> substitutions) {
+            return substitutions.All(sub => sub.typeParameter
+                                               .GetAllConstraints()
+                                               .All(constraint => IsAssignableTo(sub.typeArgument,
+                                                                                 substitutions.First(s => s.typeParameter.Equals(constraint)).typeArgument)));
         }
 
 
@@ -115,13 +117,13 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private ICallable CouldNotFindMatchingOverload(HashSet<Error> errors, CallLocation location) {
+        private ICallable CouldNotFindMatchingOverload(CallLocation location) {
             errors.Add(new NoMatchingOverloadForCall(location.File, location.Line, location.CallString));
             return new ErrorSignature(new UndefinedType());
         }
 
 
-        private ICallable AmbiguousFunctionCall(HashSet<Error> errors, CallLocation location) {
+        private ICallable AmbiguousFunctionCall(CallLocation location) {
             errors.Add(new CouldNotResolveAmbiguousFunctionCall(location.File, location.Line, location.CallString));
             return new ErrorSignature(new UndefinedType());
         }

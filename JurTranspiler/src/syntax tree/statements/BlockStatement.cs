@@ -58,8 +58,8 @@ namespace JurTranspiler.compilerSource.nodes {
 
         }
 
-        public string ToJs(Binder binder) {
-	        return $"{{{Body.Select(x => x.ToJs(binder)).Glue(";\n")}}}";
+        public string ToJs(Knowledge knowledge) {
+	        return $"{{{Body.Select(x => x.ToJs(knowledge)).Glue("\n")}}}";
         }
 
 

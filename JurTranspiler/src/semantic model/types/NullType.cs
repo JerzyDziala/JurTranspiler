@@ -23,34 +23,15 @@ namespace JurTranspiler.compilerSource.semantic_model {
 		}
 
 
-		protected override bool IsAssignableToCore(Type type, HashSet<Error> errors) => true;
 
 
-		public override bool IsAssignableToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-			}
-			return true;
-		}
 
-
-		public override bool IsEqualToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-			}
-			return true;
-		}
 
 
 		public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
 
 
-		public override string GetJsTypeCacheGetter() {
-			throw new NotImplementedException();
-		}
-
-
-		public bool Equals(NullType other) {
+        public bool Equals(NullType other) {
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
 			return string.Equals(Name, other.Name);

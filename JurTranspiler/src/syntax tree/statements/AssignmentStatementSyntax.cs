@@ -41,13 +41,10 @@ namespace JurTranspiler.compilerSource.nodes {
 
         }
 
-        public string ToJs(Binder binder) {
-            return $"{Left.ToJs(binder)} = {Right.ToJs(binder)}";
+        public string ToJs(Knowledge knowledge) {
+            return $"{Left.ToJs(knowledge)} = {Right.ToJs(knowledge)};\n";
         }
 
-        public Type GetLeftType(HashSet<Error> errors, Binder binder) => Left.Evaluate(errors, binder);
-
-        public Type GetRightType(HashSet<Error> errors, Binder binder) => Right.Evaluate(errors, binder);
     }
 
 }

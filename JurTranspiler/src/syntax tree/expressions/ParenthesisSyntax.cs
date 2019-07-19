@@ -37,9 +37,8 @@ namespace JurTranspiler.compilerSource.nodes {
         }
 
 
-        public override Type Evaluate(HashSet<Error> errors, Binder binder) => Expression.Evaluate(errors,binder);
-        public override string ToJs(Binder binder) {
-            return $"({Expression.ToJs(binder)})";
+        public override string ToJs(Knowledge knowledge) {
+            return $"({Expression.ToJs(knowledge)})";
         }
 
     }

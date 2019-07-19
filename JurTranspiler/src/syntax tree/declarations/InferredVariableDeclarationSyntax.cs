@@ -43,8 +43,8 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public string ToJs(Binder binder) {
-			return $"let {Name} = {Initializer.ToJs(binder)}";
+                public string ToJs(Knowledge knowledge) {
+			return $"let {Name} = {Initializer.ToJs(knowledge)};\n";
 		}
 
 	}

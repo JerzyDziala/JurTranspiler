@@ -38,22 +38,7 @@ namespace JurTranspiler.compilerSource.nodes {
         }
 
 
-        public override Type Evaluate(HashSet<Error> errors, Binder binder) {
-            if (IsNull) return new NullType();
-            if (Value.StartsWith("'") && Value.EndsWith("'") && Value.Length > 1) {
-                return new PrimitiveType(PrimitiveKind.STRING);
-            }
-            if (double.TryParse(Value, out double _)) {
-                return new PrimitiveType(PrimitiveKind.NUM);
-            }
-            if (Value == "true" || Value == "false") {
-                return new PrimitiveType(PrimitiveKind.BOOL);
-            }
-            else throw new Exception("WTF");
-        }
-
-
-        public override string ToJs(Binder binder) {
+        public override string ToJs(Knowledge knowledge) {
             return Value;
         }
 

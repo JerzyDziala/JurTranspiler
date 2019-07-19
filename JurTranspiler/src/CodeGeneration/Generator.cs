@@ -1,93 +1,98 @@
-using System.CodeDom.Compiler;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.compilerSource.semantic_model;
+using UtilityLibrary;
+using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
 namespace JurTranspiler.compilerSource.CodeGeneration {
 
-	public class Generator {
+    public class Generator {
 
-		private Binder binder { get; }
-
-
-		public Generator(Binder binder) {
-			this.binder = binder;
-		}
+        private Knowledge knowledge { get; }
+        private SyntaxTree syntaxTree { get; }
 
 
-		public string generate(SyntaxTree tree) {
-			var jsStructTypeConstructor = @"
+        public Generator(Knowledge knowledge, SyntaxTree syntaxTree) {
+            this.knowledge = knowledge;
+            this.syntaxTree = syntaxTree;
+        }
 
-function StructType$(name, genericParams, fields) {
-    this.name = name;
-    this.genericParams = genericParams;
-    this.isGeneric = !genericParams.empty();
-    this.fields = fields;
-    this.fullName = name + (this.isGeneric ? ' < ' + this.genericParams.join(', ') + ' > ' : '');
-}";
 
-			var jsArrayTypeConstructor = @"
+        public string GenerateJs() {
+            return $@"//Program//
 
-function ArrayType$(elementType) {
-    this.elementType = elementType;
-    this.fullName = elementType.fullName + '[]';
-}";
+//---Types Table---//
 
-			var jsPrimitiveTypeConstructor = @"
+{GenerateTypesTable()}
 
-function PrimitiveType$(kind) {
-    this.kind = kind;
-    this.name = this.kind;
-} ";
+//---internal javascript functions---//
 
-			var jsFieldConstructor = @"
+{JsStrings.TypeOfDefinition}
+{JsStrings.GetTypeDefinition}
+{JsStrings.WithTypeNameDefinition}
 
-function Field$(type, name) {
-    this.type = type;
-    this.name = name;
-}
+//---internal javascript constructors---//
+
+{JsStrings.TypeInfoConstructorDefinition}
+{JsStrings.FieldInfoConstructorDefinition}
+
+//---User's code---//
+{GenerateConstructors()}
+{syntaxTree.ToJs(knowledge)}
 ";
-
-			var jsFunctionTypeConstructor = @"
-
-function FunctionType$(){
-    this.name = 'function'
-}";
+        }
 
 
-			return "";
-		}
+        public string GenerateTypesTable() {
+            Func<string, string, string> withTypeName = (obj, name) => $"withTypeName({obj},'{name}')";
+            Func<string, string> newTypeInfo = args => $"new TypeInfo(\n{args})";
+            Func<string, string, string> typeTableEntry = (typeName, entry) => $"'{typeName}':{entry}";
+
+            Func<string, string, string> createEntry = (entryName, args) => typeTableEntry(entryName, withTypeName(newTypeInfo(args), "TypeInfo"));
+
+            Func<Type, string> getElementTypeString = type => type is ArrayType arrayType ? $"() => types['{arrayType.ElementType.Name}']" : "() => null";
+            Func<Type, string> getIsArraySting = type => type is ArrayType ? "true" : "false";
+
+            Func<string, string> asFieldInfoConstructor = args => $"new FieldInfo({args})";
+            Func<string, string> asFieldInfoConstructorWithTypeName = args => withTypeName(asFieldInfoConstructor(args), "FieldInfo");
+            Func<Field, string> asFieldInfoArgs = field => $"'{field.Name}', types['{field.Type.Name}']";
+
+            Func<Field, string> asFieldInfoWithTypeName = field => asFieldInfoConstructorWithTypeName(asFieldInfoArgs(field));
+
+            Func<ImmutableArray<Field>, string> getFields = fields => $"() => [\n{fields.Select(asFieldInfoWithTypeName).Glue(",\n")}]";
+            Func<Type, ImmutableArray<Field>> getAllFields = type => type is StructType structType ? knowledge.Fields[structType] : ImmutableArray.Create<Field>();
+
+            Func<Type, string> getFieldsString = type => getFields(getAllFields(type));
+
+            Func<Type, string> createArgs = type => $"'{type.Name}',\n{getIsArraySting(type)},\n {getElementTypeString(type)},\n {getFieldsString(type)}";
+            Func<Type, string> asEntry = type => createEntry(type.Name, createArgs(type));
+
+            Func<string> createTypesTable = () => $"const types = {{\n{knowledge.AllTypes.Select(asEntry).Glue(",\n\n")}}};";
+
+            return createTypesTable();
+        }
 
 
-		private string generateJsTypesTable() {
+        public string GenerateConstructors() {
+            var structs = knowledge.AllTypes
+                                   .OfType<StructType>()
+                                   .Where(x => !x.isExtern)
+                                   .ToImmutableArray();
 
-			var structTypesDictionary = generateJsStructTypesTable();
+            Func<Field, string> fieldDefinitionGenerator = field => $"this.{field.Name} = {field.Type.GetDefaultValue()};";
 
-			var table = $@"
-	internals$ = {{
-		structTypes$:
+            Func<StructType, string> constructorFunctionGenerator = type => $@"function {type.Name}(){{
+                            {knowledge.Fields[type].Select(fieldDefinitionGenerator).Glue("\n")}
+                        }}";
 
-		arrayTypes$:
+            return structs.Select(constructorFunctionGenerator).Glue("\n\n");
+        }
 
-		functionType$: new FunctionType$(),
-
-        primitiveTypes$: {{
-            string: new PrimitiveType$('string'),
-            bool: new PrimitiveType$('bool'),
-            num: new PrimitiveType$('num'),
-        }}
-	}}
-";
-			return "";
-
-		}
-
-
-		private string generateJsStructTypesTable() {
-
-
-			return "";
-		}
-
-	}
+    }
 
 }

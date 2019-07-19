@@ -44,8 +44,8 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public string ToJs(Binder binder) {
-			return $"return{(IsVoid ? "" : $" {ReturnValue.ToJs(binder)}")}";
+                public string ToJs(Knowledge knowledge) {
+			return $"return{(IsVoid ? "" : $" {ReturnValue.ToJs(knowledge)}")};\n";
 		}
 
 	}

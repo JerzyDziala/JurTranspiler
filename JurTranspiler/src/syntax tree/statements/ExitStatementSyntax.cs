@@ -3,7 +3,7 @@ using JurTranspiler.compilerSource.Analysis;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class ExitStatement : ISyntaxNode, IStatementSyntax {
+    public class ExitStatementSyntax : ISyntaxNode, IStatementSyntax {
         public ISyntaxNode Root { get; }
         public ISyntaxNode Parent { get; }
         public ImmutableList<ISyntaxNode> AllParents { get; }
@@ -16,7 +16,7 @@ namespace JurTranspiler.compilerSource.nodes {
         public string Message { get; }
 
 
-        public ExitStatement(ISyntaxNode parent, JurParser.ExitStatementContext context) {
+        public ExitStatementSyntax(ISyntaxNode parent, JurParser.ExitStatementContext context) {
             Parent = parent;
             Root = Parent.Root;
             AllParents = this.GetAllParents();
@@ -32,8 +32,9 @@ namespace JurTranspiler.compilerSource.nodes {
 
         }
 
-        public string ToJs(Binder binder) {
-            return $"throw new Error(\"{Message}\")";
+
+        public string ToJs(Knowledge knowledge) {
+            return $"throw new Error(\"{Message}\");\n";
         }
 
     }

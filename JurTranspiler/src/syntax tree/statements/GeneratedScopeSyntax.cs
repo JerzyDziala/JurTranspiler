@@ -36,8 +36,8 @@ namespace JurTranspiler.compilerSource.nodes {
 
         }
 
-        public string ToJs(Binder binder) {
-            return Body.ToJs(binder);
+        public string ToJs(Knowledge knowledge) {
+            return Body.ToJs(knowledge);
         }
 
 

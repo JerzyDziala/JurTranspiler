@@ -20,23 +20,9 @@ namespace JurTranspiler.compilerSource.semantic_model {
 		}
 
 
-		protected override bool IsAssignableToCore(Type type, HashSet<Error> errors) => true;
 
 
-		public override bool IsAssignableToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-			}
-			return true;
-		}
 
-
-		public override bool IsEqualToWithSubstitutions(Type type, ICollection<Substitution> substitutions, HashSet<Error> errors) {
-			if (type is TypeParameterType t) {
-				substitutions.Add(new Substitution(t, this));
-			}
-			return true;
-		}
 
 
 		public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
@@ -61,11 +47,8 @@ namespace JurTranspiler.compilerSource.semantic_model {
 			throw new NotImplementedException();
 		}
 
-        public override string GetJsTypeCacheGetter() {
-            throw new NotImplementedException();
-        }
 
-		public override int GetHashCode() => (Name != null ? Name.GetHashCode() : 0);
+        public override int GetHashCode() => (Name != null ? Name.GetHashCode() : 0);
 
 	}
 

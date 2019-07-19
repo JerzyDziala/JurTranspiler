@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.nodes {
         ISyntaxNode Parent { get; }
         ImmutableList<ISyntaxNode> AllParents { get; }
 
-        string ToJs(Binder binder);
+        string ToJs(Knowledge knowledge);
 
     }
 

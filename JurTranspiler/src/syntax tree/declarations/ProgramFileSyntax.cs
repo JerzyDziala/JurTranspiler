@@ -42,11 +42,11 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public string ToJs(Binder binder) {
+                public string ToJs(Knowledge knowledge) {
 			return $@"
-{Mains.Select(x => x.ToJs(binder)).Glue("\n")}
+{Mains.Select(x => x.ToJs(knowledge)).Glue("\n")}
 
-{Abstractions.Select(x => x.ToJs(binder)).Glue("\n")}
+{Abstractions.Select(x => x.ToJs(knowledge)).Glue("\n")}
 ";
 		}
 

@@ -1,3 +1,4 @@
+
 grammar Jur;
 
 /*
@@ -12,7 +13,6 @@ NEWLINE : '\r'? '\n' -> channel(HIDDEN);
 COMA: ',';
 DOT : '.';
 SEMICOLON : ';';
-DOLLAR: '$';
 ASSIGN: '=';
 ADD : '+';
 SUBTRACT: '-';
@@ -29,11 +29,10 @@ LEQUAL: '<=';
 GREATER: '>';
 GREQUAL: '>=';
 EQUAL: '==';
-IS: 'is';
 WHERE: 'where';
 NOT_EQUAL: '!=';
-AND: 'and' | '&&';
-OR: 'or' | '||';
+LOGICAL_AND: '&&';
+OR: '||';
 
 STRING_VALUE: '\''.*?'\'';
 NUMBER_VALUE: [-]?[0-9]+ ([.] [0-9]+)?;
@@ -50,15 +49,14 @@ BREAK: 'break';
 CONTINUE: 'continue';
 EXIT: 'exit';
 IF: 'if';
-WHILE : 'while';
 ABSTRACTION : 'abstraction';
 MAIN: 'main';
 NEW: 'new';
-IN: 'in';
+IS: 'is';
+AND: 'and';
 ELSE: 'else';
 FOR: 'for' ;
 EXTERN: 'extern';
-LET: 'let';
 POLY: 'poly';
 ARROW: '->';
 PRIMITIVE: 'num' | 'string' | 'bool' ;
@@ -67,7 +65,7 @@ PRIMITIVE: 'num' | 'string' | 'bool' ;
 fragment DIGIT  : '0'..'9' ;
 fragment LETTER : 'a'..'z' | 'A'..'Z' | '_' ;
 ARITHMETIC: ADD | TIMES | DIVIDE | SUBTRACT ;
-LOGIC: LESS | LEQUAL | GREATER | GREQUAL | EQUAL | NOT_EQUAL | AND | OR;
+LOGIC: LESS | LEQUAL | GREATER | GREQUAL | EQUAL | NOT_EQUAL | LOGICAL_AND | OR;
 
 ID : LETTER (LETTER | DIGIT)* ;
 
@@ -98,7 +96,8 @@ inlinedType : IS type ';'
 
 //functions
 
-functionDeclaration : ( (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? statement)
+functionDeclaration : ( (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? block)
+					| ( (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? ARROW expression ';')
 					| ( EXTERN (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
                     ;
 
@@ -118,7 +117,6 @@ initializedVariableDeclaration : type ID '=' expression
                                ;
 
 inferedVariableDeclaration : ID ':=' expression
-						   | LET ID '=' expression
 						   ;
 
 //types
@@ -134,10 +132,10 @@ type : PRIMITIVE #primitiveType
 //statements and expressions
 
 
+//TODO: add ';' to exit statement
 statement : '{' statement* '}' #blockStatement
 		  | IF expression statement (ELSE statement)? #ifStatement
 		  | FOR ((initializedVariableDeclaration | inferedVariableDeclaration) ';')? expression (';' expression)? statement #forStatement
-		  | FOR uninitializedVarDeclaration (IN | ':') expression statement #foreachStatement
 		  | RETURN expression? ';' #returnStatement
 		  | BREAK ';' #breakStatement
 		  | CONTINUE ';' #continueStatement
@@ -166,7 +164,7 @@ expression : ID #variableAccess
            | expression operator=( ADD | SUBTRACT ) expression #operation
            | expression operator=( LESS | GREATER | LEQUAL | GREQUAL ) expression #operation
            | expression operator=( EQUAL | IS | NOT_EQUAL ) expression #operation
-           | expression AND expression #operation
+           | expression LOGICAL_AND expression #operation
            | expression OR expression #operation
 		   ;
 

@@ -52,8 +52,8 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public string ToJs(Binder binder) {
-			return ExpressionSyntax.ToJs(binder);
+                public string ToJs(Knowledge knowledge) {
+			return ExpressionSyntax.ToJs(knowledge) +";\n";
 		}
 
 	}

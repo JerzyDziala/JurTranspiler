@@ -48,23 +48,16 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public override Type Evaluate(HashSet<Error> errors, Binder binder) {
-			return binder.BindFunctionCall(this, errors).ReturnType;
-		}
 
 
-		public override string ToJs(Binder binder) {
+                public override string ToJs(Knowledge knowledge) {
 			if (IsPoly) throw new NotImplementedException("poly methods are not supported by code gen");
 
-			var args = $"{Arguments.Select(x => x.ToJs(binder)).Glue(", ")}";
-			return $"{binder.GetNewNameFor(this)}({args})";
+			var args = $"{Arguments.Select(x => x.ToJs(knowledge)).Glue(", ")}";
+			return $"{knowledge.GetNewNameFor(this)}({args})";
 		}
 
 
-		public string GetCallString(HashSet<Error> errors, Binder binder) {
-			var explicitList = HasExplicitTypeArguments ? $"<{string.Join(",", ExplicitTypeArguments.Select(x => x.FullName))}>" : "";
-			return $"{Name}{explicitList}({string.Join(",", Arguments.Select(arg => arg.Evaluate(errors, binder).Name))})";
-		}
 
 	}
 

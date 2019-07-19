@@ -4,7 +4,6 @@ using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.syntax_tree.searching;
 
 namespace JurTranspiler.compilerSource.nodes {
 
@@ -36,18 +35,7 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public override Type Evaluate(HashSet<Error> diagnosticBag, Binder binder) {
-			var declaration = this.GetVisibleDeclarationOrNull();
-			if (declaration == null) {
-				//use of undeclared variable
-				diagnosticBag.Add(new UseOfUndeclaredVariable(File, Line, Name));
-				return new UndefinedType();
-			}
-			return binder.BindVariableType(declaration, diagnosticBag);
-		}
-
-
-		public override string ToJs(Binder binder) {
+                public override string ToJs(Knowledge knowledge) {
 			return Name;
 		}
 
