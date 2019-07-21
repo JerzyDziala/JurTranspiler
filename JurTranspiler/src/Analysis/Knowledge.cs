@@ -12,11 +12,11 @@ namespace JurTranspiler.compilerSource.Analysis {
     public class Knowledge {
 
         public ImmutableArray<Type> AllTypes { get; }
-        public ImmutableDictionary<ITypeSyntax,Type> TypesBindings { get; }
-        public ImmutableDictionary<StructDefinitionSyntax,Type> StructDefinitionsBindings { get; }
+        public ImmutableDictionary<ITypeSyntax, Type> TypesBindings { get; }
+        public ImmutableDictionary<StructDefinitionSyntax, Type> StructDefinitionsBindings { get; }
         public ImmutableDictionary<StructType, ImmutableArray<Field>> Fields { get; }
         public ImmutableDictionary<FunctionDefinitionSyntax, FunctionSignature> FunctionSignaturesBindings { get; }
-        public ImmutableDictionary<FunctionCallSyntax, ICallable> FunctionCallsBindings { get; }
+        public ImmutableDictionary<FunctionCallSyntax, FunctionCallInfo> FunctionCallsBindings { get; }
         private ImmutableDictionary<ICallable, string> NewNames;
 
 
@@ -25,7 +25,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                          IDictionary<StructType, ImmutableArray<Field>> fields,
                          IDictionary<ICallable, string> newNames,
                          IDictionary<FunctionDefinitionSyntax, FunctionSignature> functionSignaturesBindings,
-                         IDictionary<FunctionCallSyntax, ICallable> functionCallsBindings,
+                         IDictionary<FunctionCallSyntax, FunctionCallInfo> functionCallsBindings,
                          IDictionary<StructDefinitionSyntax, Type> structDefinitionsBindings) {
 
             StructDefinitionsBindings = structDefinitionsBindings.ToImmutableDictionary();
@@ -46,7 +46,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         public string GetNewNameFor(FunctionCallSyntax call) {
-            var callable = FunctionCallsBindings[call];
+            var callable = FunctionCallsBindings[call].Callable;
 
             if (callable is Dispatcher d) return d.Name + $"$Arity_{d.Arity}_dispatcher";
 

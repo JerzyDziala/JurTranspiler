@@ -23,6 +23,7 @@ namespace JurTranspiler.compilerSource.nodes {
         public string Name { get; }
         public string FullName { get; }
         public bool IsGeneric { get; }
+        public int GenericArity { get; }
         public int Arity { get; }
         public bool IsExtern { get; }
 
@@ -63,6 +64,8 @@ namespace JurTranspiler.compilerSource.nodes {
 
             Parameters = context.uninitializedVarDeclaration().Select(x => new UninitializedVariableDeclarationSyntax(this, x, true)).ToImmutableList();
 
+            Arity = Parameters.Count;
+
             if (!IsExtern)
                 Body = context.ARROW() == null
                            ? (IStatementSyntax) new BlockStatement(this, context.block())
@@ -72,8 +75,8 @@ namespace JurTranspiler.compilerSource.nodes {
                                                      .OfType<TypeParameterSyntax>()
                                                      .ToImmutableList();
 
-            Arity = TypeParameters.Select(x => x.Name).Distinct().Count();
-            IsGeneric = Arity > 0;
+            GenericArity = TypeParameters.Select(x => x.Name).Distinct().Count();
+            IsGeneric = GenericArity > 0;
 
             if (!IsGeneric) FullName = $"{ReturnType.Name} {Name}()";
             else FullName = $"{ReturnType.Name} {Name}<{string.Join(",", TypeParametersInGenericTypesList.Select(x => x.Name))}>({string.Join(",", Parameters.Select(x => x.Type.Name))})";
@@ -94,6 +97,11 @@ namespace JurTranspiler.compilerSource.nodes {
 
             var name = knowledge.GetNewNameFor(this);
             string parameters = Parameters.Select(x => x.Name).Glue(", ");
+
+            if (IsGeneric) {
+                if (Arity > 0) parameters += ", ";
+                parameters += "substitutions";
+            }
 
             return $@"function {name}({parameters}) {Body.ToJs(knowledge)} ";
         }

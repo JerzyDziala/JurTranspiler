@@ -33,6 +33,8 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public ImmutableList<Lazy<Field>> Fields { get; }
         public ImmutableList<Lazy<Type>> InlinedTypes { get; }
 
+        public string JsName => Name.Replace("<", "_S_").Replace(">", "_E_").Replace(",", "___");
+
 
         public StructType(StructDefinitionSyntax originalSyntax,
                           ImmutableList<Lazy<Type>> typeArguments,
@@ -82,8 +84,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
             return string.Equals(Name, other.Name)
                 && string.Equals(NonGenericName, other.NonGenericName)
                 && TypeArguments.SequenceEqual(other.TypeArguments)
-                && Fields.SequenceEqual(other.Fields)
-                && InlinedTypes.SequenceEqual(other.InlinedTypes)
                 && OriginalDefinitionSyntax.File.Equals(other.OriginalDefinitionSyntax.File)
                 && OriginalDefinitionSyntax.Line.Equals(other.OriginalDefinitionSyntax.Line);
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
@@ -20,28 +21,33 @@ namespace JurTranspiler.compilerSource.Analysis {
 
         private Type BindExpressionCore(AnonymousFunctionSyntax syntax) {
 
+            Func<Type, Type> functionPointerTypeWithReturnType = returnType => new FunctionPointerType(returnType, syntax.Parameters.Select(x => BindType(x.Type)));
 
-            Type returnType = new UndefinedType();
             if (syntax.IsExpressionStatementLambda) {
                 var bodyExpression = ((ExpressionStatementSyntax) syntax.Body).ExpressionSyntax;
-                returnType = BindExpression(bodyExpression);
+                return functionPointerTypeWithReturnType(BindExpression(bodyExpression));
             }
             else {
                 var block = ((BlockStatement) syntax.Body);
 
-                //TODO: checks for return types in multiline lambdas
-                var returnStatementsTypes = block.Body.SelectMany(x => x.AllChildren)
-                                                 .OfType<ReturnStatementSyntax>()
-                                                 .Select(x => x.IsVoid ? new VoidType() : BindExpression(x.ReturnValue));
+                var returnStatements = block.Body.SelectMany(x => x.AllChildren)
+                                            .OfType<ReturnStatementSyntax>()
+                                            .ToImmutableArray();
 
-                if (returnStatementsTypes.None()) returnType = new VoidType();
-                else {
-//                    var inferredReturnTypes = symbols.TypesBindings.Values
-//                                                    .Where(x=>)
-                }
+                Func<Type> addUnableToInferAndReturnUndefined = () => {
+                    errors.Add(new UnableToInferReturnType(returnStatements.GetLocations()));
+                    return functionPointerTypeWithReturnType(new UndefinedType());
+                };
+
+                return returnStatements
+                       .Select(x => x.IsVoid ? new VoidType() : BindExpression(x.ReturnValue))
+                       .ToImmutableArray() switch {
+                           var x when x.None() => functionPointerTypeWithReturnType(new VoidType()),
+                           var x when x.AllAreSame() => functionPointerTypeWithReturnType(x[0]),
+                           _ => addUnableToInferAndReturnUndefined()
+                           };
             }
 
-            return new FunctionPointerType(returnType, syntax.Parameters.Select(x => BindType(x.Type)));
         }
 
 
@@ -49,8 +55,8 @@ namespace JurTranspiler.compilerSource.Analysis {
             var ownerType = BindExpression(syntax.Array);
             if (ownerType is ArrayType arrayType) return arrayType.ElementType;
 
-            //TODO: error, index access on nonArray
-            else return new UndefinedType();
+            errors.Add(new IndexAccessOnNonArray(syntax.File, syntax.Line));
+            return new UndefinedType();
         }
 
 
@@ -84,7 +90,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(FunctionCallSyntax syntax) => BindFunctionCall(syntax).ReturnType;
+        private Type BindExpressionCore(FunctionCallSyntax syntax) => BindFunctionCall(syntax).Callable.ReturnType;
 
 
         private Type BindExpressionCore(OperationSyntax syntax) {

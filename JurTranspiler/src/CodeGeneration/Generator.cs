@@ -72,7 +72,8 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
             Func<Type, string> createArgs = type => $"'{type.Name}',\n{getIsArraySting(type)},\n {getElementTypeString(type)},\n {getFieldsString(type)}";
             Func<Type, string> asEntry = type => createEntry(type.Name, createArgs(type));
 
-            Func<string> createTypesTable = () => $"const types = {{\n{knowledge.AllTypes.Select(asEntry).Glue(",\n\n")}}};";
+            Func<string> createTypesTable = () => $"const types = {{\n{knowledge.AllTypes.Distinct(UtilityLibrary.Comparer<Type>.MakeComp((a, b) => a.Name == b.Name, x => x.Name.GetHashCode())).Select(asEntry).Glue(",\n\n")}}};";
+
 
             return createTypesTable();
         }
@@ -81,12 +82,13 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
         public string GenerateConstructors() {
             var structs = knowledge.AllTypes
                                    .OfType<StructType>()
+                                   .Distinct(UtilityLibrary.Comparer<StructType>.MakeComp((a, b) => a.Name == b.Name, x => x.Name.GetHashCode()))
                                    .Where(x => !x.isExtern)
                                    .ToImmutableArray();
 
             Func<Field, string> fieldDefinitionGenerator = field => $"this.{field.Name} = {field.Type.GetDefaultValue()};";
 
-            Func<StructType, string> constructorFunctionGenerator = type => $@"function {type.Name}(){{
+            Func<StructType, string> constructorFunctionGenerator = type => $@"function {type.JsName}(){{
                             {knowledge.Fields[type].Select(fieldDefinitionGenerator).Glue("\n")}
                         }}";
 

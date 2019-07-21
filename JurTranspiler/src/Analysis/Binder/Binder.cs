@@ -7,7 +7,6 @@ using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.compilerSource.semantic_model.functions;
 using UtilityLibrary;
-using static UtilityLibrary.Comparer<JurTranspiler.compilerSource.semantic_model.functions.FunctionSignature>;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
@@ -69,7 +68,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             //of functions
             var functionsDuplicates = symbols.FunctionSignaturesBindings.Values
-                                             .GroupBy(x => x, MakeComp<FunctionSignature>((a, b) => a.IsConsideredSameAs(b), a => a.Name.GetHashCode()))
+                                             .GroupBy(x => x, UtilityLibrary.Comparer<FunctionSignature>.MakeComp((a, b) => a.IsConsideredSameAs(b), a => a.Name.GetHashCode()))
                                              .Where(x => x.MoreThenOne())
                                              .ToList();
             foreach (var duplicate in functionsDuplicates) {

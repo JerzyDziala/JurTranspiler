@@ -34,8 +34,15 @@ namespace UtilityLibrary {
 
 
 		public static bool AllHaveSame<T, G>(this IEnumerable<T> list, Func<T, G> selector) {
-			var first = selector(list.FirstOrDefault());
-			return list.All(element => first.Equals(selector(element)));
+            var enumerable = list.ToList();
+            var first = selector(enumerable.FirstOrDefault());
+			return enumerable.All(element => first.Equals(selector(element)));
+		}
+
+		public static bool AllAreSame<T>(this IEnumerable<T> list) {
+            var enumerable = list.ToList();
+            var first = enumerable.FirstOrDefault();
+			return enumerable.All(element => first.Equals(element));
 		}
 
 

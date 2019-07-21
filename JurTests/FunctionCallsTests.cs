@@ -2,6 +2,7 @@ using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.Analysis;
 using NUnit.Framework;
+using UtilityLibrary;
 
 namespace JurTranspilerTests {
 
@@ -69,6 +70,27 @@ namespace JurTranspilerTests {
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
                 new TypeMismatchInAssignmentError("__TEST__",9,"num","string")
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void GenericFunctionPointerParameterContravariantce() {
+            var code = @"
+        		abstraction 0 {
+        		    T A<T>(void(T) fun) {
+                        T x;
+                        return x;
+					}
+        		}
+        		main {
+                    void(string[]) f;
+					string[] x = A(f);
+        		}
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }

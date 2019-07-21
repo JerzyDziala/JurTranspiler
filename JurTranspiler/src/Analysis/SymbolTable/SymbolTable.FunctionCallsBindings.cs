@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.compilerSource.semantic_model.functions;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class SymbolTable {
-        public Dictionary<FunctionCallSyntax, ICallable> FunctionCallsBindings { get; } = new Dictionary<FunctionCallSyntax, ICallable>();
+        public Dictionary<FunctionCallSyntax, FunctionCallInfo> FunctionCallsBindings { get; } = new Dictionary<FunctionCallSyntax, FunctionCallInfo>();
         public bool AlreadyBound(FunctionCallSyntax syntax) => FunctionCallsBindings.ContainsKey(syntax);
-        public ICallable GetBindingFor(FunctionCallSyntax syntax) => FunctionCallsBindings[syntax];
+        public FunctionCallInfo GetBindingFor(FunctionCallSyntax syntax) => FunctionCallsBindings[syntax];
 
 
-        public ICallable MakeBindingFor(FunctionCallSyntax syntax, ICallable value) {
+        public FunctionCallInfo MakeBindingFor(FunctionCallSyntax syntax, FunctionCallInfo value) {
             FunctionCallsBindings[syntax] = value;
             return value;
         }

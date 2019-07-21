@@ -44,14 +44,14 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        public ICallable BindFunctionCall(FunctionCallSyntax call) {
+        public FunctionCallInfo BindFunctionCall(FunctionCallSyntax call) {
             return symbols.AlreadyBound(call)
                        ? symbols.GetBindingFor(call)
                        : symbols.MakeBindingFor(call, BindFunctionCallCore(call));
         }
 
 
-        public ICallable BindFunctionCallCore(FunctionCallSyntax call) {
+        public FunctionCallInfo BindFunctionCallCore(FunctionCallSyntax call) {
 
             var argumentsTypes = call.Arguments.Select(BindExpression).ToList();
             var explicitTypeArgumentsTypes = call.ExplicitTypeArguments.Select(BindType).ToList();
@@ -70,34 +70,34 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        public ICallable BindFunctionCallCore(IReadOnlyList<Callable> overloads,
-                                              IReadOnlyList<Type> argumentsTypes,
-                                              IReadOnlyList<Type> explicitTypeArguments,
-                                              bool isPoly,
-                                              CallLocation location) {
+        public FunctionCallInfo BindFunctionCallCore(IReadOnlyList<Callable> overloads,
+                                                     IReadOnlyList<Type> argumentsTypes,
+                                                     IReadOnlyList<Type> explicitTypeArguments,
+                                                     bool isPoly,
+                                                     CallLocation location) {
 
             //check for use of undefined function/overload
             if (overloads.None()) {
                 errors.Add(new UseOfUndeclaredFunction(location.File, location.Line, location.CallString));
-                return new ErrorSignature(new UndefinedType());
+                return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
             }
 
             //check for calls that use undefined arguments
             if (argumentsTypes.Any(x => x is UndefinedType) || explicitTypeArguments.Any(x => x is UndefinedType)) {
-                return new ErrorSignature(new UndefinedType());
+                return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
             }
 
             if (isPoly) {
                 var overloadsInfo = getCompatibility(true);
-                var possibleAtRuntime = overloadsInfo.Where(x => x.IsCompatible()).Select(AfterSubstitution).ToList();
+                var possibleAtRuntime = overloadsInfo.Where(x => x.IsCompatible()).Select(x => new FunctionCallInfo(AfterSubstitution(x), x.Substitutions)).ToList();
 
                 if (possibleAtRuntime.One()) return possibleAtRuntime.First();
                 if (possibleAtRuntime.None()) return CouldNotFindMatchingOverload(location);
                 return getDispatcherOrErrorSignature();
 
-                ICallable getDispatcherOrErrorSignature() => possibleAtRuntime.AllHaveSame(x => x.ReturnType)
-                                                                 ? new Dispatcher(possibleAtRuntime.ToImmutableList())
-                                                                 : (ICallable) new ErrorSignature(new UndefinedType());
+                FunctionCallInfo getDispatcherOrErrorSignature() => possibleAtRuntime.AllHaveSame(x => x.Callable.ReturnType)
+                                                                        ? new FunctionCallInfo(new Dispatcher(possibleAtRuntime.ToImmutableList()), ImmutableHashSet<Substitution>.Empty)
+                                                                        : new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
             }
             else {
                 var overloadsInfo = getCompatibility(false);
@@ -107,7 +107,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 if (compatibleOverloads.None()) return CouldNotFindMatchingOverload(location);
                 return resolve();
 
-                ICallable resolve() {
+                FunctionCallInfo resolve() {
                     var perfectMatches = compatibleOverloads.Where(IsPerfectCompatibility).ToImmutableList();
                     return perfectMatches.One()
                                ? checkConstraintsAndReturn(perfectMatches.First())
@@ -115,7 +115,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 }
             }
 
-            ICallable checkConstraintsAndReturn(OverloadCompatibility x) => CheckConstraintsAndReturn(x, location);
+            FunctionCallInfo checkConstraintsAndReturn(OverloadCompatibility x) => CheckConstraintsAndReturn(x, location);
 
             IEnumerable<OverloadCompatibility> getCompatibility(bool poly) => GetOverloadsCompatibilityInfo(explicitTypeArguments: explicitTypeArguments,
                                                                                                             argumentsTypes: argumentsTypes,

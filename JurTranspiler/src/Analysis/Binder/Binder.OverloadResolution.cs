@@ -13,13 +13,13 @@ namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        private Callable CheckConstraintsAndReturn(OverloadCompatibility compatibility, CallLocation location) {
+        private FunctionCallInfo CheckConstraintsAndReturn(OverloadCompatibility compatibility, CallLocation location) {
             if (RespectsAllConstraints(compatibility.Substitutions)) {
-                return AfterSubstitution(compatibility);
+                return new FunctionCallInfo(AfterSubstitution(compatibility), compatibility.Substitutions);
             }
 
             errors.Add(new CallArgumentsViolateParametersConstraints(location.File, location.Line, location.CallString));
-            return new ErrorSignature(new UndefinedType());
+            return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
         }
 
 
@@ -117,15 +117,15 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private ICallable CouldNotFindMatchingOverload(CallLocation location) {
+        private FunctionCallInfo CouldNotFindMatchingOverload(CallLocation location) {
             errors.Add(new NoMatchingOverloadForCall(location.File, location.Line, location.CallString));
-            return new ErrorSignature(new UndefinedType());
+            return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
         }
 
 
-        private ICallable AmbiguousFunctionCall(CallLocation location) {
+        private FunctionCallInfo AmbiguousFunctionCall(CallLocation location) {
             errors.Add(new CouldNotResolveAmbiguousFunctionCall(location.File, location.Line, location.CallString));
-            return new ErrorSignature(new UndefinedType());
+            return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
         }
 
     }

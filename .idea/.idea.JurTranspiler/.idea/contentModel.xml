@@ -13,6 +13,7 @@
         <e p="FunctionCallsTests.cs" t="Include" />
         <e p="FunctionDeclarationsTests.cs" t="Include" />
         <e p="JurTests.csproj" t="IncludeRecursive" />
+        <e p="LambdasTests.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp3.0" t="Include">
@@ -61,6 +62,7 @@
               </e>
               <e p="CallArgumentsViolateParametersConstraints.cs" t="Include" />
               <e p="CouldNotResolveAmbiguousFunctionCall.cs" t="Include" />
+              <e p="IndexAccessOnNonArray.cs" t="Include" />
               <e p="InliningOfNonStructType.cs" t="Include" />
               <e p="InliningResultsInMultipleFieldsWithTheSameName.cs" t="Include" />
               <e p="MissingReturnStatement.cs" t="Include" />
@@ -76,6 +78,7 @@
               <e p="TypeMismatchInAssignmentError.cs" t="Include" />
               <e p="TypeMismatchInReturnStatement.cs" t="Include" />
               <e p="TypeMismatchInUseOfOperator.cs" t="Include" />
+              <e p="UnableToInferReturnType.cs" t="Include" />
               <e p="UseOfAmbiguousType.cs" t="Include" />
               <e p="UseOfNonTypeParameterInConstraint.cs" t="Include" />
               <e p="UseOfUndeclaredFunction.cs" t="Include" />
@@ -114,6 +117,7 @@
           <e p="Parser.cs" t="Include" />
           <e p="semantic model" t="Include">
             <e p="Field.cs" t="Include" />
+            <e p="FunctionCallInfo.cs" t="Include" />
             <e p="functions" t="Include">
               <e p="BrokenFunctionSignature.cs" t="Include" />
               <e p="Callable.cs" t="Include" />

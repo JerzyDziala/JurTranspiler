@@ -3,19 +3,19 @@ using System.Linq;
 
 namespace JurTranspiler.compilerSource.semantic_model.functions {
 
-    public class Dispatcher : ICallable{
+    public class Dispatcher : ICallable {
 
         public string Name { get; }
         public int Arity { get; }
         public Type ReturnType { get; }
-        public ImmutableList<Callable> Functions;
+        public ImmutableList<FunctionCallInfo> Functions;
 
 
-        public Dispatcher(ImmutableList<Callable> functions) {
+        public Dispatcher(ImmutableList<FunctionCallInfo> functions) {
             Functions = functions;
-            Name = functions.First().Name;
-            Arity = functions.First().Arity;
-            ReturnType = functions.First().ReturnType;
+            Name = functions.First().Callable.Name;
+            Arity = functions.First().Callable.Arity;
+            ReturnType = functions.First().Callable.ReturnType;
         }
     }
 

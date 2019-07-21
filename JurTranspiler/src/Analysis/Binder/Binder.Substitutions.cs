@@ -31,10 +31,15 @@ namespace JurTranspiler.compilerSource.Analysis {
             if (type is UndefinedType) return true;
             if (type is FunctionPointerType func && IsAssignableToWithSubstitutions(self.ReturnType, func.ReturnType, substitutions)) {
                 if (self.Parameters.Count != func.Parameters.Count) return false;
-                return func.Parameters.Where((t, i) => {
-                    var isNot = !IsAssignableToWithSubstitutions(t, self.Parameters[i], substitutions);
-                    return isNot;
-                }).None();
+                return self.Parameters
+                           .Zip(func.Parameters, (aPar, bPar) => (aPar, bPar))
+                           .All(x => {
+                               if (x.bPar is TypeParameterType t) {
+                                   substitutions.Add(new Substitution(t, x.aPar));
+                                   return true;
+                               }
+                               return IsAssignableToWithSubstitutions(x.bPar, x.aPar, substitutions);
+                           });
             }
             return false;
         }
@@ -69,7 +74,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 var fieldsB = BindFields(target).ToList();
                 var tmpSubs = new HashSet<Substitution>();
 
-                var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA =>IsEqualToWithSubstitutions(fieldA.Type,fieldB.Type, tmpSubs)
+                var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => IsEqualToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)
                                                                             && fieldA.Name.Equals(fieldB.Name)));
 
                 if (!isCompatible) return false;
@@ -112,7 +117,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(VoidType self, Type type, ICollection<Substitution> substitutions) => false;
+        private bool IsAssignableToWithSubstitutionsCore(VoidType self, Type type, ICollection<Substitution> substitutions) => type is VoidType;
     }
 
 }

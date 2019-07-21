@@ -8,7 +8,7 @@ namespace UtilityLibrary {
 		private readonly Func<T, T, bool> equalityComparer;
 		private readonly Func<T, int> hashCodeGetter;
 
-		public static Comparer<G> MakeComp<G>(Func<G, G, bool> eq, Func<G, int> hash) => new Comparer<G>(eq, hash);
+		public static Comparer<T> MakeComp(Func<T, T, bool> eq, Func<T, int> hash) => new Comparer<T>(eq, hash);
 
 
 		private Comparer(Func<T, T, bool> equalityComparer, Func<T, int> hashCodeGetter) {

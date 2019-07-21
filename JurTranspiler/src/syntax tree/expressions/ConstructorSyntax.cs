@@ -50,14 +50,14 @@ namespace JurTranspiler.compilerSource.nodes {
                 return $"({pointer.Parameters.Select((syntax, i) => $"p{i}").Glue(", ")}) => {pointer.ReturnType.DefaultValue};}}"
                     .WithTypeName(type.Name);
             }
-            if (ConstructedType is ArrayTypeSyntax ) {
+            if (ConstructedType is ArrayTypeSyntax) {
                 return $"[]".WithTypeName(type.Name);
             }
             if (ConstructedType is PrimitiveTypeSyntax primitive) {
                 return primitive.DefaultValue;
             }
-            if (ConstructedType is StructTypeSyntax structType) {
-                return $"new {type.Name}()".WithTypeName(type.Name);
+            if (type is StructType structType) {
+                return $"new {structType.JsName}()".WithTypeName(structType.Name);
             }
 
             else throw new Exception("invalid constructor type");
