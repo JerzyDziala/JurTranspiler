@@ -24,7 +24,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
                 //we are in generic struct or function declaration and we were declared in this scope
                 var hasTypeParameterWithMyName = parentDeclaration.TypeParameters.Any(x => x.Name == ambiguous.ID().GetText());
-                if (hasTypeParameterWithMyName) return new TypeParameterSyntax(parent, ambiguous,parentDeclaration);
+                if (hasTypeParameterWithMyName) return new TypeParameterSyntax(parent, ambiguous, parentDeclaration);
 
                 //we were not declared as typeParameter
                 else return new StructTypeSyntax(parent, ambiguous);

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Xml.Schema;
 using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.compilerSource.CodeGeneration;
 using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
 using UtilityLibrary;
@@ -57,7 +60,13 @@ namespace JurTranspiler.compilerSource.nodes {
             var args = $"{Arguments.Select(x => x.ToJs(knowledge)).Glue(", ")}";
 
             if (boundCallableInfo.Substitutions.Any()) {
-                var subs = $"{{{boundCallableInfo.Substitutions.Select(x => $"{x.typeParameter.Name}: '{x.typeArgument.Name}'").Glue(", ")}}}";
+
+                Func<string, string> withSubs = s => this.IsInGenericFunction() ? $"{s}.withSubstitutedTypes(substitutions)" : s;
+                Func<string, string> toTypeArgumentString = s => withSubs($"types[{s.AsString()}]");
+
+                var subs = boundCallableInfo.Substitutions
+                                            .Select(x => $"typeParameter: types[{x.typeParameter.Name.AsString()}], typeArgument: {toTypeArgumentString(x.typeArgument.Name)}".AsObject())
+                                            .AsArray();
                 if (boundCallableInfo.Callable.Arity > 0) args += ", ";
                 args += subs;
             }

@@ -19,7 +19,7 @@ namespace JurTranspiler.compilerSource.Analysis {
             }
             if (type is UndefinedType) return true;
             if (type is ArrayType arrayType && IsAssignableToWithSubstitutions(self.ElementType, arrayType.ElementType, substitutions)) return true;
-            return true;
+            return false;
         }
 
 
@@ -49,7 +49,7 @@ namespace JurTranspiler.compilerSource.Analysis {
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
             }
-            return true;
+            return type is StructType || type is ArrayType || type is FunctionPointerType;
         }
 
 

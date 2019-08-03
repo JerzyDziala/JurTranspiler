@@ -28,10 +28,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public int Abstraction { get; }
         public bool isExtern { get; }
 
-        public StructType PreSubstitutionType { get; }
         public ImmutableList<Lazy<Type>> TypeArguments { get; }
         public ImmutableList<Lazy<Field>> Fields { get; }
         public ImmutableList<Lazy<Type>> InlinedTypes { get; }
+        public StructType PreSubstitutionType { get; }
 
         public string JsName => Name.Replace("<", "_S_").Replace(">", "_E_").Replace(",", "___");
 
@@ -43,11 +43,11 @@ namespace JurTranspiler.compilerSource.semantic_model {
                           ImmutableList<Lazy<Field>> fields,
                           StructType preSubstitutionType = null) {
             OriginalDefinitionSyntax = originalSyntax;
-            PreSubstitutionType = preSubstitutionType;
             NonGenericName = originalSyntax.Name;
             TypeArguments = typeArguments;
             InlinedTypes = inlinedTypes;
             Fields = fields;
+            PreSubstitutionType = preSubstitutionType;
             IsGeneric = TypeArguments.Count > 0;
             isExtern = originalSyntax.IsExtern;
             Arity = TypeArguments.Count;

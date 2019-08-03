@@ -255,6 +255,59 @@ namespace JurTranspilerTests {
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
 
+        [Test]
+        [Parallelizable]
+        public void SubstitutionsAndInheritance() {
+            var code = @"
+        		abstraction 0 {
+        		    void add<T>(T[] list, T item){
+
+                    }
+                    struct Dog {
+                        is Entity<num>;
+                        string name;
+                    }
+                    struct Entity<T> {
+                        T id;
+                    }
+        		}
+        		main {
+                    new Entity<num>[].add(new Entity<num>);
+                    new Entity<num>[].add(new Dog);
+        		}
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new NoMatchingOverloadForCall("__TEST__",16,"add(Entity<num>[],Dog)"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void ValidSubstitutionsAndInheritance() {
+            var code = @"
+        		abstraction 0 {
+        		    void add<T,I>(T[] list, I item) where I is T {
+                        T a = item;
+                    }
+                    struct Dog {
+                        is Entity<num>;
+                        string name;
+                    }
+                    struct Entity<T> {
+                        T id;
+                    }
+        		}
+        		main {
+                    new Entity<num>[].add(new Entity<num>);
+                    new Entity<num>[].add(new Dog);
+        		}
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
     }
 
 }

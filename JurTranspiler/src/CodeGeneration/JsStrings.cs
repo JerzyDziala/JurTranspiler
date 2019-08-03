@@ -25,7 +25,7 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
             }";
 
         public static string GetTypeDefinition =>
-            @"function getType(obj) {
+            @"function getType(obj,substitutions) {
 
                 const typeName = obj.typeName;
 
@@ -34,27 +34,15 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
                     const jsTypeName = typeOf(obj);
                     const jurType = types[jsTypeName];
 
+
                     return jurType === undefined || jurType === null
                         ? null
                         : jurType;
                 }
 
-                return types[typeName];
+                return types[typeName].withSubstitutedTypes(substitutions);
             }";
 
-        public static string TypeInfoConstructorDefinition => @"
-            function TypeInfo(name, isArray, elementType, fields) {
-                this.name = name;
-                this.isArray = isArray;
-                this.getElementType = elementType;
-                this.getFields = fields;
-            }";
-
-        public static string FieldInfoConstructorDefinition => @"
-            function FieldInfo(name, fieldType) {
-                this.name = name;
-                this.fieldType = fieldType;
-            }";
     }
 
 }

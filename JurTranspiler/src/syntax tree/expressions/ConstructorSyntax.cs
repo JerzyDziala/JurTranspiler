@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.CodeGeneration;
@@ -43,24 +44,13 @@ namespace JurTranspiler.compilerSource.nodes {
 
 
         public override string ToJs(Knowledge knowledge) {
+            var needsSubstitutions = ConstructedType.AllChildren.Any(x => x is TypeParameterSyntax);
+            var type = "types[" + ConstructedType.FullName.AsString() + "]";
 
-            var type = knowledge.TypesBindings[ConstructedType];
-
-            if (ConstructedType is FunctionPointerTypeSyntax pointer) {
-                return $"({pointer.Parameters.Select((syntax, i) => $"p{i}").Glue(", ")}) => {pointer.ReturnType.DefaultValue};}}"
-                    .WithTypeName(type.Name);
+            if (needsSubstitutions) {
+                type += ".withSubstitutedTypes(substitutions)";
             }
-            if (ConstructedType is ArrayTypeSyntax) {
-                return $"[]".WithTypeName(type.Name);
-            }
-            if (ConstructedType is PrimitiveTypeSyntax primitive) {
-                return primitive.DefaultValue;
-            }
-            if (type is StructType structType) {
-                return $"new {structType.JsName}()".WithTypeName(structType.Name);
-            }
-
-            else throw new Exception("invalid constructor type");
+            return type + ".createInstance()";
         }
 
     }

@@ -59,7 +59,7 @@ namespace JurTranspiler.compilerSource.nodes {
             => ForLoopType switch {
                    ForLoopType.Classic => $"for({Iterator.ToJs(knowledge)} {Condition.ToJs(knowledge)}; {Modification.ToJs(knowledge)}) {Body.ToJs(knowledge)}",
                    ForLoopType.While => $"while({Condition.ToJs(knowledge)}) {Body.ToJs(knowledge)}",
-                   ForLoopType.WhileIterator => $"for({Iterator.ToJs(knowledge)} {Condition.ToJs(knowledge)};;) {Body.ToJs(knowledge)}",
+                   ForLoopType.WhileIterator => $"for({Iterator.ToJs(knowledge)} {Condition.ToJs(knowledge)};) {Body.ToJs(knowledge)}",
                    ForLoopType.WhileModify => $"for(;{Condition.ToJs(knowledge)};{Modification.ToJs(knowledge)};) {Body.ToJs(knowledge)}",
                    _ => throw new ArgumentOutOfRangeException()
                    };

@@ -17,6 +17,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         public ImmutableDictionary<StructType, ImmutableArray<Field>> Fields { get; }
         public ImmutableDictionary<FunctionDefinitionSyntax, FunctionSignature> FunctionSignaturesBindings { get; }
         public ImmutableDictionary<FunctionCallSyntax, FunctionCallInfo> FunctionCallsBindings { get; }
+        public ImmutableDictionary<IExpressionSyntax, Type> ExpressionsBindings { get; }
         private ImmutableDictionary<ICallable, string> NewNames;
 
 
@@ -26,8 +27,9 @@ namespace JurTranspiler.compilerSource.Analysis {
                          IDictionary<ICallable, string> newNames,
                          IDictionary<FunctionDefinitionSyntax, FunctionSignature> functionSignaturesBindings,
                          IDictionary<FunctionCallSyntax, FunctionCallInfo> functionCallsBindings,
-                         IDictionary<StructDefinitionSyntax, Type> structDefinitionsBindings) {
-
+                         IDictionary<StructDefinitionSyntax, Type> structDefinitionsBindings,
+                         IDictionary<IExpressionSyntax, Type> expressionsBindings) {
+            ExpressionsBindings = expressionsBindings.ToImmutableDictionary();
             StructDefinitionsBindings = structDefinitionsBindings.ToImmutableDictionary();
             FunctionCallsBindings = functionCallsBindings.ToImmutableDictionary();
             FunctionSignaturesBindings = functionSignaturesBindings.ToImmutableDictionary();

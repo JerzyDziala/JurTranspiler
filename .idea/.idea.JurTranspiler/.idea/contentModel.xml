@@ -24,6 +24,7 @@
         </e>
         <e p="OperationsTests.cs" t="Include" />
         <e p="StructDefinitionsTests.cs" t="Include" />
+        <e p="VariablesScopesTest.cs" t="Include" />
       </e>
       <e p="JurTranspiler" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -110,8 +111,10 @@
             <e p="ParserErrorListener.cs" t="Include" />
           </e>
           <e p="CodeGeneration" t="Include">
+            <e p="GenerationUtils.cs" t="Include" />
             <e p="Generator.cs" t="Include" />
             <e p="JsStrings.cs" t="Include" />
+            <e p="TypesTableGenerator.cs" t="Include" />
           </e>
           <e p="Compiler.cs" t="Include" />
           <e p="Parser.cs" t="Include" />
@@ -161,6 +164,7 @@
               <e p="AnonymousFunctionSyntax.cs" t="Include" />
               <e p="ArrayIndexAccessSyntax.cs" t="Include" />
               <e p="ConstructorSyntax.cs" t="Include" />
+              <e p="DefaultTypeValueSyntax.cs" t="Include" />
               <e p="FieldAccessSyntax.cs" t="Include" />
               <e p="FunctionCallSyntax.cs" t="Include" />
               <e p="OperationSyntax.cs" t="Include" />

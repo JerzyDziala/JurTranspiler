@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         public MultipleDeclarationsOfVariableInScope(IEnumerable<(string file, int line)> filesLinesLocations, string name) {
-            FilesLinesLocations = filesLinesLocations;
+            FilesLinesLocations = filesLinesLocations.OrderBy(x=>x.file+x.line);
             Name = name;
         }
 

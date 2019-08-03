@@ -54,6 +54,8 @@ MAIN: 'main';
 NEW: 'new';
 IS: 'is';
 AND: 'and';
+DEFAULT_VALUE: 'default';
+TYPE: 'type';
 ELSE: 'else';
 FOR: 'for' ;
 EXTERN: 'extern';
@@ -156,6 +158,8 @@ expression : ID #variableAccess
            | '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' ARROW (block | expression)  #anonymusFunction
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
+		   | type '.' DEFAULT_VALUE #defaultValue
+		   | type '.' TYPE #defaultValue
 		   | expression '.' ID #fieldAccess
 		   | NEW type #constructor
 		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess

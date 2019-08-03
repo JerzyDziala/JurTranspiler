@@ -24,6 +24,11 @@ namespace JurTranspiler.compilerSource.nodes {
             return builder.ToImmutableList();
         }
 
+
+        public static bool IsInGenericFunction(this ISyntaxNode node) => node.AllParents
+                                                                             .FirstOrDefault(x => x is FunctionDefinitionSyntax)
+                                                                             ?.As<FunctionDefinitionSyntax>()
+                                                                             ?.IsGeneric ?? false;
     }
 
 }

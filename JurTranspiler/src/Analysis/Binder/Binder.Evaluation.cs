@@ -92,6 +92,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
         private Type BindExpressionCore(FunctionCallSyntax syntax) => BindFunctionCall(syntax).Callable.ReturnType;
 
+        private Type BindExpressionCore(DefaultTypeValueSyntax syntax) => BindType(syntax.Type);
+
 
         private Type BindExpressionCore(OperationSyntax syntax) {
             var left = BindExpression(syntax.Left);
