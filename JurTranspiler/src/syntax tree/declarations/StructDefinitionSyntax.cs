@@ -27,7 +27,6 @@ namespace JurTranspiler.compilerSource.nodes {
         public string FullName { get; }
         public bool IsGeneric { get; }
         public int Arity { get; }
-        public bool IsExtern { get; }
         public ImmutableList<TypeParameterSyntax> TypeParameters { get; }
         public ImmutableList<ITypeSyntax> InlinedTypes { get; }
         public ImmutableList<FieldDeclarationSyntax> Fields { get; }
@@ -42,7 +41,6 @@ namespace JurTranspiler.compilerSource.nodes {
             Line = context.Start.Line;
 
             Name = context.ID(0).GetText();
-            IsExtern = context.EXTERN() != null;
             IsGeneric = context.LESS() != null;
             TypeParameters = context.ID().Skip(1).Select(x => new TypeParameterSyntax(this, x.GetText(), Line, this)).ToImmutableList();
             InlinedTypes = context.inlinedType().Select(x => TypeSyntaxFactory.Create(this, x.type())).ToImmutableList();

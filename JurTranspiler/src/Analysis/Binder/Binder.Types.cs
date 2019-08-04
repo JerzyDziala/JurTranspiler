@@ -7,6 +7,7 @@ using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.syntax_tree.types;
 using UtilityLibrary;
 using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
@@ -70,6 +71,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private Type BindTypeCore(ITypeSyntax syntax) {
+            if (syntax is AnyTypeSyntax) return new AnyType();
             if (syntax is VoidTypeSyntax) return new VoidType();
             if (syntax is ArrayTypeSyntax arrayType) return new ArrayType(BindType(arrayType.ElementType));
             if (syntax is FunctionPointerTypeSyntax functionPointerType) {
@@ -151,6 +153,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 errors.Add(new UseOfUndeclaredType(typeParameter.File, typeParameter.Line, typeParameter.FullName));
                 return new UndeclaredStructType(typeParameter.FullName);
             }
+
             throw new Exception("WTF");
         }
 

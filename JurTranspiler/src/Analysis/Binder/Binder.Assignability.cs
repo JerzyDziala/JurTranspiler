@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using JurTranspiler.compilerSource.semantic_model;
 using UtilityLibrary;
@@ -13,6 +14,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private bool IsAssignableToCore(ArrayType self, Type type) {
+            if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is ArrayType arrayType && IsAssignableTo(self.ElementType, arrayType.ElementType)) return true;
             return false;
@@ -20,6 +22,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private bool IsAssignableToCore(FunctionPointerType self, Type type) {
+            if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is FunctionPointerType func && IsAssignableTo(self.ReturnType, func.ReturnType)) {
                 if (self.Parameters.Count != func.Parameters.Count) return false;
@@ -36,6 +39,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private bool IsAssignableToCore(PrimitiveType self, Type type) {
+            if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is PrimitiveType p) {
                 if (self.PrimitiveKind == p.PrimitiveKind) return true;
@@ -44,7 +48,11 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
+        private bool IsAssignableToCore(AnyType self, Type type) => type is AnyType;
+
+
         private bool IsAssignableToCore(StructType self, Type type) {
+            if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is StructType target) {
                 var fieldsA = BindFields(self);
@@ -57,6 +65,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private bool IsAssignableToCore(TypeParameterType self, Type type) {
+            if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is TypeParameterType t1) {
                 if (t1.Name == self.Name) return true;
@@ -67,6 +76,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private bool IsAssignableToCore(UndeclaredStructType self, Type type) {
+            if (type is AnyType) return true;
             if (type is UndeclaredStructType undeclaredType
              && undeclaredType.Name == self.Name
              || type is UndefinedType) return true;

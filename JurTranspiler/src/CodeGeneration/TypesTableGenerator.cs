@@ -25,7 +25,7 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
                                            .OfType<StructType>()
                                            .Where(x => x.PreSubstitutionType != null)
                                            .SelectMany(x => knowledge.Fields[x].Select(f => f.Type))
-                                           .Concat(knowledge.AllTypes)
+                                           .Concat(knowledge.AllTypes.Where(x => !(x is AnyType)))
                                            .Distinct(Comparer<Type>.MakeComp((a, b) => a.Name == b.Name, x => x.Name.GetHashCode()))
                                            .ToImmutableArray();
 

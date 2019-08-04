@@ -15,6 +15,7 @@ namespace JurTranspiler.compilerSource.nodes {
             if (context is JurParser.ParExpressionContext parExpressionContext) return new ParenthesisSyntax(parent, parExpressionContext);
             if (context is JurParser.OperationContext operationContext) return new OperationSyntax(parent, operationContext);
             if (context is JurParser.DefaultValueContext defaultContext) return new DefaultTypeValueSyntax(parent, defaultContext);
+            if (context is JurParser.TypeExpressionContext typeExpressionContext) return new TypeExpressionSyntax(parent, typeExpressionContext);
 
             throw new Exception("You forgot to add new expression here");
         }

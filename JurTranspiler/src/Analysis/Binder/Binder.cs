@@ -32,7 +32,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             //bind types
             foreach (var typeSyntax in symbols.Tree.AllTypeUsages) {
-                BindType(typeSyntax);
+                var type = BindType(typeSyntax);
+                if (type is StructType structType) BindFields(structType);
             }
 
             //bind expressions (must be last)
@@ -56,7 +57,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 BindFunctionDefinition(definitionSyntax);
             }
 
-            //check for duplicates //of structs
+            //check for duplicates of structs
             var structDuplicates = symbols.OpenStructsBinding.Values
                                           .OfType<StructType>()
                                           .GroupBy(x => x.NonGenericName + " " + x.Arity)

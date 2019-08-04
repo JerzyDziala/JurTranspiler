@@ -44,6 +44,7 @@ VALUE: STRING_VALUE | NUMBER_VALUE | BOOL_VALUE | NULL_VALUE;
 //keywords
 STRUCT : 'struct';
 VOID: 'void';
+ANY: 'any';
 RETURN: 'return';
 BREAK: 'break';
 CONTINUE: 'continue';
@@ -55,7 +56,7 @@ NEW: 'new';
 IS: 'is';
 AND: 'and';
 DEFAULT_VALUE: 'default';
-TYPE: 'type';
+TYPE: 'typeof';
 ELSE: 'else';
 FOR: 'for' ;
 EXTERN: 'extern';
@@ -89,7 +90,7 @@ abstraction : ABSTRACTION NUMBER_VALUE '{' (functionDeclaration | structDeclarat
 
 //structs and constrains
 
-structDeclaration : EXTERN? STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((uninitializedVarDeclaration ';') | inlinedType)* '}'
+structDeclaration : STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((uninitializedVarDeclaration ';') | inlinedType)* '}'
                  ;
 
 
@@ -123,7 +124,8 @@ inferedVariableDeclaration : ID ':=' expression
 
 //types
 
-type : PRIMITIVE #primitiveType
+type : ANY #anyType
+	 | PRIMITIVE #primitiveType
      | ID #typeParameterOrStructType
      | ID ('<' type (',' type)* '>') #genericStructType
      | type '(' (type (',' type)*)? ')' #functionPointerType
@@ -159,7 +161,7 @@ expression : ID #variableAccess
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | type '.' DEFAULT_VALUE #defaultValue
-		   | type '.' TYPE #defaultValue
+		   | type '.' TYPE #typeExpression
 		   | expression '.' ID #fieldAccess
 		   | NEW type #constructor
 		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess

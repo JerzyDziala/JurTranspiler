@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.syntax_tree.types;
 
 namespace JurTranspiler.compilerSource.nodes {
 
@@ -12,6 +13,7 @@ namespace JurTranspiler.compilerSource.nodes {
             if (context is JurParser.ArrayTypeContext arrayTypeContext) return new ArrayTypeSyntax(parent, arrayTypeContext);
             if (context is JurParser.FunctionPointerTypeContext functionPointerTypeContext) return new FunctionPointerTypeSyntax(parent, functionPointerTypeContext);
             if (context is JurParser.GenericStructTypeContext genericStructTypeContext) return new StructTypeSyntax(parent, genericStructTypeContext);
+            if (context is JurParser.AnyTypeContext anyTypeContext) return new AnyTypeSyntax(parent, anyTypeContext);
             if (context is JurParser.TypeParameterOrStructTypeContext ambiguous) {
 
                 var parentDeclaration = parent.AllParents

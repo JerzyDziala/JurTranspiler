@@ -26,7 +26,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public StructDefinitionSyntax OriginalDefinitionSyntax { get; }
         public int Arity { get; }
         public int Abstraction { get; }
-        public bool isExtern { get; }
 
         public ImmutableList<Lazy<Type>> TypeArguments { get; }
         public ImmutableList<Lazy<Field>> Fields { get; }
@@ -49,7 +48,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
             Fields = fields;
             PreSubstitutionType = preSubstitutionType;
             IsGeneric = TypeArguments.Count > 0;
-            isExtern = originalSyntax.IsExtern;
             Arity = TypeArguments.Count;
             Abstraction = OriginalDefinitionSyntax.Abstraction;
 

@@ -131,8 +131,10 @@
               <e p="ICallable.cs" t="Include" />
               <e p="SubstitutedCallable.cs" t="Include" />
             </e>
+            <e p="KnownTypes.cs" t="Include" />
             <e p="Substitution.cs" t="Include" />
             <e p="types" t="Include">
+              <e p="AnyType.cs" t="Include" />
               <e p="ArrayType.cs" t="Include" />
               <e p="FunctionPointerType.cs" t="Include" />
               <e p="NullType.cs" t="Include" />
@@ -170,6 +172,7 @@
               <e p="OperationSyntax.cs" t="Include" />
               <e p="ParenthesisSyntax.cs" t="Include" />
               <e p="PrimitiveValueSyntax.cs" t="Include" />
+              <e p="TypeExpressionSyntax.cs" t="Include" />
               <e p="VariableAccessSyntax.cs" t="Include" />
             </e>
             <e p="factories" t="Include">
@@ -199,6 +202,7 @@
               <e p="ReturnStatementSyntax.cs" t="Include" />
             </e>
             <e p="types" t="Include">
+              <e p="AnyTypeSyntax.cs" t="Include" />
               <e p="ArrayTypeSyntax.cs" t="Include" />
               <e p="FunctionPointerTypeSyntax.cs" t="Include" />
               <e p="ITypeSyntax.cs" t="Include" />

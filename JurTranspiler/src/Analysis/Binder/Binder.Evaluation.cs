@@ -95,6 +95,27 @@ namespace JurTranspiler.compilerSource.Analysis {
         private Type BindExpressionCore(DefaultTypeValueSyntax syntax) => BindType(syntax.Type);
 
 
+        private Type BindExpressionCore(TypeExpressionSyntax syntax) {
+            var type = BindType(syntax.Type);
+            Func<string, Type> findType = name => symbols.TypesBindings.Values
+                                                         .Concat(symbols.OpenStructsBinding.Values)
+                                                         .FirstOrDefault(x => x.Name == name);
+            var typeType = type switch {
+                               FunctionPointerType functionPointerType => findType(nameof(FunctionPointerType)),
+                               UndeclaredStructType undeclaredStructType => findType(nameof(Type)),
+                               StructType structType => findType(nameof(StructType)),
+                               ArrayType arrayType => findType(nameof(ArrayType)),
+                               PrimitiveType primitiveType => findType(nameof(PrimitiveType)),
+                               var x when x is TypeParameterType || x is UndefinedType || x is AnyType => findType(nameof(Type)),
+                               _ => throw new Exception("Invalid Type Expression Type")
+                               };
+            if (typeType == null) {
+                throw new Exception("You forgot to add the runtime library");
+            }
+            return typeType;
+        }
+
+
         private Type BindExpressionCore(OperationSyntax syntax) {
             var left = BindExpression(syntax.Left);
             var right = BindExpression(syntax.Right);
