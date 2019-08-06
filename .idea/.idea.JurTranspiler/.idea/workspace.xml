@@ -2,28 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb67d417-4c1d-4a1e-9c9d-14e568fb91a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/KnownTypes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/TypeExpressionSyntax.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/AnyTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.interp" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurParser.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Substitutions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Substitutions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/ExpressionSyntaxFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/ExpressionSyntaxFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/TypeSyntaxFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/TypeSyntaxFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,14 +20,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.55411255">
+    <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="346">
-                  <caret line="92" column="20" selection-start-line="92" selection-start-column="20" selection-end-line="92" selection-end-column="20" />
+                <state relative-caret-position="689">
+                  <caret line="83" selection-start-line="83" selection-end-line="83" />
                 </state>
               </provider>
             </entry>
@@ -49,10 +37,10 @@
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs">
+            <entry file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="429">
-                  <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+                <state relative-caret-position="613">
+                  <caret line="83" selection-start-line="83" selection-end-line="83" />
                 </state>
               </provider>
             </entry>
@@ -84,6 +72,7 @@
       <find>Index</find>
       <find>&quot;, &quot;</find>
       <find>Defa</find>
+      <find>UseOfUn</find>
     </findStrings>
     <replaceStrings>
       <replace>JurTranspiler</replace>
@@ -250,8 +239,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/StatementSyntaxFactory.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExitStatementSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/SyntaxTree.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/OperationSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTests/OperationsTests.cs" />
@@ -273,7 +260,6 @@
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ConstructorSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/PrimitiveTypes.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/GenerationUtils.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfVariableInScope.cs" />
         <option value="$PROJECT_DIR$/JurTests/VariablesScopesTest.cs" />
         <option value="$PROJECT_DIR$/JurTests/FunctionCallsTests.cs" />
@@ -283,23 +269,26 @@
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/AnonymousFunctionSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.ToKnowledge.cs" />
         <option value="$PROJECT_DIR$/UtilityLibrary/_.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/INodeExtensions.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/Generator.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/AnyTypeSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/TypeSyntaxFactory.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/DefaultTypeValueSyntax.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Substitutions.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/ExpressionSyntaxFactory.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/TypeExpressionSyntax.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" />
+        <option value="$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4" />
       </list>
     </option>
@@ -358,36 +347,6 @@
               <item name="src" type="24d0babc:SolutionExplorerModelNode" />
               <item name="ANTLR" type="24d0babc:SolutionExplorerModelNode" />
             </path>
-            <path>
-              <item name="" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="semantic model" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="semantic model" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="types" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="syntax tree" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
-            <path>
-              <item name="" type="784c90a0:SolutionExplorerRootNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="JurTranspiler" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="syntax tree" type="24d0babc:SolutionExplorerModelNode" />
-              <item name="expressions" type="24d0babc:SolutionExplorerModelNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -420,7 +379,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected=".NET Project.Basic">
     <configuration name="Basic" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/JurTranspiler/bin/Debug/netcoreapp3.0/JurTranspiler.dll" />
       <option name="PROGRAM_PARAMETERS" value="src out" />
@@ -439,6 +398,9 @@
         <option name="Build" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Project.Basic" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -454,7 +416,7 @@
       <workItem from="1562488887906" duration="21294000" />
       <workItem from="1562759170820" duration="95862000" />
       <workItem from="1564672266949" duration="16484000" />
-      <workItem from="1564847062903" duration="7405000" />
+      <workItem from="1564847062903" duration="15212000" />
     </task>
     <task id="LOCAL-00001" summary="podstawy refleksji działają, pętla for działa, lambdy zaraz będą działać. większość generacji kodu już działa.&#10;przede mną najtrudniejsze wyzwanie jakim będą multimetody.">
       <created>1563561117211</created>
@@ -474,7 +436,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="144850000" />
+    <option name="totallyTimeSpent" value="152657000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -489,12 +451,12 @@
     <frame x="-1920" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1578125" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1578125" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3291592" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.34040746" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27079797" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3132428" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -506,8 +468,8 @@
       <window_info anchor="bottom" id="Tool Output" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Statistic" order="13" />
-      <window_info anchor="bottom" id="Unit Tests" order="14" weight="0.355" />
-      <window_info anchor="bottom" id="Terminal" order="15" weight="0.27928692" />
+      <window_info anchor="bottom" id="Unit Tests" order="14" weight="0.3548387" />
+      <window_info anchor="bottom" id="Terminal" order="15" weight="0.2826825" />
       <window_info anchor="bottom" id="Event Log" order="16" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="17" weight="0.32767403" />
       <window_info anchor="bottom" id="ANTLR Preview" order="18" />
@@ -608,19 +570,6 @@
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs</url>
-          <line>41</line>
-          <properties documentPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs" initialLine="41">
-            <startOffsets>
-              <option value="2416" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2489" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="95" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/TypeExpressionSyntax.cs</url>
           <line>38</line>
           <properties documentPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/TypeExpressionSyntax.cs" initialLine="38">
@@ -634,6 +583,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs</url>
+          <line>229</line>
+          <properties documentPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" initialLine="229">
+            <startOffsets>
+              <option value="11858" />
+            </startOffsets>
+            <endOffsets>
+              <option value="11937" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -731,34 +693,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/JurTests/LambdasTests.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="95" selection-start-line="95" selection-end-line="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTests/ForLoopTests.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTests/CodeGenerationTests.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3646">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfVariableInScope.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -892,13 +826,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="33" column="145" selection-start-line="33" selection-start-column="145" selection-end-line="33" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/INodeExtensions.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
@@ -924,13 +851,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
           <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
         </state>
       </provider>
     </entry>
@@ -969,20 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="27" column="50" selection-start-line="27" selection-start-column="50" selection-end-line="27" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="559">
@@ -1015,13 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="98" column="44" selection-start-line="98" selection-start-column="44" selection-end-line="98" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -1060,31 +959,94 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs">
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+        <state relative-caret-position="559">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/KnownTypes.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="42" lean-forward="true" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="223" lean-forward="true" selection-start-line="223" selection-end-line="223" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="69" column="34" lean-forward="true" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="57" column="88" lean-forward="true" selection-start-line="57" selection-start-column="88" selection-end-line="57" selection-end-column="88" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="44" column="55" lean-forward="true" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
+        <state relative-caret-position="334">
+          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="102" column="8" selection-start-line="102" selection-start-column="8" selection-end-line="102" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="41" column="35" selection-start-line="41" selection-start-column="35" selection-end-line="41" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="613">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="145" column="48" lean-forward="true" selection-start-line="145" selection-start-column="48" selection-end-line="145" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="92" column="20" selection-start-line="92" selection-start-column="20" selection-end-line="92" selection-end-column="20" />
+        <state relative-caret-position="689">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
         </state>
       </provider>
     </entry>

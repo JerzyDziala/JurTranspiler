@@ -48,7 +48,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToCore(AnyType self, Type type) => type is AnyType;
+        private bool IsAssignableToCore(AnyType self, Type type) => type is AnyType || type is UndefinedType;
 
 
         private bool IsAssignableToCore(StructType self, Type type) {
@@ -86,7 +86,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
         private bool IsAssignableToCore(UndefinedType self, Type type) => true;
 
-        private bool IsAssignableToCore(VoidType self, Type type) => type is VoidType;
+        private bool IsAssignableToCore(VoidType self, Type type) => type is VoidType || type is UndefinedType;
     }
 
 }

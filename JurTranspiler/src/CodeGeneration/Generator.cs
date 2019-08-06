@@ -30,12 +30,6 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
 
 {new TypesTableGenerator(knowledge).GenerateTypesTable()}
 
-//---internal javascript functions---//
-
-{JsStrings.TypeOfDefinition}
-{JsStrings.GetTypeDefinition}
-{JsStrings.WithTypeNameDefinition}
-
 //---User's code---//
 {syntaxTree.ToJs(knowledge)}
 ";

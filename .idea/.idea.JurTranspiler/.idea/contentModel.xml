@@ -131,7 +131,6 @@
               <e p="ICallable.cs" t="Include" />
               <e p="SubstitutedCallable.cs" t="Include" />
             </e>
-            <e p="KnownTypes.cs" t="Include" />
             <e p="Substitution.cs" t="Include" />
             <e p="types" t="Include">
               <e p="AnyType.cs" t="Include" />

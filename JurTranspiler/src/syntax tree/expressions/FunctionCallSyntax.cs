@@ -59,17 +59,14 @@ namespace JurTranspiler.compilerSource.nodes {
 
             var args = $"{Arguments.Select(x => x.ToJs(knowledge)).Glue(", ")}";
 
-            if (boundCallableInfo.Substitutions.Any()) {
+            Func<string, string> withSubs = s => this.IsInGenericFunction() ? $"{s}.withSubstitutedTypes(substitutions)" : s;
+            Func<string, string> toTypeArgumentString = s => withSubs($"types[{s.AsString()}]");
 
-                Func<string, string> withSubs = s => this.IsInGenericFunction() ? $"{s}.withSubstitutedTypes(substitutions)" : s;
-                Func<string, string> toTypeArgumentString = s => withSubs($"types[{s.AsString()}]");
-
-                var subs = boundCallableInfo.Substitutions
-                                            .Select(x => $"typeParameter: types[{x.typeParameter.Name.AsString()}], typeArgument: {toTypeArgumentString(x.typeArgument.Name)}".AsObject())
-                                            .AsArray();
-                if (boundCallableInfo.Callable.Arity > 0) args += ", ";
-                args += subs;
-            }
+            var subs = boundCallableInfo.Substitutions
+                                        .Select(x => $"typeParameter: types[{x.typeParameter.Name.AsString()}], typeArgument: {toTypeArgumentString(x.typeArgument.Name)}".AsObject())
+                                        .AsArray();
+            if (boundCallableInfo.Callable.Arity > 0) args += ", ";
+            args += subs;
             return $"{knowledge.GetNewNameFor(this)}({args})";
         }
 

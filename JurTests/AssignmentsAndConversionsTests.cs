@@ -89,7 +89,7 @@ namespace JurTranspilerTests {
         		main {
         		    Entity<string> entity = new Person;
                     NamedEntity<string> namedEntity = new Person;
-                    Any any = namedEntity;
+                    Any an = namedEntity;
                     Entity<Entity<string>> ees = new NamedEntity<Entity<string>>;
                     Any[] a = new Person[];
 

@@ -11,6 +11,5 @@ Its main features are:
     interop with existing javascript code (implemented)
     function overloading (implemented)
     runtime polymorphism in the form of multimethods (work in progress)
-    runtime reflections (work in progress)
+    runtime reflections (implemented)
 
-Semantic analysis is pretty much done and I just started programming the code generation phase so it is not usable right now (but you can still run/test the parsing and analysis phases)

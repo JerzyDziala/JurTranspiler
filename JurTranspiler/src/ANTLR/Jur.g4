@@ -34,7 +34,58 @@ NOT_EQUAL: '!=';
 LOGICAL_AND: '&&';
 OR: '||';
 
-STRING_VALUE: '\''.*?'\'';
+STRING_VALUE: '\'' SingleStringCharacter* '\'';
+
+//string
+
+fragment SingleStringCharacter
+    : ~['\\\r\n]
+    | '\\' EscapeSequence
+    | LineContinuation
+    ;
+fragment EscapeSequence
+    : CharacterEscapeSequence
+    | '0' // no digit ahead! TODO
+    | HexEscapeSequence
+    | UnicodeEscapeSequence
+    | ExtendedUnicodeEscapeSequence
+    ;
+
+fragment CharacterEscapeSequence
+    : SingleEscapeCharacter
+    | NonEscapeCharacter
+    ;
+
+fragment HexEscapeSequence
+      : 'x' HexDigit HexDigit
+      ;
+fragment UnicodeEscapeSequence
+      : 'u' HexDigit HexDigit HexDigit HexDigit
+      ;
+fragment ExtendedUnicodeEscapeSequence
+      : 'u' '{' HexDigit+ '}'
+      ;
+fragment SingleEscapeCharacter
+      : ['"\\bfnrtv]
+      ;
+
+fragment NonEscapeCharacter
+      : ~['"\\bfnrtv0-9xu\r\n]
+      ;
+fragment EscapeCharacter
+      : SingleEscapeCharacter
+      | [0-9]
+      | [xu]
+      ;
+fragment LineContinuation
+      : '\\' [\r\n\u2028\u2029]
+      ;
+fragment HexDigit
+     : [0-9a-fA-F]
+     ;
+
+//------
+
 NUMBER_VALUE: [-]?[0-9]+ ([.] [0-9]+)?;
 BOOL_VALUE: 'true' | 'false';
 NULL_VALUE: 'null';
@@ -154,8 +205,7 @@ statement : '{' statement* '}' #blockStatement
 block: '{' statement* '}'
 			   ;
 
-expression : ID #variableAccess
-           | value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE ) #primitiveValue
+expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE ) #primitiveValue
            | uninitializedVarDeclaration? ARROW (block | expression)  #anonymusFunction
            | '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' ARROW (block | expression)  #anonymusFunction
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
@@ -164,6 +214,7 @@ expression : ID #variableAccess
 		   | type '.' TYPE #typeExpression
 		   | expression '.' ID #fieldAccess
 		   | NEW type #constructor
+		   | ID #variableAccess
 		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess
 		   | LEFT_PARENT expression RIGHT_PARENT #parExpression
            | expression operator=( TIMES | DIVIDE ) expression #operation
