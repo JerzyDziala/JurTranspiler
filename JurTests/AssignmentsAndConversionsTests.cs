@@ -340,7 +340,65 @@ namespace JurTranspilerTests {
                 //new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"), //i don't want to write a column number in test
                 new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"),
                 new UseOfUndeclaredType(file: "__TEST__", line: 11, name: "A<void(num),string[]>"),
+                new TriedToAccessFieldOnNonStruct(file: "__TEST__", line: 10, fieldName: "g", typeName: "A<string,bool>"),
+                new TriedToAccessFieldOnNonStruct(file: "__TEST__", line: 11, fieldName: "g2", typeName: "A<string,bool>"),
             };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+
+        [Test]
+        [Parallelizable]
+        public void ComplexGenericBugRegressionTest() {
+            var code = @"
+                main {
+                    x := new A<bool>;
+                    x.a = new B<A<string>>;
+                }
+
+                abstraction 0 {
+
+                    struct A<T1> {
+                        B<A<string>> a;
+                    }
+
+                    struct B<T2> {
+
+                    }
+
+                }";
+
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void AnotherComplexGenericBugRegressionTest() {
+            var code = @"
+                main {
+
+                }
+
+                abstraction 0 {
+
+                    struct A<T> {
+                        T x;
+                    }
+
+                    A<T> create<T>(){
+                        return new A<T>;
+                    }
+
+                    A<T> _create<T>() {
+                        return create<T>();
+                    }
+
+                }";
+
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
     }

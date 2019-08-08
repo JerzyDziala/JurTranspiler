@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.compilerSource.semantic_model;
 using UtilityLibrary;
@@ -44,7 +45,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                                                                               duplicateGroup.First().Name,
                                                                               duplicateGroup.Select(field => field.OriginalOwnerSyntax.FullName).Distinct()));
             }
-            return allFields;
+            return allFields.ToImmutableArray();
         }
     }
 

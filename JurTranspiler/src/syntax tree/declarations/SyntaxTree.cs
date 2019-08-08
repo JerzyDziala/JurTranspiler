@@ -47,6 +47,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
             AllChildren = this.GetAllChildren();
 
+            //TODO: optimize
             AllStructDefinitions = AllChildren.OfType<StructDefinitionSyntax>().ToImmutableArray();
             AllFunctionDefinitions = AllChildren.OfType<FunctionDefinitionSyntax>().ToImmutableArray();
             AllTypeUsages = AllChildren.OfType<ITypeSyntax>().ToImmutableArray();
@@ -70,6 +71,7 @@ namespace JurTranspiler.compilerSource.nodes {
             ImmediateChildren = ImmutableList.Create<ITreeNode>()
                                              .AddRange(Files);
             AllChildren = this.GetAllChildren();
+            //TODO: optimize
             AllStructDefinitions = AllChildren.OfType<StructDefinitionSyntax>().ToImmutableArray();
             AllFunctionDefinitions = AllChildren.OfType<FunctionDefinitionSyntax>().ToImmutableArray();
             AllTypeUsages = AllChildren.OfType<ITypeSyntax>().ToImmutableArray();

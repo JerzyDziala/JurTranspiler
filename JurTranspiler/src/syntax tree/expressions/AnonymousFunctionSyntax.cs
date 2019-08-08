@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Xml;
 using System.Xml.Serialization;
 using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.compilerSource.CodeGeneration;
 using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.src.syntax_tree.types;
@@ -56,11 +57,22 @@ namespace JurTranspiler.compilerSource.nodes {
 
 
         public override string ToJs(Knowledge knowledge) {
-            return Body is ExpressionStatementSyntax statement
-                       ? knowledge.ExpressionsBindings[statement.ExpressionSyntax] is VoidType
-                             ? $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{{statement.ExpressionSyntax.ToJs(knowledge)};}}"
-                             : $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{return {statement.ExpressionSyntax.ToJs(knowledge)};}}"
-                       : $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{{Body.ToJs(knowledge)}}}";
+
+            var lambdaType = knowledge.ExpressionsBindings[this];
+
+            var needsSubstitutions = lambdaType.AllChildren.Any(x => x is TypeParameterType);
+
+            var t = $"types['{lambdaType.Name}']";
+
+            if (needsSubstitutions) {
+                t += ".withSubstitutedTypes(substitutions)";
+            }
+
+            return (Body is ExpressionStatementSyntax statement
+                        ? knowledge.ExpressionsBindings[statement.ExpressionSyntax] is VoidType
+                              ? $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{{statement.ExpressionSyntax.ToJs(knowledge)};}}"
+                              : $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{return {statement.ExpressionSyntax.ToJs(knowledge)};}}"
+                        : $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{{Body.ToJs(knowledge)}}}").WithTypeNameNoParents($"{t}.name");
         }
 
     }

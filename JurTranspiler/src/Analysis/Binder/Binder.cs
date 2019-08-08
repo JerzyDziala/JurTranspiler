@@ -15,8 +15,36 @@ namespace JurTranspiler.compilerSource.Analysis {
         private SymbolTable symbols;
         private HashSet<Error> errors;
 
-        public Knowledge Knowledge => symbols?.ToKnowledge()
-                                   ?? throw new Exception("you tried to get knowledge before the symbolTable was initialized");
+        public Knowledge Knowledge {
+            get {
+
+                //TODO: remove some expensive and unnecessary allocations
+                var allTypesExplicitlyWrittenInTheProgram = symbols.TypesBindings.Values.ToImmutableArray();
+                var allTypesExtractedFromStructDefinitions = symbols.OpenStructsBinding.Values.ToImmutableArray();
+                var allTypesReturnedByExpressions = symbols.ExpressionsBindings.Values.ToImmutableArray();
+
+                allTypesExplicitlyWrittenInTheProgram.OfType<StructType>()
+                                                     .Select(BindFields)
+                                                     .ToImmutableArray();
+
+                var allPostSubstitutionFieldsTypes = allTypesReturnedByExpressions.Concat(allTypesExplicitlyWrittenInTheProgram)
+                                                                                  .OfType<StructType>()
+                                                                                  .SelectMany(x => BindFields(x).Select(y => y.Type))
+                                                                                  .ToImmutableArray();
+
+                var allPreSubstitutionFieldsTypes = allTypesExtractedFromStructDefinitions.OfType<StructType>()
+                                                                                          .SelectMany(x => BindFields(x).Select(y => y.Type))
+                                                                                          .ToImmutableArray();
+
+                var allTypes = allTypesExplicitlyWrittenInTheProgram.Concat(allTypesExtractedFromStructDefinitions)
+                                                                    .Concat(allTypesReturnedByExpressions)
+                                                                    .Concat(allPostSubstitutionFieldsTypes)
+                                                                    .Concat(allPreSubstitutionFieldsTypes)
+                                                                    .Distinct();
+                return symbols?.ToKnowledge(allTypes)
+                    ?? throw new Exception("you tried to get knowledge before the symbolTable was initialized");
+            }
+        }
 
 
         public Binder(SyntaxTree tree, HashSet<Error> errors) {
@@ -38,7 +66,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             //bind expressions (must be last)
             foreach (var expression in symbols.Tree.AllExpressions) {
-                BindExpression(expression);
+                var returnType = BindExpression(expression);
+                if (returnType is StructType structType) BindFields(structType);
             }
         }
 

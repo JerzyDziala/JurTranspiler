@@ -86,6 +86,9 @@ namespace JurTranspiler.compilerSource.Analysis {
                 }
                 else return matchingFields.First().Type;
             }
+            else if (!(ownerType is UndefinedType)) {
+                errors.Add(new TriedToAccessFieldOnNonStruct(syntax.File, syntax.Line, syntax.Name, ownerType.Name));
+            }
             return new UndefinedType();
         }
 

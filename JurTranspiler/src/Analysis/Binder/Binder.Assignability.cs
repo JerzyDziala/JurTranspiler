@@ -57,8 +57,7 @@ namespace JurTranspiler.compilerSource.Analysis {
             if (type is StructType target) {
                 var fieldsA = BindFields(self);
                 var fieldsB = BindFields(target);
-                return fieldsB.All(fieldB => fieldsA.Any(fieldA => fieldA.Name == fieldB.Name
-                                                                && fieldA.Type.Equals(fieldB.Type)));
+                return fieldsB.All(fieldB => fieldsA.Any(fieldA => fieldA.Name == fieldB.Name && fieldA.Type.Equals(fieldB.Type)));
             }
             return false;
         }

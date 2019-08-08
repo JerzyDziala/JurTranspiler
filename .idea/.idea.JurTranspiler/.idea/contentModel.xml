@@ -53,6 +53,7 @@
               <e p="Binder.Substitutions.cs" t="Include" />
               <e p="Binder.Types.cs" t="Include" />
               <e p="Binder.Variables.cs" t="Include" />
+              <e p="TriedToAccessFieldOnNonStruct.cs" t="Include" />
             </e>
             <e p="errors" t="Include">
               <e p="AmbiguousFieldReference.cs" t="Include" />

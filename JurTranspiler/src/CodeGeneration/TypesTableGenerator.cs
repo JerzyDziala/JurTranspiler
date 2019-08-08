@@ -21,13 +21,7 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
 
         public string GenerateTypesTable() {
 
-            var typesToGenerate = knowledge.AllTypes
-                                           .OfType<StructType>()
-                                           .Where(x => x.PreSubstitutionType != null)
-                                           .SelectMany(x => knowledge.Fields[x].Select(f => f.Type))
-                                           .Concat(knowledge.AllTypes)
-                                           .Distinct(Comparer<Type>.MakeComp((a, b) => a.Name == b.Name, x => x.Name.GetHashCode()))
-                                           .ToImmutableArray();
+            var typesToGenerate = knowledge.AllTypes.Where(x => !(x is NullType));
 
             return "const types = {" + typesToGenerate.Select(GenerateTypeTableEntry).Glue(",\n\n") + "};";
         }
@@ -86,6 +80,7 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
         private string GenerateArgumentsForTypeInfo(VoidType type) {
             return "";
         }
+
 
         private string GenerateArgumentsForTypeInfo(AnyType type) {
             return "";

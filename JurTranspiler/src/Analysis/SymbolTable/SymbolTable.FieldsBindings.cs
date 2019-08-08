@@ -13,7 +13,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
         public IEnumerable<Field> MakeBindingFor(StructType type, ICollection<Field> value) {
             FieldsBindings[type] = value.ToImmutableArray();
-            return value.ToList();
+            return FieldsBindings[type];
         }
     }
 

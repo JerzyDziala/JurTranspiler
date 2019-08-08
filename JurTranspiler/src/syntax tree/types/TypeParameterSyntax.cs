@@ -60,6 +60,7 @@ namespace JurTranspiler.src.syntax_tree.types {
 
         }
 
+
         public string ToJs(Knowledge knowledge) => Name;
 
 

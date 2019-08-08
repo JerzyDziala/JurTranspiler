@@ -97,13 +97,13 @@ namespace JurTranspiler.compilerSource.Analysis {
                 //check for missing definition
                 if (matchingBoundTypes.None()) {
                     errors.Add(new UseOfUndeclaredType(syntax.File, syntax.Line, syntax.FullName));
-                    return new UndeclaredStructType(syntax.Name);
+                    return new UndeclaredStructType(syntax.FullName);
                 }
 
                 //check for multiple definitions
                 if (matchingBoundTypes.MoreThenOne()) {
                     errors.Add(new UseOfAmbiguousType(syntax.File, syntax.Line, syntax.FullName));
-                    return new UndeclaredStructType(syntax.Name);
+                    return new UndeclaredStructType(syntax.FullName);
                 }
 
                 var openType = matchingBoundTypes.First();

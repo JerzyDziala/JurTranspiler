@@ -75,7 +75,8 @@ namespace JurTranspiler.src.syntax_tree.types {
         public bool Equals(StructTypeSyntax other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Name, other.Name);
+            return string.Equals(FullName, other.FullName)
+                && TypeArguments.SequenceEqual(other.TypeArguments);
         }
 
 

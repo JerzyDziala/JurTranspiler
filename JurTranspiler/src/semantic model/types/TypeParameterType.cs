@@ -74,7 +74,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
 
 		public override int GetHashCode() {
 			unchecked {
-				return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (OriginalDeclarer != null ? OriginalDeclarer.GetHashCode() : 0);
+				return ( Name.GetHashCode()  * 397) ^ OriginalDeclarer.GetHashCode();
 			}
 		}
 

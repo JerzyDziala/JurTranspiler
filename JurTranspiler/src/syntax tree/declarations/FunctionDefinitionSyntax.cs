@@ -78,8 +78,8 @@ namespace JurTranspiler.compilerSource.nodes {
             GenericArity = TypeParameters.Select(x => x.Name).Distinct().Count();
             IsGeneric = GenericArity > 0;
 
-            if (!IsGeneric) FullName = $"{ReturnType.Name} {Name}()";
-            else FullName = $"{ReturnType.Name} {Name}<{string.Join(",", TypeParametersInGenericTypesList.Select(x => x.Name))}>({string.Join(",", Parameters.Select(x => x.Type.Name))})";
+            if (!IsGeneric) FullName = $"{ReturnType.FullName} {Name}({string.Join(",", Parameters.Select(x => x.Type.FullName))})";
+            else FullName = $"{ReturnType.FullName} {Name}<{string.Join(",", TypeParametersInGenericTypesList.Select(x => x.FullName))}>({string.Join(",", Parameters.Select(x => x.Type.FullName))})";
 
             ImmediateChildren = ImmutableList.Create<ITreeNode>()
                                              .Add(ReturnType)

@@ -28,6 +28,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public int Abstraction { get; }
 
         public ImmutableList<Lazy<Type>> TypeArguments { get; }
+        public ImmutableList<string> TypeArgumentsNames { get; }
         public ImmutableList<Lazy<Field>> Fields { get; }
         public ImmutableList<Lazy<Type>> InlinedTypes { get; }
         public StructType PreSubstitutionType { get; }
@@ -44,6 +45,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
             OriginalDefinitionSyntax = originalSyntax;
             NonGenericName = originalSyntax.Name;
             TypeArguments = typeArguments;
+            TypeArgumentsNames = typeArgumentsNames;
             InlinedTypes = inlinedTypes;
             Fields = fields;
             PreSubstitutionType = preSubstitutionType;
@@ -80,10 +82,8 @@ namespace JurTranspiler.compilerSource.semantic_model {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return string.Equals(Name, other.Name)
-                && string.Equals(NonGenericName, other.NonGenericName)
-                && TypeArguments.SequenceEqual(other.TypeArguments)
-                && OriginalDefinitionSyntax.File.Equals(other.OriginalDefinitionSyntax.File)
-                && OriginalDefinitionSyntax.Line.Equals(other.OriginalDefinitionSyntax.Line);
+                && TypeArguments.Select(x => x.Value).SequenceEqual(other.TypeArguments.Select(x => x.Value))
+                && OriginalDefinitionSyntax.Equals(other.OriginalDefinitionSyntax);
         }
 
 
@@ -98,11 +98,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public override int GetHashCode() {
             unchecked {
                 var hashCode = (Name != null ? Name.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (NonGenericName != null ? NonGenericName.GetHashCode() : 0);
-                foreach (var typeArgument in TypeArguments) {
+                foreach (var typeArgument in TypeArguments.Select(x => x.Value)) {
                     hashCode = (hashCode * 397) ^ typeArgument.GetHashCode();
                 }
-                hashCode ^= OriginalDefinitionSyntax.File.GetHashCode() ^ OriginalDefinitionSyntax.Line.GetHashCode();
+                hashCode ^= OriginalDefinitionSyntax.GetHashCode();
                 return hashCode;
             }
         }
