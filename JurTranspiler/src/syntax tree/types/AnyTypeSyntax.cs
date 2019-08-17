@@ -3,38 +3,23 @@ using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.syntax_tree.types {
 
-    public class AnyTypeSyntax : ITypeSyntax, IEquatable<AnyTypeSyntax> {
+    public class AnyTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<AnyTypeSyntax> {
 
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
-        public string Name { get; }
-        public string FullName { get; }
-        public string DefaultValue { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
+        public string Name => "any";
+        public string FullName => Name;
 
 
-        public AnyTypeSyntax(ISyntaxNode parent, JurParser.AnyTypeContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public AnyTypeSyntax(ISyntaxNode parent, JurParser.AnyTypeContext context) : base(parent, context) {
 
-            Name = "any";
-            FullName = "any";
-            DefaultValue = "null";
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
 

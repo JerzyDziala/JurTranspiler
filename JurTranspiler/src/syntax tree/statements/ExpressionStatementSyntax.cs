@@ -1,61 +1,34 @@
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class ExpressionStatementSyntax : ISyntaxNode, IStatementSyntax {
+    public class ExpressionStatementSyntax : SyntaxNode, IStatementSyntax {
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-		public ISyntaxNode Root { get; }
-		public ISyntaxNode Parent { get; }
-		public ImmutableList<ISyntaxNode> AllParents { get; }
-		public ImmutableList<ITreeNode> ImmediateChildren { get; }
-		public ImmutableList<ITreeNode> AllChildren { get; }
-
-		public string File { get; }
-		public int Line { get; }
-		public int Abstraction { get; }
-
-		public IExpressionSyntax ExpressionSyntax { get; }
+        public IExpressionSyntax ExpressionSyntax { get; }
 
 
-		public ExpressionStatementSyntax(ISyntaxNode parent, JurParser.ExpressionStatementContext context) {
-			Parent = parent;
-			Root = Parent.Root;
-			AllParents = this.GetAllParents();
-			Abstraction = parent.Abstraction;
-			File = parent.File;
-			Line = context.Start.Line;
-
-			ExpressionSyntax = ExpressionSyntaxFactory.CreateExpressionSyntax(this, context.expression());
-			ImmediateChildren = ImmutableList.Create<ITreeNode>()
-			                                 .Add(ExpressionSyntax);
-
-			AllChildren = this.GetAllChildren();
-
-		}
+        public ExpressionStatementSyntax(ISyntaxNode parent, JurParser.ExpressionStatementContext context) : base(parent, context) {
+            ExpressionSyntax = ToExpression(context.expression());
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ExpressionSyntax);
+            AllChildren = GetAllChildren();
+        }
 
 
-		public ExpressionStatementSyntax(ISyntaxNode parent, JurParser.ExpressionContext context) {
-			Parent = parent;
-			Root = Parent.Root;
-			AllParents = this.GetAllParents();
-			Abstraction = parent.Abstraction;
-			File = parent.File;
-			Line = context.Start.Line;
-
-			ExpressionSyntax = ExpressionSyntaxFactory.CreateExpressionSyntax(this, context);
-			ImmediateChildren = ImmutableList.Create<ITreeNode>()
-			                                 .Add(ExpressionSyntax);
-
-			AllChildren = this.GetAllChildren();
-
-		}
+        public ExpressionStatementSyntax(ISyntaxNode parent, JurParser.ExpressionContext context) : base(parent, context) {
+            ExpressionSyntax = ToExpression(context);
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ExpressionSyntax);
+            AllChildren = GetAllChildren();
+        }
 
 
-                public string ToJs(Knowledge knowledge) {
-			return ExpressionSyntax.ToJs(knowledge) +";\n";
-		}
+        public override string ToJs(Knowledge knowledge) {
+            return ExpressionSyntax.ToJs(knowledge) + ";\n";
+        }
 
-	}
+    }
 
 }

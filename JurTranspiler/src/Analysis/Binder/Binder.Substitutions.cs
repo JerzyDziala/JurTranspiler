@@ -7,12 +7,12 @@ namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        private bool IsAssignableToWithSubstitutions(Type self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutions(IType self, IType type, ICollection<Substitution> substitutions) {
             return IsAssignableToWithSubstitutionsCore((dynamic) self, (dynamic) type, substitutions);
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(ArrayType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(ArrayType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
@@ -24,40 +24,44 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(FunctionPointerType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(FunctionPointerType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is TypeParameterType typeParameterType) {
                 substitutions.Add(new Substitution(typeParameterType, self));
                 return true;
             }
             if (type is UndefinedType) return true;
-            if (type is FunctionPointerType func && IsAssignableToWithSubstitutions(self.ReturnType, func.ReturnType, substitutions)) {
-                if (self.Parameters.Count != func.Parameters.Count) return false;
+            if (type is FunctionPointerType func) {
+
+                if (!IsAssignableToWithSubstitutions(self.ReturnType, func.ReturnType, substitutions)) return false;
+
+                if (self.Parameters.Length != func.Parameters.Length) return false;
+
                 return self.Parameters
-                           .Zip(func.Parameters, (aPar, bPar) => (aPar, bPar))
+                           .Zip(func.Parameters, (sPar, tPar) => (sPar, tPar))
                            .All(x => {
-                               if (x.bPar is TypeParameterType t) {
-                                   substitutions.Add(new Substitution(t, x.aPar));
+                               if (x.tPar is TypeParameterType t) {
+                                   substitutions.Add(new Substitution(t, x.sPar));
                                    return true;
                                }
-                               return IsAssignableToWithSubstitutions(x.bPar, x.aPar, substitutions);
+                               return IsAssignableToWithSubstitutions(x.tPar, x.sPar, substitutions);
                            });
             }
             return false;
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(NullType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(NullType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
                 return true;
             }
-            return type is StructType || type is ArrayType || type is FunctionPointerType || type is AnyType;
+            return type is StructType || type is ArrayType || type is FunctionPointerType;
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(AnyType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(AnyType self, IType type, ICollection<Substitution> substitutions) {
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
                 return true;
@@ -66,7 +70,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(PrimitiveType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(PrimitiveType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (IsAssignableTo(self, type)) return true;
             if (type is TypeParameterType t) {
@@ -77,7 +81,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(StructType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(StructType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is TypeParameterType t) {
@@ -103,7 +107,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(TypeParameterType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(TypeParameterType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is UndefinedType) return true;
             if (type is TypeParameterType t) {
@@ -114,7 +118,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(UndeclaredStructType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(UndeclaredStructType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is UndeclaredStructType undeclaredType && undeclaredType.Name == self.Name) return true;
             if (type is UndefinedType) return true;
@@ -126,7 +130,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(UndefinedType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsAssignableToWithSubstitutionsCore(UndefinedType self, IType type, ICollection<Substitution> substitutions) {
             if (type is AnyType) return true;
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
@@ -136,7 +140,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsAssignableToWithSubstitutionsCore(VoidType self, Type type, ICollection<Substitution> substitutions) => type is VoidType;
+        private bool IsAssignableToWithSubstitutionsCore(VoidType self, IType type, ICollection<Substitution> substitutions) => type is VoidType;
 
     }
 

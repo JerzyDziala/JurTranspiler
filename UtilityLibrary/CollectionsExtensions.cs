@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Linq;
 
 namespace UtilityLibrary {
 
 	public static class CollectionsExtensions {
 
-		public static ImmutableList<T> AddIfNotNull<T>(this ImmutableList<T> list, T item) {
+		public static ImmutableArray<T> AddIfNotNull<T>(this ImmutableArray<T> list, T item) {
 			return item == null ? list : list.Add(item);
 		}
 

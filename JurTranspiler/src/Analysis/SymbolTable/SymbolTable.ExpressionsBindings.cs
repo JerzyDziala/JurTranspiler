@@ -5,12 +5,12 @@ using JurTranspiler.compilerSource.semantic_model;
 namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class SymbolTable {
-        public Dictionary<IExpressionSyntax, Type> ExpressionsBindings { get; } = new Dictionary<IExpressionSyntax, Type>();
+        public Dictionary<IExpressionSyntax, IType> ExpressionsBindings { get; } = new Dictionary<IExpressionSyntax, IType>();
         public bool AlreadyBound(IExpressionSyntax syntax) => ExpressionsBindings.ContainsKey(syntax);
-        public Type GetBindingFor(IExpressionSyntax syntax) => ExpressionsBindings[syntax];
+        public IType GetBindingFor(IExpressionSyntax syntax) => ExpressionsBindings[syntax];
 
 
-        public Type MakeBindingFor(IExpressionSyntax syntax, Type value) {
+        public IType MakeBindingFor(IExpressionSyntax syntax, IType value) {
             ExpressionsBindings[syntax] = value;
             return value;
         }

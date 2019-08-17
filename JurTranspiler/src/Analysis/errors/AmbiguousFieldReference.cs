@@ -4,8 +4,8 @@ namespace JurTranspiler.Analysis.errors {
 
     public class AmbiguousFieldReference : SingleLocationError{
 
-        private string fieldName;
-        private string typeName;
+        private readonly string fieldName;
+        private readonly string typeName;
 
         public AmbiguousFieldReference(string file, int line, string fieldName,string typeName) : base(file, line) {
             this.fieldName = fieldName;

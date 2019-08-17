@@ -373,6 +373,7 @@ namespace JurTranspilerTests {
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
 
+
         [Test]
         [Parallelizable]
         public void AnotherComplexGenericBugRegressionTest() {
@@ -394,9 +395,40 @@ namespace JurTranspilerTests {
                     A<T> _create<T>() {
                         return create<T>();
                     }
-
                 }";
 
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+
+        [Test]
+        [Parallelizable]
+        public void ComplexCodeGenerationGenericsBug() {
+            var code = @"
+                main {
+                    fun<num>();
+                }
+
+                abstraction 2 {
+
+                    void fun<T>() {
+
+                        x := new Dog<T>;
+
+                        x.d = new Cat<T, Dog<string>>;
+
+                    }
+
+                    struct Dog<T> {
+                        Cat<T, Dog<string>> d;
+                    }
+
+                    struct Cat<T,R> {
+                        T field1;
+                    }
+                }";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] { };
             CollectionAssert.AreEquivalent(expectedErrors, errors);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using JurTranspiler.compilerSource;
@@ -7,7 +6,7 @@ using UtilityLibrary;
 
 namespace JurTranspiler {
 
-    class Program {
+    static class Program {
         static void Main(string[] args) {
             var projectDirectory = Environment.CurrentDirectory + "/" + args[0];
             var outputDirectory = Environment.CurrentDirectory + "/" + args[1];

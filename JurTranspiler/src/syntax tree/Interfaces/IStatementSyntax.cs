@@ -1,8 +1,7 @@
 namespace JurTranspiler.compilerSource.nodes {
 
-	public interface IStatementSyntax : ISyntaxNode {
+    public interface IStatementSyntax : ISyntaxNode {
 
-
-	}
+    }
 
 }

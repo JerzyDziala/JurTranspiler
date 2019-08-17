@@ -1,67 +1,42 @@
 using System;
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.src.syntax_tree.types {
 
-    public class TypeParameterSyntax : ITypeSyntax, IEquatable<TypeParameterSyntax> {
+    public class TypeParameterSyntax : SyntaxNode, ITypeSyntax, IEquatable<TypeParameterSyntax> {
 
-        public virtual ISyntaxNode Root { get; }
-        public virtual ISyntaxNode Parent { get; }
-        public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-        public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public virtual ImmutableList<ITreeNode> AllChildren { get; }
-        public virtual string File { get; }
-        public virtual int Line { get; }
-        public virtual int Abstraction { get; }
-        public virtual string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
+        public string Name { get; }
         public string FullName => Name;
-        public string DefaultValue => $"getDefaultValueOfType(substitutions$['{Name}'])";
         public IStructOrFunctionDeclarationSyntax OriginalDeclarer { get; }
 
 
-        public TypeParameterSyntax(ISyntaxNode parent, JurParser.TypeParameterOrStructTypeContext context, IStructOrFunctionDeclarationSyntax originalDeclarer) {
-            Parent = parent;
+        public TypeParameterSyntax(ISyntaxNode parent, JurParser.TypeParameterOrStructTypeContext context, IStructOrFunctionDeclarationSyntax originalDeclarer) : base(parent, context) {
             OriginalDeclarer = originalDeclarer;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
-
             Name = context.ID().GetText();
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
-
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
 
         public TypeParameterSyntax(ISyntaxNode parent,
                                    string name,
                                    int line,
-                                   IStructOrFunctionDeclarationSyntax originalDeclarer) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = line;
+                                   IStructOrFunctionDeclarationSyntax originalDeclarer) : base(parent, line) {
             OriginalDeclarer = originalDeclarer;
-
             Name = name;
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
-
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
 
-        public string ToJs(Knowledge knowledge) => Name;
+        public override string ToJs(Knowledge knowledge) => Name;
 
 
         public bool Equals(TypeParameterSyntax other) {

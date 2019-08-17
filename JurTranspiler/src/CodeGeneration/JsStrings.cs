@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using JurTranspiler.compilerSource.semantic_model;
-using UtilityLibrary;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
-
 namespace JurTranspiler.compilerSource.CodeGeneration {
 
     public static class JsStrings {

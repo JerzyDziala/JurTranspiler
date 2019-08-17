@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
 
 namespace JurTranspiler.Analysis.errors {

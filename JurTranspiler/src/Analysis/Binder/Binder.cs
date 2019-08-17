@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.compilerSource.semantic_model.functions;
 using UtilityLibrary;
@@ -12,8 +11,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        private SymbolTable symbols;
-        private HashSet<Error> errors;
+        private readonly SymbolTable symbols;
+        private readonly HashSet<Error> errors;
 
         public Knowledge Knowledge {
             get {
@@ -22,10 +21,6 @@ namespace JurTranspiler.compilerSource.Analysis {
                 var allTypesExplicitlyWrittenInTheProgram = symbols.TypesBindings.Values.ToImmutableArray();
                 var allTypesExtractedFromStructDefinitions = symbols.OpenStructsBinding.Values.ToImmutableArray();
                 var allTypesReturnedByExpressions = symbols.ExpressionsBindings.Values.ToImmutableArray();
-
-                allTypesExplicitlyWrittenInTheProgram.OfType<StructType>()
-                                                     .Select(BindFields)
-                                                     .ToImmutableArray();
 
                 var allPostSubstitutionFieldsTypes = allTypesReturnedByExpressions.Concat(allTypesExplicitlyWrittenInTheProgram)
                                                                                   .OfType<StructType>()
@@ -40,7 +35,13 @@ namespace JurTranspiler.compilerSource.Analysis {
                                                                     .Concat(allTypesReturnedByExpressions)
                                                                     .Concat(allPostSubstitutionFieldsTypes)
                                                                     .Concat(allPreSubstitutionFieldsTypes)
-                                                                    .Distinct();
+                                                                    .Distinct(UtilityLibrary.Comparer<IType>.MakeComp((type, type1) => type.Name.Equals(type1.Name), type => type.Name.GetHashCode()))
+                                                                    .ToImmutableArray();
+
+                allTypes.OfType<StructType>()
+                        .ToImmutableList()
+                        .ForEach(x => BindFields(x));
+
                 return symbols?.ToKnowledge(allTypes)
                     ?? throw new Exception("you tried to get knowledge before the symbolTable was initialized");
             }
@@ -89,7 +90,7 @@ namespace JurTranspiler.compilerSource.Analysis {
             //check for duplicates of structs
             var structDuplicates = symbols.OpenStructsBinding.Values
                                           .OfType<StructType>()
-                                          .GroupBy(x => x.NonGenericName + " " + x.Arity)
+                                          .GroupBy(x => x.NonGenericName + " " + x.Arity.ToString())
                                           .Where(x => x.MoreThenOne());
             foreach (var duplicate in structDuplicates) {
                 errors.Add(new MultipleDeclarationsOfStruct(duplicate.Select(x => (x.OriginalDefinitionSyntax.File, x.OriginalDefinitionSyntax.Line)),

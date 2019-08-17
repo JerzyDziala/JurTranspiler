@@ -9,7 +9,7 @@ namespace JurTranspiler.compilerSource {
 
     public static class Parser {
 
-        public static SyntaxTree ParseString(HashSet<Error> errors, string source) {
+        public static SyntaxTree? ParseString(HashSet<Error> errors, string source) {
 
             var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(source))));
 
@@ -19,15 +19,14 @@ namespace JurTranspiler.compilerSource {
             var parsedProgram = parser.program();
 
             return errors.Any() ? null : new SyntaxTree(parsedProgram);
-
         }
 
 
-        public static SyntaxTree ParseFiles(HashSet<Error> errors, IEnumerable<(string code, string file)> files) {
+        public static SyntaxTree? ParseFiles(HashSet<Error> errors, IEnumerable<(string code, string file)> files) {
 
             List<(JurParser.ProgramContext, string)> parsedFiles = new List<(JurParser.ProgramContext, string)>();
 
-            foreach (var (code, file) in files) {
+            foreach ( (string code, string file) in files) {
                 var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(code))));
 
                 parser.RemoveErrorListeners();

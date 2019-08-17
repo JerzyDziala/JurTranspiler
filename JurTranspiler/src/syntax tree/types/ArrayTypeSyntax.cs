@@ -1,46 +1,30 @@
 using System;
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.src.syntax_tree.types {
 
-    public class ArrayTypeSyntax : ITypeSyntax, IEquatable<ArrayTypeSyntax> {
+    public class ArrayTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<ArrayTypeSyntax> {
 
-        public virtual ISyntaxNode Root { get; }
-        public virtual ISyntaxNode Parent { get; }
-        public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-        public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public virtual ImmutableList<ITreeNode> AllChildren { get; }
-        public virtual string File { get; }
-        public virtual int Line { get; }
-        public virtual int Abstraction { get; }
-        public virtual string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         public ITypeSyntax ElementType { get; }
+        public string Name => ElementType.Name + "[]";
         public string FullName => Name;
-        public string DefaultValue => "null";
 
 
-        public ArrayTypeSyntax(ISyntaxNode parent, JurParser.ArrayTypeContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
-
-            ElementType = TypeSyntaxFactory.Create(parent, context.type());
-            Name = ElementType.FullName + "[]";
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(ElementType);
-            AllChildren = this.GetAllChildren();
-
+        public ArrayTypeSyntax(ISyntaxNode parent, JurParser.ArrayTypeContext context) : base(parent, context) {
+            ElementType = ToType(context.type());
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ElementType);
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
+
+        public override string ToJs(Knowledge knowledge) {
             throw new NotImplementedException();
         }
 

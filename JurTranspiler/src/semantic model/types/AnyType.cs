@@ -1,25 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using JurTranspiler.compilerSource.nodes;
+using Type = JurTranspiler.syntax_tree.bases.Type;
 
 namespace JurTranspiler.compilerSource.semantic_model {
 
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class AnyType : Type, IEquatable<AnyType> {
 
-        public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableList<ITreeNode> AllChildren { get; }
-        public override string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
+        public override string Name => "any";
 
         public AnyType() {
-            Name = "any";
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
 
-        public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
+        public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
 
 
         public bool Equals(AnyType other) {
@@ -37,7 +39,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        public override int GetHashCode() => (Name != null ? Name.GetHashCode() : 0);
+        public override int GetHashCode() => Name?.GetHashCode() ?? 0;
 
     }
 

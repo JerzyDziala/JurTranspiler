@@ -2,58 +2,45 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.src.syntax_tree.types {
 
-    public class FunctionPointerTypeSyntax : ITypeSyntax, IEquatable<FunctionPointerTypeSyntax> {
-        public virtual ISyntaxNode Root { get; }
-        public virtual ISyntaxNode Parent { get; }
-        public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-        public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public virtual ImmutableList<ITreeNode> AllChildren { get; }
-        public virtual string File { get; }
-        public virtual int Line { get; }
-        public virtual int Abstraction { get; }
-        public virtual string Name { get; }
+    public class FunctionPointerTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<FunctionPointerTypeSyntax> {
 
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
+        public string Name => ReturnType.FullName + "(" + string.Join(",", Parameters.Select(x => x.FullName)) + ")";
         public ITypeSyntax ReturnType { get; }
-        public ImmutableList<ITypeSyntax> Parameters { get; }
+        public ImmutableArray<ITypeSyntax> Parameters { get; }
         public string FullName => Name;
-        public string DefaultValue => "null";
 
 
-        public FunctionPointerTypeSyntax(ISyntaxNode parent, JurParser.FunctionPointerTypeContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public FunctionPointerTypeSyntax(ISyntaxNode parent, JurParser.FunctionPointerTypeContext context) : base(parent, context) {
 
             if (context.VOID() != null) {
                 ReturnType = new VoidTypeSyntax(this, Line);
-                Parameters = context.type().Select(x => TypeSyntaxFactory.Create(this, x)).ToImmutableList();
+                Parameters = ToTypes(context.type());
             }
             else {
-                ReturnType = TypeSyntaxFactory.Create(this, context.type(0));
-                Parameters = context.type().Skip(1).Select(x => TypeSyntaxFactory.Create(this, x)).ToImmutableList();
+                ReturnType = ToType(context.type(0));
+                Parameters = ToTypes(context.type().Skip(1).ToArray());
             }
 
-            Name = ReturnType.FullName + "(" + string.Join(",", Parameters.Select(x => x.FullName)) + ")";
-
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(ReturnType)
-                                             .AddRange(Parameters);
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .Add(ReturnType)
+                                              .AddRange(Parameters);
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
+
+        public override string ToJs(Knowledge knowledge) {
             throw new NotImplementedException();
         }
+
 
         public bool Equals(FunctionPointerTypeSyntax other) {
             if (ReferenceEquals(null, other)) return false;

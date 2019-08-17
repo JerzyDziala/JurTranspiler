@@ -1,76 +1,46 @@
 using System;
 using System.Collections.Immutable;
-using System.Data;
 using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
-using System.Xml;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.src.syntax_tree.types {
 
-    public class StructTypeSyntax : ITypeSyntax, IEquatable<StructTypeSyntax> {
+    public class StructTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<StructTypeSyntax> {
 
-        public virtual ISyntaxNode Root { get; }
-        public virtual ISyntaxNode Parent { get; }
-        public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-        public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public virtual ImmutableList<ITreeNode> AllChildren { get; }
-        public virtual string File { get; }
-        public virtual int Line { get; }
-        public virtual int Abstraction { get; }
-        public virtual string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-        public ImmutableList<ITypeSyntax> TypeArguments { get; }
-        public int Arity { get; }
-        public string FullName { get; }
-        public string DefaultValue => "null";
+        public string Name { get; }
+        public ImmutableArray<ITypeSyntax> TypeArguments { get; }
+        public int Arity => TypeArguments.Length;
+        public bool IsGeneric => Arity > 0;
+        public string FullName => IsGeneric ? Name + $"<{string.Join(",", TypeArguments.Select(x => x.FullName))}>" : Name;
 
 
-        public StructTypeSyntax(ISyntaxNode parent, JurParser.TypeParameterOrStructTypeContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public StructTypeSyntax(ISyntaxNode parent, JurParser.TypeParameterOrStructTypeContext context) : base(parent, context) {
 
             Name = context.ID().GetText();
-            TypeArguments = ImmutableList.Create<ITypeSyntax>();
-            Arity = 0;
-            FullName = Name;
-            if (Arity > 0) {
-                FullName += $"<{string.Join(",", TypeArguments.Select(x => x.FullName))}>";
-            }
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
-
+            TypeArguments = ImmutableArray.Create<ITypeSyntax>();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
-        public StructTypeSyntax(ISyntaxNode parent, JurParser.GenericStructTypeContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
 
+        public StructTypeSyntax(ISyntaxNode parent, JurParser.GenericStructTypeContext context) : base(parent, context) {
             Name = context.ID().GetText();
-            TypeArguments = context.type().Select(x => TypeSyntaxFactory.Create(this, x)).ToImmutableList();
-            Arity = TypeArguments.Count;
-            FullName = Name;
-            if (Arity > 0) {
-                FullName += $"<{string.Join(",", TypeArguments.Select(x => x.FullName))}>";
-            }
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(TypeArguments);
-            AllChildren = this.GetAllChildren();
-
+            TypeArguments = ToTypes(context.type());
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().AddRange(TypeArguments);
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
+
+        public override string ToJs(Knowledge knowledge) {
             throw new NotImplementedException();
         }
+
 
         public bool Equals(StructTypeSyntax other) {
             if (ReferenceEquals(null, other)) return false;

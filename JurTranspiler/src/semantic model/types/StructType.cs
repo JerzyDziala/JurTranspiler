@@ -1,79 +1,64 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.Specialized;
-using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Xml;
-using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.src.syntax_tree.types;
-using UtilityLibrary;
+using Type = JurTranspiler.syntax_tree.bases.Type;
 
 namespace JurTranspiler.compilerSource.semantic_model {
 
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class StructType : Type, IEquatable<StructType> {
 
-        public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableList<ITreeNode> AllChildren { get; }
-        public override string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-        public string NonGenericName { get; }
-        public bool IsGeneric { get; }
+        public override string Name => IsGeneric
+                                           ? NonGenericName + "<" + string.Join(",", TypeArgumentsNames) + ">"
+                                           : NonGenericName;
+
         public StructDefinitionSyntax OriginalDefinitionSyntax { get; }
-        public int Arity { get; }
-        public int Abstraction { get; }
-
-        public ImmutableList<Lazy<Type>> TypeArguments { get; }
-        public ImmutableList<string> TypeArgumentsNames { get; }
-        public ImmutableList<Lazy<Field>> Fields { get; }
-        public ImmutableList<Lazy<Type>> InlinedTypes { get; }
-        public StructType PreSubstitutionType { get; }
-
-        public string JsName => Name.Replace("<", "_S_").Replace(">", "_E_").Replace(",", "___");
+        public string NonGenericName => OriginalDefinitionSyntax.Name;
+        public int Arity => TypeArguments.Length;
+        public bool IsGeneric => Arity > 0;
+        public int Abstraction => OriginalDefinitionSyntax.Abstraction;
+        public ImmutableArray<Lazy<IType>> TypeArguments { get; }
+        public ImmutableArray<string> TypeArgumentsNames { get; }
+        public ImmutableArray<Lazy<Field>> Fields { get; }
+        public ImmutableArray<Lazy<IType>> InlinedTypes { get; }
+        public StructType? PreSubstitutionType { get; }
 
 
         public StructType(StructDefinitionSyntax originalSyntax,
-                          ImmutableList<Lazy<Type>> typeArguments,
-                          ImmutableList<string> typeArgumentsNames,
-                          ImmutableList<Lazy<Type>> inlinedTypes,
-                          ImmutableList<Lazy<Field>> fields,
-                          StructType preSubstitutionType = null) {
+                          ImmutableArray<Lazy<IType>> typeArguments,
+                          ImmutableArray<string> typeArgumentsNames,
+                          ImmutableArray<Lazy<IType>> inlinedTypes,
+                          ImmutableArray<Lazy<Field>> fields,
+                          StructType? preSubstitutionType = null) {
             OriginalDefinitionSyntax = originalSyntax;
-            NonGenericName = originalSyntax.Name;
             TypeArguments = typeArguments;
             TypeArgumentsNames = typeArgumentsNames;
             InlinedTypes = inlinedTypes;
             Fields = fields;
             PreSubstitutionType = preSubstitutionType;
-            IsGeneric = TypeArguments.Count > 0;
-            Arity = TypeArguments.Count;
-            Abstraction = OriginalDefinitionSyntax.Abstraction;
 
-            Name = NonGenericName;
-            if (IsGeneric) {
-                Name += "<" + string.Join(",", typeArgumentsNames) + ">";
-            }
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
 
-        public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) {
+        public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) {
 
-            var typeArguments = TypeArguments.Select(arg => new Lazy<Type>(() => typeMap.FirstOrDefault(sub => sub.typeParameter.Equals(arg.Value))?.typeArgument ?? arg.Value)).ToImmutableList();
+            var typeArguments = TypeArguments.Select(arg => new Lazy<IType>(() => typeMap.FirstOrDefault(sub => sub.typeParameter.Equals(arg.Value))?.typeArgument ?? arg.Value)).ToImmutableArray();
 
             return new StructType(originalSyntax: OriginalDefinitionSyntax,
                                   typeArguments: typeArguments,
-                                  typeArgumentsNames: typeArguments.Select(x => x.Value.Name).ToImmutableList(),
-                                  inlinedTypes: InlinedTypes.Select(type => new Lazy<Type>(() => type.Value.WithSubstitutedTypes(typeMap))).ToImmutableList(),
+                                  typeArgumentsNames: typeArguments.Select(x => x.Value.Name).ToImmutableArray(),
+                                  inlinedTypes: InlinedTypes.Select(type => new Lazy<IType>(() => type.Value.WithSubstitutedTypes(typeMap))).ToImmutableArray(),
                                   fields: Fields.Select(field => new Lazy<Field>(() => new Field(originalSyntax: field.Value.OriginalSyntax,
                                                                                                  originalOwnerSyntax: field.Value.OriginalOwnerSyntax,
-                                                                                                 type: field.Value.Type.WithSubstitutedTypes(typeMap)))).ToImmutableList(),
+                                                                                                 type: field.Value.Type.WithSubstitutedTypes(typeMap)))).ToImmutableArray(),
                                   this);
         }
 

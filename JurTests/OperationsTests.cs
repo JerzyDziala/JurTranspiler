@@ -40,7 +40,6 @@ namespace JurTranspilerTests {
                     bool i9 = g != h;
                     bool i10 = e != f;
                     bool i11 = h == null;
-                    bool i12 = h is null;
                     bool i13 = c != d;
                     bool i14 = i != null || a <= b && a >= b;
         		}

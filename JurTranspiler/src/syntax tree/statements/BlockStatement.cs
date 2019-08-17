@@ -1,67 +1,37 @@
 using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.syntax_tree.bases;
 using UtilityLibrary;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class BlockStatement : ISyntaxNode, IStatementSyntax {
+    public class BlockStatement : SyntaxNode, IStatementSyntax {
 
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
-
-        public ImmutableList<IStatementSyntax> Body { get; }
+        public ImmutableArray<IStatementSyntax> Body { get; }
 
 
-        public BlockStatement(ISyntaxNode parent, JurParser.BlockStatementContext context) {
-			Parent = parent;
-			Root = Parent.Root;
-			AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
-
-            Body = context.statement()
-                          .Select(x => StatementSyntaxFactory.CreateStatementSyntax(this, x))
-                          .ToImmutableList();
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(Body);
-
-            AllChildren = this.GetAllChildren();
-
+        public BlockStatement(ISyntaxNode parent, JurParser.BlockStatementContext context) : base(parent, context) {
+            Body = ToStatements(context.statement());
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().AddRange(Body);
+            AllChildren = GetAllChildren();
         }
 
-        public BlockStatement(ISyntaxNode parent, JurParser.BlockContext context) {
-			Parent = parent;
-			Root = Parent.Root;
-			AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
 
-            Body = context.statement()
-                          .Select(x => StatementSyntaxFactory.CreateStatementSyntax(this, x))
-                          .ToImmutableList();
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(Body);
-
-            AllChildren = this.GetAllChildren();
-
+        public BlockStatement(ISyntaxNode parent, JurParser.BlockContext context) : base(parent, context) {
+            Body = ToStatements(context.statement());
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().AddRange(Body);
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
-	        return $"{{{Body.Select(x => x.ToJs(knowledge)).Glue("\n")}}}";
-        }
 
+        public override string ToJs(Knowledge knowledge) {
+            return $"{{{Body.Select(x => x.ToJs(knowledge)).Glue("\n")}}}";
+        }
 
     }
 

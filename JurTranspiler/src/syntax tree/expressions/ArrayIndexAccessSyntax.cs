@@ -1,55 +1,33 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class ArrayIndexAccessSyntax : IExpressionSyntax, ISyntaxNode {
+    public class ArrayIndexAccessSyntax : SyntaxNode, IExpressionSyntax {
 
-		//INode
-		public override ISyntaxNode Root { get; }
-		public override ISyntaxNode Parent { get; }
-		public override ImmutableList<ISyntaxNode> AllParents { get; }
-		public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-		public override ImmutableList<ITreeNode> AllChildren { get; }
+        //INode
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-		public override string File { get; }
-		public override int Line { get; }
-
-		public override int Abstraction { get; }
-
-		public IExpressionSyntax Array { get; }
-		public IExpressionSyntax Index { get; }
+        public IExpressionSyntax Array { get; }
+        public IExpressionSyntax Index { get; }
 
 
-		public ArrayIndexAccessSyntax(ISyntaxNode parent, JurParser.ArrayIndexAccessContext context) {
-			Parent = parent;
-			Root = Parent.Root;
-			AllParents = this.GetAllParents();
-			Abstraction = parent.Abstraction;
-			File = parent.File;
-			Line = context.Start.Line;
+        public ArrayIndexAccessSyntax(ISyntaxNode parent, JurParser.ArrayIndexAccessContext context) : base(parent, context) {
 
-			Array = ExpressionSyntaxFactory.CreateExpressionSyntax(this, context.expression(0));
-			Index = ExpressionSyntaxFactory.CreateExpressionSyntax(this, context.expression(1));
+            Array = ToExpression(context.expression(0));
+            Index = ToExpression(context.expression(1));
 
-			ImmediateChildren = ImmutableList.Create<ITreeNode>()
-			                                 .Add(Array)
-			                                 .Add(Index);
-
-			AllChildren = this.GetAllChildren();
-
-		}
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Array).Add(Index);
+            AllChildren = GetAllChildren();
+        }
 
 
+        public override string ToJs(Knowledge knowledge) {
+            return $"{Array.ToJs(knowledge)}[{Index.ToJs(knowledge)}]";
+        }
 
-
-                public override string ToJs(Knowledge knowledge) {
-			return $"{Array.ToJs(knowledge)}[{Index.ToJs(knowledge)}]";
-		}
-
-	}
+    }
 
 }

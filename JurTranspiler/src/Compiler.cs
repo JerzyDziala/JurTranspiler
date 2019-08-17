@@ -15,7 +15,7 @@ namespace JurTranspiler.compilerSource {
 
             var tree = Parser.ParseString(diagnostics, jurCode);
 
-            if (diagnostics.Any()) return (diagnostics, string.Empty);
+            if (tree == null) return (diagnostics, string.Empty);
 
             var knowledge = Analyser.Analyse(diagnostics, tree);
 
@@ -35,7 +35,7 @@ namespace JurTranspiler.compilerSource {
 
             var tree = Parser.ParseFiles(diagnostics, jurCode);
 
-            if (diagnostics.Any()) return (diagnostics, string.Empty);
+            if (tree == null) return (diagnostics, string.Empty);
 
             var knowledge = Analyser.Analyse(diagnostics, tree);
 

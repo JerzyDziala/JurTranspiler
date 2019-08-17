@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.Analysis;
-using Microsoft.VisualBasic;
 using NUnit.Framework;
 
 namespace JurTranspilerTests {

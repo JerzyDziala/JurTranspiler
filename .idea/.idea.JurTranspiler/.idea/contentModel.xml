@@ -8,7 +8,6 @@
       <e p="JurTests" t="IncludeRecursive">
         <e p="AssignmentsAndConversionsTests.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="CodeGenerationTests.cs" t="Include" />
         <e p="ForLoopTests.cs" t="Include" />
         <e p="FunctionCallsTests.cs" t="Include" />
         <e p="FunctionDeclarationsTests.cs" t="Include" />
@@ -53,13 +52,13 @@
               <e p="Binder.Substitutions.cs" t="Include" />
               <e p="Binder.Types.cs" t="Include" />
               <e p="Binder.Variables.cs" t="Include" />
-              <e p="TriedToAccessFieldOnNonStruct.cs" t="Include" />
             </e>
             <e p="errors" t="Include">
               <e p="AmbiguousFieldReference.cs" t="Include" />
               <e p="bases" t="Include">
                 <e p="CallLocation.cs" t="Include" />
                 <e p="Error.cs" t="Include" />
+                <e p="ErrorExtensions.cs" t="Include" />
                 <e p="SingleLocationError.cs" t="Include" />
               </e>
               <e p="CallArgumentsViolateParametersConstraints.cs" t="Include" />
@@ -77,6 +76,7 @@
               <e p="NoMatchingOverloadForCall.cs" t="Include" />
               <e p="StructDeclarationContainsInheritanceCycles.cs" t="Include" />
               <e p="SyntaxError.cs" t="Include" />
+              <e p="TriedToAccessFieldOnNonStruct.cs" t="Include" />
               <e p="TypeMismatchInAssignmentError.cs" t="Include" />
               <e p="TypeMismatchInReturnStatement.cs" t="Include" />
               <e p="TypeMismatchInUseOfOperator.cs" t="Include" />
@@ -123,7 +123,6 @@
             <e p="Field.cs" t="Include" />
             <e p="FunctionCallInfo.cs" t="Include" />
             <e p="functions" t="Include">
-              <e p="BrokenFunctionSignature.cs" t="Include" />
               <e p="Callable.cs" t="Include" />
               <e p="Dispatcher.cs" t="Include" />
               <e p="ErrorSignature.cs" t="Include" />
@@ -137,8 +136,10 @@
               <e p="AnyType.cs" t="Include" />
               <e p="ArrayType.cs" t="Include" />
               <e p="FunctionPointerType.cs" t="Include" />
+              <e p="IType.cs" t="Include" />
               <e p="NullType.cs" t="Include" />
-              <e p="PrimitiveTypes.cs" t="Include" />
+              <e p="PrimitiveKind.cs" t="Include" />
+              <e p="PrimitiveType.cs" t="Include" />
               <e p="StructType.cs" t="Include" />
               <e p="Type.cs" t="Include" />
               <e p="TypeParameterType.cs" t="Include" />
@@ -148,6 +149,11 @@
             </e>
           </e>
           <e p="syntax tree" t="Include">
+            <e p="bases" t="Include">
+              <e p="SyntaxNode.Creation.cs" t="Include" />
+              <e p="SyntaxNode.cs" t="Include" />
+              <e p="TreeNode.cs" t="Include" />
+            </e>
             <e p="declarations" t="Include">
               <e p="AbstractionSyntax.cs" t="Include" />
               <e p="FieldDeclarationSyntax.cs" t="Include" />
@@ -177,16 +183,17 @@
             </e>
             <e p="factories" t="Include">
               <e p="ExpressionSyntaxFactory.cs" t="Include" />
+              <e p="Extensions.cs" t="Include" />
               <e p="StatementSyntaxFactory.cs" t="Include" />
               <e p="TypeSyntaxFactory.cs" t="Include" />
             </e>
-            <e p="INodeExtensions.cs" t="Include" />
             <e p="Interfaces" t="Include">
               <e p="IAssignment.cs" t="Include" />
               <e p="IExpressionSyntax.cs" t="Include" />
               <e p="IStatementSyntax.cs" t="Include" />
               <e p="ISyntaxNode.cs" t="Include" />
               <e p="ITreeNode.cs" t="Include" />
+              <e p="ITypeSyntax.cs" t="Include" />
               <e p="IVariableDeclarationSyntax.cs" t="Include" />
             </e>
             <e p="statements" t="Include">
@@ -196,6 +203,7 @@
               <e p="ContinueStatementSyntax.cs" t="Include" />
               <e p="ExitStatementSyntax.cs" t="Include" />
               <e p="ExpressionStatementSyntax.cs" t="Include" />
+              <e p="ForLoopType.cs" t="Include" />
               <e p="ForStatementSyntax.cs" t="Include" />
               <e p="GeneratedScopeSyntax.cs" t="Include" />
               <e p="IfStatementSyntax.cs" t="Include" />
@@ -205,7 +213,6 @@
               <e p="AnyTypeSyntax.cs" t="Include" />
               <e p="ArrayTypeSyntax.cs" t="Include" />
               <e p="FunctionPointerTypeSyntax.cs" t="Include" />
-              <e p="ITypeSyntax.cs" t="Include" />
               <e p="PrimitiveTypeSyntax.cs" t="Include" />
               <e p="StructTypeSyntax.cs" t="Include" />
               <e p="TypeParameterSyntax.cs" t="Include" />

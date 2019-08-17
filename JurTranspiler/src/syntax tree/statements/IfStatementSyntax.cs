@@ -1,53 +1,38 @@
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
 using UtilityLibrary;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class IfStatementSyntax : ISyntaxNode, IStatementSyntax {
+    public class IfStatementSyntax : SyntaxNode, IStatementSyntax {
 
-        //INode
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         public IExpressionSyntax Condition { get; }
         public IStatementSyntax Body { get; }
-        public bool HaveElse { get; }
-        public IStatementSyntax ElseBody { get; }
+        public IStatementSyntax? ElseBody { get; }
+        public bool HaveElse => ElseBody != null;
 
 
-        public IfStatementSyntax(ISyntaxNode parent, JurParser.IfStatementContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public IfStatementSyntax(ISyntaxNode parent, JurParser.IfStatementContext context) : base(parent, context) {
 
-            Condition = ExpressionSyntaxFactory.CreateExpressionSyntax(this, context.expression());
+            Condition = ExpressionSyntaxFactory.Create(this, context.expression());
             Body = new GeneratedScopeSyntax(this, context.statement(0));
-            HaveElse = context.ELSE() != null;
-            ElseBody = HaveElse
+            ElseBody = context.ELSE() != null
                            ? new GeneratedScopeSyntax(this, context.statement(1))
                            : null;
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(Condition)
-                                             .Add(Body)
-                                             .AddIfNotNull(ElseBody);
 
-            AllChildren = this.GetAllChildren();
-
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .Add(Condition)
+                                              .Add(Body)
+                                              .AddIfNotNull(ElseBody);
+            AllChildren = GetAllChildren();
         }
 
 
-        public string ToJs(Knowledge knowledge) {
+        public override string ToJs(Knowledge knowledge) {
             var e = HaveElse ? $"else {ElseBody.ToJs(knowledge)}" : "";
             return $@"if ({Condition.ToJs(knowledge)}) {Body.ToJs(knowledge)}
                       {e}";

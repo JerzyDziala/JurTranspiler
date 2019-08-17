@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.nodes;
 
 namespace JurTranspiler.compilerSource.semantic_model.functions {
 
     public class OverloadCompatibility {
 
-        public ImmutableList<Type> argumentTypes { get; }
+        public ImmutableArray<IType> argumentTypes { get; }
         public Callable Callable { get; }
         public ImmutableHashSet<Substitution> Substitutions { get; }
         public bool AllArgumentsAreCompatible { get; }
@@ -17,12 +16,12 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
                                      IEnumerable<Substitution> substitutions,
                                      bool allArgumentsAreCompatible,
                                      bool allTypeParametersHaveOneSubstitution,
-                                     IEnumerable<Type> argumentTypes) {
+                                     IEnumerable<IType> argumentTypes) {
             Callable = callable;
             Substitutions = substitutions.ToImmutableHashSet();
             AllArgumentsAreCompatible = allArgumentsAreCompatible;
             AllTypeParametersHaveOneSubstitution = allTypeParametersHaveOneSubstitution;
-            this.argumentTypes = argumentTypes.ToImmutableList();
+            this.argumentTypes = argumentTypes.ToImmutableArray();
         }
 
 

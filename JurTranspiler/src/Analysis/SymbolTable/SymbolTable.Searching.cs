@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Dynamic;
 using System.Linq;
 using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.semantic_model.functions;
 using JurTranspiler.src.syntax_tree.types;
 
 namespace JurTranspiler.compilerSource.Analysis {
@@ -14,10 +10,12 @@ namespace JurTranspiler.compilerSource.Analysis {
 
         public SyntaxTree Tree { get; }
 
+
         public SymbolTable(SyntaxTree tree) {
             Tree = tree;
 
         }
+
 
         //searching
         public IVariableDeclarationSyntax GetVisibleDeclarationOrNull(VariableAccessSyntax variableAccess) {
@@ -29,12 +27,12 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private ImmutableList<IVariableDeclarationSyntax> GetVisibleDeclarations(VariableAccessSyntax accessSyntax) {
-            return GetVisibleVariablesInScope(accessSyntax).Where(x => x.Name == accessSyntax.Name).ToImmutableList();
+        private ImmutableArray<IVariableDeclarationSyntax> GetVisibleDeclarations(VariableAccessSyntax accessSyntax) {
+            return GetVisibleVariablesInScope(accessSyntax).Where(x => x.Name == accessSyntax.Name).ToImmutableArray();
         }
 
 
-        public ImmutableList<IVariableDeclarationSyntax> GetVisibleVariablesInScope(ISyntaxNode scope) {
+        public ImmutableArray<IVariableDeclarationSyntax> GetVisibleVariablesInScope(ISyntaxNode scope) {
 
             var declarations = new List<IVariableDeclarationSyntax>();
             ITreeNode previousScope = scope;
@@ -42,7 +40,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             while (parentScope != null) {
                 foreach (var node in parentScope.ImmediateChildren) {
-                    if (node == previousScope) break;
+                    if (ReferenceEquals(node, previousScope)) break;
                     if (node is IVariableDeclarationSyntax declaration) {
                         declarations.Add(declaration);
                     }
@@ -51,7 +49,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 parentScope = parentScope.Parent;
             }
 
-            return declarations.ToImmutableList();
+            return declarations.ToImmutableArray();
         }
 
 
@@ -63,28 +61,28 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        public ImmutableList<StructDefinitionSyntax> GetVisibleDefinitionsFor(StructTypeSyntax syntax) {
+        public ImmutableArray<StructDefinitionSyntax> GetVisibleDefinitionsFor(StructTypeSyntax syntax) {
             return GetStructDefinitionsWith(syntax.Name, syntax.Arity)
                    .Where(def => def.Abstraction <= syntax.Abstraction)
-                   .ToImmutableList();
+                   .ToImmutableArray();
         }
 
 
-        public ImmutableList<FunctionDefinitionSyntax> GetVisibleDefinitionsFor(FunctionCallSyntax syntax) {
-            return GetFunctionDefinitionsWith(syntax.Name, syntax.Arguments.Count)
+        public ImmutableArray<FunctionDefinitionSyntax> GetVisibleDefinitionsFor(FunctionCallSyntax syntax) {
+            return GetFunctionDefinitionsWith(syntax.Name, syntax.Arguments.Length)
                    .Where(def => def.Abstraction <= syntax.Abstraction)
-                   .Where(def => def.TypeParametersInGenericTypesList.Count >= syntax.ExplicitTypeArguments.Count)
-                   .ToImmutableList();
+                   .Where(def => def.TypeParameters.Length >= syntax.ExplicitTypeArguments.Length)
+                   .ToImmutableArray();
         }
 
 
-        public ImmutableList<StructDefinitionSyntax> GetStructDefinitionsWith(string name, int arity) {
-            return Tree.AllStructDefinitions.Where(definition => definition.Name == name && definition.Arity == arity).ToImmutableList();
+        public ImmutableArray<StructDefinitionSyntax> GetStructDefinitionsWith(string name, int arity) {
+            return Tree.AllStructDefinitions.Where(definition => definition.Name == name && definition.GenericArity == arity).ToImmutableArray();
         }
 
 
-        public ImmutableList<FunctionDefinitionSyntax> GetFunctionDefinitionsWith(string name, int argsCount) {
-            return Tree.AllFunctionDefinitions.Where(definition => definition.Name == name && definition.Parameters.Count == argsCount).ToImmutableList();
+        public ImmutableArray<FunctionDefinitionSyntax> GetFunctionDefinitionsWith(string name, int argsCount) {
+            return Tree.AllFunctionDefinitions.Where(definition => definition.Name == name && definition.Parameters.Length == argsCount).ToImmutableArray();
         }
 
 

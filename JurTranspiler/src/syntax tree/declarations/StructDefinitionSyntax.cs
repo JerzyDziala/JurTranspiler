@@ -1,66 +1,48 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Security.Cryptography;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.src.syntax_tree.types;
-using UtilityLibrary;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class StructDefinitionSyntax : ISyntaxNode, IStructOrFunctionDeclarationSyntax, IEquatable<StructDefinitionSyntax> {
+    public class StructDefinitionSyntax : SyntaxNode, IStructOrFunctionDeclarationSyntax, IEquatable<StructDefinitionSyntax> {
 
-        //INode
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         public string Name { get; }
         public string FullName { get; }
-        public bool IsGeneric { get; }
-        public int Arity { get; }
-        public ImmutableList<TypeParameterSyntax> TypeParameters { get; }
-        public ImmutableList<ITypeSyntax> InlinedTypes { get; }
-        public ImmutableList<FieldDeclarationSyntax> Fields { get; }
+        public bool IsGeneric => GenericArity > 0;
+        public int GenericArity => TypeParameters.Length;
+        public ImmutableArray<TypeParameterSyntax> TypeParameters { get; }
+        public ImmutableArray<ITypeSyntax> InlinedTypes { get; }
+        public ImmutableArray<FieldDeclarationSyntax> Fields { get; }
 
 
-        public StructDefinitionSyntax(ISyntaxNode parent, JurParser.StructDeclarationContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public StructDefinitionSyntax(ISyntaxNode parent, JurParser.StructDeclarationContext context) : base(parent, context) {
 
             Name = context.ID(0).GetText();
-            IsGeneric = context.LESS() != null;
-            TypeParameters = context.ID().Skip(1).Select(x => new TypeParameterSyntax(this, x.GetText(), Line, this)).ToImmutableList();
-            InlinedTypes = context.inlinedType().Select(x => TypeSyntaxFactory.Create(this, x.type())).ToImmutableList();
-            Fields = context.uninitializedVarDeclaration().Select(x => new FieldDeclarationSyntax(this, x)).ToImmutableList();
-            Arity = TypeParameters.Count;
+            TypeParameters = context.ID().Skip(1).Select(x => new TypeParameterSyntax(this, x.GetText(), Line, this)).ToImmutableArray();
+            InlinedTypes = ToTypes(context.inlinedType().Select(x => x.type()).ToArray());
+            Fields = ToFields(context.uninitializedVarDeclaration());
 
             FullName = IsGeneric
                            ? Name + "<" + string.Join(",", TypeParameters.Select(x => x.Name)) + ">"
                            : Name;
 
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(InlinedTypes)
-                                             .AddRange(Fields);
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .AddRange(InlinedTypes)
+                                              .AddRange(Fields);
 
-            AllChildren = this.GetAllChildren();
+            AllChildren = GetAllChildren();
 
         }
 
 
-        public string ToJs(Knowledge knowledge) {
+        public override string ToJs(Knowledge knowledge) {
             throw new Exception("type constructors should be generated from closed types");
         }
 

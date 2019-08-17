@@ -22,7 +22,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         private FunctionSignature BindFunctionDefinitionCore(FunctionDefinitionSyntax syntax) {
 
             //check for duplicate type arguments
-            var typeArgumentsGroups = syntax.TypeParametersInGenericTypesList.GetDuplicates(x => x.FullName);
+            var typeArgumentsGroups = syntax.TypeParameters.GetDuplicates(x => x.FullName);
             foreach (var typeArgumentsGroup in typeArgumentsGroups) {
                 errors.Add(new MultipleTypeParametersWithTheSameName(typeArgumentsGroup.Select(x => (x.File, x.Line)), typeArgumentsGroup.First().FullName));
             }
@@ -38,8 +38,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             var returnType = BindType(syntax.ReturnType);
             return new FunctionSignature(originalDefinitionSyntax: syntax,
-                                         typeArguments: syntax.TypeParametersInGenericTypesList.Distinct().Select(BindType),
-                                         parameters: syntax.Parameters.Select(x => BindType(x.Type)),
+                                         typeArguments: syntax.TypeParameters.Distinct().Select(BindType).ToImmutableArray(),
+                                         parameters: syntax.Parameters.Select(x => BindType(x.Type)).ToImmutableArray(),
                                          returnType: returnType);
         }
 
@@ -71,8 +71,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         public FunctionCallInfo BindFunctionCallCore(IReadOnlyList<Callable> overloads,
-                                                     IReadOnlyList<Type> argumentsTypes,
-                                                     IReadOnlyList<Type> explicitTypeArguments,
+                                                     IReadOnlyList<IType> argumentsTypes,
+                                                     IReadOnlyList<IType> explicitTypeArguments,
                                                      bool isPoly,
                                                      CallLocation location) {
 
@@ -95,9 +95,11 @@ namespace JurTranspiler.compilerSource.Analysis {
                 if (possibleAtRuntime.None()) return CouldNotFindMatchingOverload(location);
                 return getDispatcherOrErrorSignature();
 
-                FunctionCallInfo getDispatcherOrErrorSignature() => possibleAtRuntime.AllHaveSame(x => x.Callable.ReturnType)
-                                                                        ? new FunctionCallInfo(new Dispatcher(possibleAtRuntime.ToImmutableList()), ImmutableHashSet<Substitution>.Empty)
-                                                                        : new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
+                FunctionCallInfo getDispatcherOrErrorSignature() {
+                    return possibleAtRuntime.AllHaveSame(x => x.Callable.ReturnType)
+                               ? new FunctionCallInfo(new Dispatcher(possibleAtRuntime.ToImmutableArray()), ImmutableHashSet<Substitution>.Empty)
+                               : new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
+                }
             }
             else {
                 var overloadsInfo = getCompatibility(false);
@@ -108,7 +110,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                 return resolve();
 
                 FunctionCallInfo resolve() {
-                    var perfectMatches = compatibleOverloads.Where(IsPerfectCompatibility).ToImmutableList();
+                    var perfectMatches = compatibleOverloads.Where(IsPerfectCompatibility).ToImmutableArray();
                     return perfectMatches.One()
                                ? checkConstraintsAndReturn(perfectMatches.First())
                                : AmbiguousFunctionCall(location);

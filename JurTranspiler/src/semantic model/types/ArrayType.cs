@@ -1,38 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using JurTranspiler.compilerSource.Analysis;
+using System.Diagnostics;
 using JurTranspiler.compilerSource.nodes;
-using UtilityLibrary;
+using Type = JurTranspiler.syntax_tree.bases.Type;
 
 namespace JurTranspiler.compilerSource.semantic_model {
 
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class ArrayType : Type, IEquatable<ArrayType> {
 
-        public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableList<ITreeNode> AllChildren { get; }
-        public override string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-        public Type ElementType { get; }
+        public override string Name => ElementType.Name + "[]";
+
+        public IType ElementType { get; }
 
 
-        public ArrayType(Type elementType) {
+        public ArrayType(IType elementType) {
             ElementType = elementType;
-            Name = elementType.Name + "[]";
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(ElementType);
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ElementType);
+            AllChildren = GetAllChildren();
         }
 
 
-
-
-
-
-
-
-        public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) {
+        public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) {
             return new ArrayType(ElementType.WithSubstitutedTypes(typeMap));
         }
 

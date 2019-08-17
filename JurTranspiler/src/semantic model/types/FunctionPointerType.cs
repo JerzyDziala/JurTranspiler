@@ -1,41 +1,38 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Xml;
-using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.nodes;
-using UtilityLibrary;
+using Type = JurTranspiler.syntax_tree.bases.Type;
 
 namespace JurTranspiler.compilerSource.semantic_model {
 
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class FunctionPointerType : Type, IEquatable<FunctionPointerType> {
 
-        public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableList<ITreeNode> AllChildren { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
         public override string Name { get; }
 
-        public Type ReturnType { get; }
-        public ImmutableList<Type> Parameters { get; }
+        public IType ReturnType { get; }
+        public ImmutableArray<IType> Parameters { get; }
 
 
-        public FunctionPointerType(Type returnType, IEnumerable<Type> parameters) {
+        public FunctionPointerType(IType returnType, IEnumerable<IType> parameters) {
             ReturnType = returnType;
-            Parameters = parameters.ToImmutableList();
+            Parameters = parameters.ToImmutableArray();
             Name = ReturnType.Name + "(" + string.Join(",", Parameters.Select(x => x.Name)) + ")";
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(ReturnType)
-                                             .AddRange(Parameters);
-            AllChildren = this.GetAllChildren();
+
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ReturnType).AddRange(Parameters);
+            AllChildren = GetAllChildren();
         }
 
 
-
-
-        public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) {
+        public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) {
             return new FunctionPointerType(ReturnType.WithSubstitutedTypes(typeMap),
-                                           Parameters.Select(x => x.WithSubstitutedTypes(typeMap)).ToImmutableList());
+                                           Parameters.Select(x => x.WithSubstitutedTypes(typeMap)).ToImmutableArray());
         }
 
 

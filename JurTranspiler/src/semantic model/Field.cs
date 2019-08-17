@@ -1,33 +1,33 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.Analysis;
+using System.Diagnostics;
 using JurTranspiler.compilerSource.nodes;
 
 namespace JurTranspiler.compilerSource.semantic_model {
 
+    [DebuggerDisplay("Name = {" + nameof(Name) + "}, Type = {Type.Name}")]
     public class Field : IEquatable<Field>, ITreeNode {
 
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
+        public ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public ImmutableArray<ITreeNode> AllChildren { get; }
 
         public string OriginalFile { get; }
         public int OriginalLine { get; }
         public string Name { get; }
         public FieldDeclarationSyntax OriginalSyntax { get; }
-        public Type Type { get; }
+        public IType Type { get; }
         public StructDefinitionSyntax OriginalOwnerSyntax { get; }
 
 
-        public Field(FieldDeclarationSyntax originalSyntax, StructDefinitionSyntax originalOwnerSyntax, Type type) {
+        public Field(FieldDeclarationSyntax originalSyntax, StructDefinitionSyntax originalOwnerSyntax, IType type) {
             Name = originalSyntax.Name;
             Type = type;
             OriginalSyntax = originalSyntax;
             OriginalOwnerSyntax = originalOwnerSyntax;
             OriginalFile = originalSyntax.File;
             OriginalLine = originalSyntax.Line;
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = ImmutableList.Create<ITreeNode>();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = ImmutableArray.Create<ITreeNode>();
         }
 
 

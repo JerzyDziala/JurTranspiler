@@ -1,27 +1,25 @@
 using System;
 using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.semantic_model;
 using UtilityLibrary;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        public Type BindExpression(IExpressionSyntax syntax) {
+        public IType BindExpression(IExpressionSyntax syntax) {
             return symbols.AlreadyBound(syntax)
                        ? symbols.GetBindingFor(syntax)
                        : symbols.MakeBindingFor(syntax, BindExpressionCore((dynamic) syntax));
         }
 
 
-        private Type BindExpressionCore(AnonymousFunctionSyntax syntax) {
+        private IType BindExpressionCore(AnonymousFunctionSyntax syntax) {
 
-            Func<Type, Type> functionPointerTypeWithReturnType = returnType => new FunctionPointerType(returnType, syntax.Parameters.Select(x => BindType(x.Type)));
+            Func<IType, IType> functionPointerTypeWithReturnType = returnType => new FunctionPointerType(returnType, syntax.Parameters.Select(x => BindType(x.Type)));
 
             if (syntax.IsExpressionStatementLambda) {
                 var bodyExpression = ((ExpressionStatementSyntax) syntax.Body).ExpressionSyntax;
@@ -34,7 +32,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                                             .OfType<ReturnStatementSyntax>()
                                             .ToImmutableArray();
 
-                Func<Type> addUnableToInferAndReturnUndefined = () => {
+                Func<IType> addUnableToInferAndReturnUndefined = () => {
                     errors.Add(new UnableToInferReturnType(returnStatements.GetLocations()));
                     return functionPointerTypeWithReturnType(new UndefinedType());
                 };
@@ -51,7 +49,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(ArrayIndexAccessSyntax syntax) {
+        private IType BindExpressionCore(ArrayIndexAccessSyntax syntax) {
             var ownerType = BindExpression(syntax.Array);
             if (ownerType is ArrayType arrayType) return arrayType.ElementType;
 
@@ -60,10 +58,10 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(ConstructorSyntax syntax) => BindType(syntax.ConstructedType);
+        private IType BindExpressionCore(ConstructorSyntax syntax) => BindType(syntax.ConstructedType);
 
 
-        private Type BindExpressionCore(FieldAccessSyntax syntax) {
+        private IType BindExpressionCore(FieldAccessSyntax syntax) {
             var ownerType = BindExpression(syntax.Owner);
             if (ownerType is StructType structType) {
                 var fields = BindFields(structType);
@@ -93,22 +91,22 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(FunctionCallSyntax syntax) => BindFunctionCall(syntax).Callable.ReturnType;
+        private IType BindExpressionCore(FunctionCallSyntax syntax) => BindFunctionCall(syntax).Callable.ReturnType;
 
-        private Type BindExpressionCore(DefaultTypeValueSyntax syntax) => BindType(syntax.Type);
+        private IType BindExpressionCore(DefaultTypeValueSyntax syntax) => BindType(syntax.Type);
 
 
-        private Type BindExpressionCore(TypeExpressionSyntax syntax) {
+        private IType BindExpressionCore(TypeExpressionSyntax syntax) {
             var type = BindType(syntax.Type);
-            Func<string, Type> findType = name => symbols.TypesBindings.Values
-                                                         .Concat(symbols.OpenStructsBinding.Values)
-                                                         .FirstOrDefault(x => x.Name == name);
+            Func<string, IType> findType = name => symbols.TypesBindings.Values
+                                                          .Concat(symbols.OpenStructsBinding.Values)
+                                                          .FirstOrDefault(x => x.Name == name);
             var typeType = type switch {
-                               FunctionPointerType functionPointerType => findType(nameof(FunctionPointerType)),
-                               UndeclaredStructType undeclaredStructType => findType(nameof(Type)),
-                               StructType structType => findType(nameof(StructType)),
-                               ArrayType arrayType => findType(nameof(ArrayType)),
-                               PrimitiveType primitiveType => findType(nameof(PrimitiveType)),
+                               FunctionPointerType _ => findType(nameof(FunctionPointerType)),
+                               UndeclaredStructType _ => findType(nameof(Type)),
+                               StructType _ => findType(nameof(StructType)),
+                               ArrayType _ => findType(nameof(ArrayType)),
+                               PrimitiveType _ => findType(nameof(PrimitiveType)),
                                var x when x is TypeParameterType || x is UndefinedType || x is AnyType => findType(nameof(Type)),
                                _ => throw new Exception("Invalid Type Expression Type")
                                };
@@ -119,7 +117,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(OperationSyntax syntax) {
+        private IType BindExpressionCore(OperationSyntax syntax) {
             var left = BindExpression(syntax.Left);
             var right = BindExpression(syntax.Right);
             if (syntax.Operator == "+") {
@@ -208,10 +206,10 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(ParenthesisSyntax syntax) => BindExpression(syntax.Expression);
+        private IType BindExpressionCore(ParenthesisSyntax syntax) => BindExpression(syntax.Expression);
 
 
-        private Type BindExpressionCore(PrimitiveValueSyntax syntax) {
+        private IType BindExpressionCore(PrimitiveValueSyntax syntax) {
             if (syntax.IsNull) return new NullType();
             if (syntax.Value.StartsWith("'") && syntax.Value.EndsWith("'") && syntax.Value.Length > 1) {
                 return new PrimitiveType(PrimitiveKind.STRING);
@@ -226,7 +224,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private Type BindExpressionCore(VariableAccessSyntax syntax) {
+        private IType BindExpressionCore(VariableAccessSyntax syntax) {
             var declaration = symbols.GetVisibleDeclarationOrNull(syntax);
             if (declaration == null) {
                 //error: use of undeclared variable

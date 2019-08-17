@@ -1,42 +1,28 @@
 using System;
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
-using System.Runtime.InteropServices.WindowsRuntime;
-using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.src.syntax_tree.types {
 
-    public class VoidTypeSyntax : ITypeSyntax, IEquatable<VoidTypeSyntax> {
+    public class VoidTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<VoidTypeSyntax> {
 
-        public virtual ISyntaxNode Root { get; }
-        public virtual ISyntaxNode Parent { get; }
-        public virtual ImmutableList<ISyntaxNode> AllParents { get; }
-        public virtual ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public virtual ImmutableList<ITreeNode> AllChildren { get; }
-        public virtual string File { get; }
-        public virtual int Line { get; }
-        public virtual int Abstraction { get; }
-        public virtual string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
+        public string Name => "void";
         public string FullName => Name;
-        public string DefaultValue => "";
 
 
-        public VoidTypeSyntax(ISyntaxNode parent, int line) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = line;
-
-            Name = "void";
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
+        public VoidTypeSyntax(ISyntaxNode parent, int line) : base(parent, line) {
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
+
+        public override string ToJs(Knowledge knowledge) {
             throw new NotImplementedException();
         }
 

@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using JurTranspiler.compilerSource.nodes;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
@@ -22,13 +17,6 @@ namespace JurTranspiler.compilerSource.Analysis {
         public override string ToString() => GetMessage() + "\n";
 
         public override int GetHashCode() => GetMessage().GetHashCode();
-    }
-
-
-    public static class ErrorExtensions {
-        public static IEnumerable<(string file, int line)> GetLocations(this IEnumerable<ISyntaxNode> syntaxs) {
-            return syntaxs.Select(x => (x.File, x.Line));
-        }
     }
 
 }

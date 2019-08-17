@@ -2,7 +2,6 @@ using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource;
 using JurTranspiler.compilerSource.Analysis;
 using NUnit.Framework;
-using UtilityLibrary;
 
 namespace JurTranspilerTests {
 

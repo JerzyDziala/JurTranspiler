@@ -1,43 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
-using JurTranspiler.compilerSource.Analysis;
+using System.Diagnostics;
 using JurTranspiler.compilerSource.nodes;
-using UtilityLibrary;
+using Type = JurTranspiler.syntax_tree.bases.Type;
 
 namespace JurTranspiler.compilerSource.semantic_model {
 
+    [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class PrimitiveType : Type, IEquatable<PrimitiveType> {
 
-        public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableList<ITreeNode> AllChildren { get; }
-        public override string Name { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
+        public override string Name => PrimitiveKind.ToString().ToLower();
 
         public PrimitiveKind PrimitiveKind { get; }
 
 
         public PrimitiveType(PrimitiveKind primitiveKind) {
             PrimitiveKind = primitiveKind;
-            Name = PrimitiveKind.ToString().ToLower();
-            ImmediateChildren = ImmutableList.Create<ITreeNode>();
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
         }
 
 
-        public override Type WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
-
-
-        public override string GetDefaultValue() {
-            switch (PrimitiveKind) {
-                case PrimitiveKind.STRING: return "''";
-                case PrimitiveKind.BOOL: return "false";
-                case PrimitiveKind.NUM: return "0";
-                default: throw new ArgumentOutOfRangeException();
-            }
-        }
+        public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) => this;
 
 
         public bool Equals(PrimitiveType other) {
@@ -60,15 +48,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
                 return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (int) PrimitiveKind;
             }
         }
-
-    }
-
-
-    public enum PrimitiveKind {
-
-        STRING,
-        BOOL,
-        NUM,
 
     }
 

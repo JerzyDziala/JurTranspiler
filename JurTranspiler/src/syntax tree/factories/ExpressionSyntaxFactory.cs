@@ -4,7 +4,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
     public static class ExpressionSyntaxFactory {
 
-        public static IExpressionSyntax CreateExpressionSyntax(ISyntaxNode parent, JurParser.ExpressionContext context) {
+        public static IExpressionSyntax Create(ISyntaxNode parent, JurParser.ExpressionContext context) {
             if (context is JurParser.VariableAccessContext varContext) return new VariableAccessSyntax(parent, varContext);
             if (context is JurParser.PrimitiveValueContext primitiveContext) return new PrimitiveValueSyntax(parent, primitiveContext);
             if (context is JurParser.AnonymusFunctionContext anonymousFunctionContext) return new AnonymousFunctionSyntax(parent, anonymousFunctionContext);

@@ -1,46 +1,33 @@
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class TypeParameterConstraintSyntax : ISyntaxNode {
-
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
+    public class TypeParameterConstraintSyntax : SyntaxNode {
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         public ITypeSyntax Left { get; }
         public ITypeSyntax Right { get; }
 
 
-        public TypeParameterConstraintSyntax(ISyntaxNode parent, JurParser.ConstrainContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public TypeParameterConstraintSyntax(ISyntaxNode parent, JurParser.ConstrainContext context) : base(parent, context) {
 
-            Left = TypeSyntaxFactory.Create(this, context.type(0));
-            Right = TypeSyntaxFactory.Create(this, context.type(1));
+            Left = ToType(context.type(0));
+            Right = ToType(context.type(1));
 
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(Left)
-                                             .Add(Right);
-
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .Add(Left)
+                                              .Add(Right);
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
+
+        public override string ToJs(Knowledge knowledge) {
             throw new System.NotImplementedException();
         }
-
 
     }
 

@@ -4,7 +4,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
 	public static class StatementSyntaxFactory {
 
-		public static IStatementSyntax CreateStatementSyntax(ISyntaxNode parent, JurParser.StatementContext context) {
+		public static IStatementSyntax Create(ISyntaxNode parent, JurParser.StatementContext context) {
 			if (context is JurParser.BlockStatementContext blockContext) return new BlockStatement(parent, blockContext);
 			if(context is JurParser.IfStatementContext ifContext) return new IfStatementSyntax(parent,ifContext);
 			if(context is JurParser.ForStatementContext forContext) return new ForStatementSyntax(parent,forContext);

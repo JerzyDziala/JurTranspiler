@@ -2,27 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.bases;
 using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class SyntaxTree : ISyntaxNode {
+    public sealed class SyntaxTree : SyntaxNode {
 
-        //INode
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         //children
-        public ImmutableList<ProgramFileSyntax> Files { get; }
+        public ImmutableArray<ProgramFileSyntax> Files { get; }
 
         public ImmutableArray<StructDefinitionSyntax> AllStructDefinitions { get; }
         public ImmutableArray<FunctionDefinitionSyntax> AllFunctionDefinitions { get; }
@@ -33,19 +27,13 @@ namespace JurTranspiler.compilerSource.nodes {
         public ImmutableArray<MainSyntax> AllMains { get; }
 
 
-        public SyntaxTree(List<(JurParser.ProgramContext context, string fileName)> files) {
-            Root = this;
-            Parent = null;
-            Abstraction = -1;
-            File = "";
-            Line = -1;
+        public SyntaxTree(List<(JurParser.ProgramContext context, string fileName)> files) : base() {
 
-            Files = files.Select(x => new ProgramFileSyntax(this, x.fileName, x.context)).ToImmutableList();
+            Files = files.Select(x => new ProgramFileSyntax(this, x.fileName, x.context)).ToImmutableArray();
 
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(Files);
-
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .AddRange(Files);
+            AllChildren = GetAllChildren();
 
             //TODO: optimize
             AllStructDefinitions = AllChildren.OfType<StructDefinitionSyntax>().ToImmutableArray();
@@ -58,19 +46,15 @@ namespace JurTranspiler.compilerSource.nodes {
         }
 
 
-        public SyntaxTree(JurParser.ProgramContext context) {
-            Root = this;
-            Parent = null;
-            Abstraction = -1;
-            File = "";
-            Line = -1;
+        public SyntaxTree(JurParser.ProgramContext context) : base() {
 
-            Files = ImmutableList.Create<ProgramFileSyntax>()
-                                 .Add(new ProgramFileSyntax(this, "__TEST__", context));
+            Files = ImmutableArray.Create<ProgramFileSyntax>()
+                                  .Add(new ProgramFileSyntax(this, "__TEST__", context));
 
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(Files);
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .AddRange(Files);
+            AllChildren = GetAllChildren();
+
             //TODO: optimize
             AllStructDefinitions = AllChildren.OfType<StructDefinitionSyntax>().ToImmutableArray();
             AllFunctionDefinitions = AllChildren.OfType<FunctionDefinitionSyntax>().ToImmutableArray();
@@ -82,7 +66,7 @@ namespace JurTranspiler.compilerSource.nodes {
         }
 
 
-        public string ToJs(Knowledge knowledge) {
+        public override string ToJs(Knowledge knowledge) {
             return $"{Files.Select(x => x.ToJs(knowledge)).Glue("\n\n")}\n\nmain$();";
         }
 

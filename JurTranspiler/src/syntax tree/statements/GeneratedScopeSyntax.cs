@@ -1,45 +1,28 @@
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
 using UtilityLibrary;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class GeneratedScopeSyntax : ISyntaxNode, IStatementSyntax {
+    public class GeneratedScopeSyntax : SyntaxNode, IStatementSyntax {
 
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         public IStatementSyntax Body { get; }
 
 
-        public GeneratedScopeSyntax(ISyntaxNode parent, JurParser.StatementContext body) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = parent.Line;
-
-            Body = StatementSyntaxFactory.CreateStatementSyntax(this, body);
-
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddIfNotNull(Body);
-
-            AllChildren = this.GetAllChildren();
-
+        public GeneratedScopeSyntax(ISyntaxNode parent, JurParser.StatementContext body) : base(parent, body, parent.Line) {
+            Body = ToStatement(body);
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().AddIfNotNull(Body);
+            AllChildren = GetAllChildren();
         }
 
-        public string ToJs(Knowledge knowledge) {
+
+        public override string ToJs(Knowledge knowledge) {
             return Body.ToJs(knowledge);
         }
-
 
     }
 

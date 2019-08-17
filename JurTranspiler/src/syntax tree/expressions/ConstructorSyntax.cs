@@ -1,54 +1,35 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.CodeGeneration;
 using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.src.syntax_tree.types;
-using UtilityLibrary;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class ConstructorSyntax : IExpressionSyntax, ISyntaxNode {
+    public class ConstructorSyntax : SyntaxNode, IExpressionSyntax {
 
-        public override ISyntaxNode Root { get; }
-        public override ISyntaxNode Parent { get; }
-        public override ImmutableList<ISyntaxNode> AllParents { get; }
-        public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableList<ITreeNode> AllChildren { get; }
-        public override string File { get; }
-        public override int Line { get; }
-        public override int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         public ITypeSyntax ConstructedType { get; }
 
 
-        public ConstructorSyntax(ISyntaxNode parent, JurParser.ConstructorContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = parent.Abstraction;
-            File = parent.File;
-            Line = context.Start.Line;
+        public ConstructorSyntax(ISyntaxNode parent, JurParser.ConstructorContext context) : base(parent, context) {
 
-            ConstructedType = TypeSyntaxFactory.Create(this, context.type());
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .Add(ConstructedType);
-            AllChildren = this.GetAllChildren();
-
+            ConstructedType = ToType(context.type());
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ConstructedType);
+            AllChildren = GetAllChildren();
         }
 
 
         public override string ToJs(Knowledge knowledge) {
             var needsSubstitutions = ConstructedType.AllChildren.Any(x => x is TypeParameterSyntax);
-            var type = "types[" + ConstructedType.FullName.AsString() + "]";
+            var type = "_t_[" + ConstructedType.FullName.AsString() + "]";
 
             if (needsSubstitutions) {
-                type += ".withSubstitutedTypes(substitutions)";
+                type += "._wst_(_s_)";
             }
             return type + ".createInstance()";
         }

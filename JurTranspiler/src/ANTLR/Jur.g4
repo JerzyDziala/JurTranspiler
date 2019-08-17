@@ -220,7 +220,7 @@ expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE ) #pri
            | expression operator=( TIMES | DIVIDE ) expression #operation
            | expression operator=( ADD | SUBTRACT ) expression #operation
            | expression operator=( LESS | GREATER | LEQUAL | GREQUAL ) expression #operation
-           | expression operator=( EQUAL | IS | NOT_EQUAL ) expression #operation
+           | expression operator=( EQUAL | NOT_EQUAL ) expression #operation
            | expression LOGICAL_AND expression #operation
            | expression OR expression #operation
 		   ;

@@ -2,8 +2,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
     public class TriedToAccessFieldOnNonStruct : SingleLocationError {
 
-        private string fieldName;
-        private string typeName;
+        private readonly string fieldName;
+        private readonly string typeName;
 
 
         public TriedToAccessFieldOnNonStruct(string file,

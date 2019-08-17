@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
-using UtilityLibrary;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
 namespace JurTranspiler.compilerSource.CodeGeneration {
 

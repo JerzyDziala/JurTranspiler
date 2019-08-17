@@ -1,44 +1,29 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class VariableAccessSyntax : IExpressionSyntax {
+    public class VariableAccessSyntax : SyntaxNode, IExpressionSyntax {
 
-		public override ISyntaxNode Root { get; }
-		public override ISyntaxNode Parent { get; }
-		public override ImmutableList<ISyntaxNode> AllParents { get; }
-		public override ImmutableList<ITreeNode> ImmediateChildren { get; }
-		public override ImmutableList<ITreeNode> AllChildren { get; }
-		public override string File { get; }
-		public override int Line { get; }
-		public override int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
-		public string Name { get; }
+        public string Name { get; }
 
 
-		public VariableAccessSyntax(ISyntaxNode parent, JurParser.VariableAccessContext context) {
-			Parent = parent;
-			Root = Parent.Root;
-			AllParents = this.GetAllParents();
-			Abstraction = parent.Abstraction;
-			File = parent.File;
-			Line = context.Start.Line;
+        public VariableAccessSyntax(ISyntaxNode parent, JurParser.VariableAccessContext context) : base(parent, context) {
+            Name = context.ID().GetText();
 
-			Name = context.ID().GetText();
-			ImmediateChildren = ImmutableList.Create<ITreeNode>();
-			AllChildren = this.GetAllChildren();
-		}
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+            AllChildren = GetAllChildren();
+        }
 
 
-                public override string ToJs(Knowledge knowledge) {
-			return Name;
-		}
+        public override string ToJs(Knowledge knowledge) {
+            return Name;
+        }
 
-	}
+    }
 
 }

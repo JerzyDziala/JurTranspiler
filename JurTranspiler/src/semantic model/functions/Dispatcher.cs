@@ -7,11 +7,11 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
 
         public string Name { get; }
         public int Arity { get; }
-        public Type ReturnType { get; }
-        public ImmutableList<FunctionCallInfo> Functions;
+        public IType ReturnType { get; }
+        public ImmutableArray<FunctionCallInfo> Functions;
 
 
-        public Dispatcher(ImmutableList<FunctionCallInfo> functions) {
+        public Dispatcher(ImmutableArray<FunctionCallInfo> functions) {
             Functions = functions;
             Name = functions.First().Callable.Name;
             Arity = functions.First().Callable.Arity;

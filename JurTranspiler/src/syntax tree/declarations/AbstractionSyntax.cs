@@ -1,49 +1,38 @@
 using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.syntax_tree.bases;
 using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class AbstractionSyntax : ISyntaxNode {
+    public class AbstractionSyntax : SyntaxNode {
 
-        //INode
-        public ISyntaxNode Root { get; }
-        public ISyntaxNode Parent { get; }
-        public ImmutableList<ISyntaxNode> AllParents { get; }
-        public ImmutableList<ITreeNode> ImmediateChildren { get; }
-        public ImmutableList<ITreeNode> AllChildren { get; }
-
-        public string File { get; }
-        public int Line { get; }
-        public int Abstraction { get; }
+        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+        public override ImmutableArray<ITreeNode> AllChildren { get; }
 
         //Children
-        public ImmutableList<FunctionDefinitionSyntax> FunctionDeclarations { get; }
-        public ImmutableList<StructDefinitionSyntax> StructDeclarations { get; }
+        public ImmutableArray<FunctionDefinitionSyntax> FunctionDeclarations { get; }
+        public ImmutableArray<StructDefinitionSyntax> StructDeclarations { get; }
 
 
-        public AbstractionSyntax(ProgramFileSyntax parent, JurParser.AbstractionContext context) {
-            Parent = parent;
-            Root = Parent.Root;
-            AllParents = this.GetAllParents();
-            Abstraction = int.Parse(context.NUMBER_VALUE().GetText());
-            File = parent.File;
-            Line = context.Start.Line;
+        public AbstractionSyntax(ProgramFileSyntax parent, JurParser.AbstractionContext context)
+            : base(int.Parse(context.NUMBER_VALUE().GetText()),
+                   parent,
+                   context) {
 
-            FunctionDeclarations = context.functionDeclaration().Select(x => new FunctionDefinitionSyntax(this, x)).ToImmutableList();
-            StructDeclarations = context.structDeclaration().Select(x => new StructDefinitionSyntax(this, x)).ToImmutableList();
+            FunctionDeclarations = ToFunctionDefinitions(context.functionDeclaration());
+            StructDeclarations = ToStructDefinitions(context.structDeclaration());
 
-            ImmediateChildren = ImmutableList.Create<ITreeNode>()
-                                             .AddRange(FunctionDeclarations)
-                                             .AddRange(StructDeclarations);
-
-            AllChildren = this.GetAllChildren();
+            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+                                              .AddRange(FunctionDeclarations)
+                                              .AddRange(StructDeclarations);
+            AllChildren = GetAllChildren();
 
         }
 
 
-        public string ToJs(Knowledge knowledge) {
+        public override string ToJs(Knowledge knowledge) {
             return $@"
 {FunctionDeclarations.Select(x => x.ToJs(knowledge)).Glue("\n")}";
         }

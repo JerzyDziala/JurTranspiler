@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
+
 namespace JurTranspiler.compilerSource.nodes {
 
     public interface ISyntaxNode : ITreeNode {
@@ -9,10 +10,13 @@ namespace JurTranspiler.compilerSource.nodes {
         int Line { get; }
         ISyntaxNode Root { get; }
         ISyntaxNode Parent { get; }
-        ImmutableList<ISyntaxNode> AllParents { get; }
+        ImmutableArray<ISyntaxNode> AllParents { get; }
+
 
         string ToJs(Knowledge knowledge);
 
     }
+
+
 
 }

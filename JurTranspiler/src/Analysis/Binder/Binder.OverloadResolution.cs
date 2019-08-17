@@ -7,7 +7,6 @@ using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.compilerSource.semantic_model.functions;
 using UtilityLibrary;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
@@ -23,8 +22,8 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private IEnumerable<OverloadCompatibility> GetOverloadsCompatibilityInfo(IReadOnlyList<Type> explicitTypeArguments,
-                                                                                 IReadOnlyList<Type> argumentsTypes,
+        private IEnumerable<OverloadCompatibility> GetOverloadsCompatibilityInfo(IReadOnlyList<IType> explicitTypeArguments,
+                                                                                 IReadOnlyList<IType> argumentsTypes,
                                                                                  IEnumerable<Callable> overloads,
                                                                                  bool isPoly) {
 
@@ -41,25 +40,25 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             var callableWithSubstitutions = AfterSubstitution(overloadCompatibility);
 
-            Func<Func<Type, Type, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(callableWithSubstitutions.ParametersTypes, overloadCompatibility.argumentTypes, predicate);
-            Func<Type, Type, bool> arePerfectlyCompatible = (param, arg) => param.Equals(arg);
+            Func<Func<IType, IType, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(callableWithSubstitutions.ParametersTypes, overloadCompatibility.argumentTypes, predicate);
+            Func<IType, IType, bool> arePerfectlyCompatible = (param, arg) => param.Equals(arg);
 
             return AllParamArgPairs(arePerfectlyCompatible);
         }
 
 
-        private OverloadCompatibility GetOverloadCompatibility(IEnumerable<Type> explicitTypeArguments,
-                                                               IReadOnlyList<Type> argumentsTypes,
+        private OverloadCompatibility GetOverloadCompatibility(IEnumerable<IType> explicitTypeArguments,
+                                                               IReadOnlyList<IType> argumentsTypes,
                                                                bool isPoly,
-                                                               Func<Type, Type, HashSet<Substitution>, bool> checkParamArgCompileTimeCompatibilityAndSubstitute,
-                                                               Func<Type, Type, bool> checkParamArgRuntimeCompatibility,
+                                                               Func<IType, IType, HashSet<Substitution>, bool> checkParamArgCompileTimeCompatibilityAndSubstitute,
+                                                               Func<IType, IType, bool> checkParamArgRuntimeCompatibility,
                                                                Callable overload) {
 
             var substitutions = new HashSet<Substitution>(GetSubstitutionsFromExplicitTypeArguments(explicitTypeArguments, overload));
 
             //partial applications
-            Func<Func<Type, Type, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(overload.ParametersTypes, argumentsTypes, predicate);
-            Func<Type, Type, bool> checkCompileTimeCompatibility = (param, arg) => checkParamArgCompileTimeCompatibilityAndSubstitute(param, arg, substitutions);
+            Func<Func<IType, IType, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(overload.ParametersTypes, argumentsTypes, predicate);
+            Func<IType, IType, bool> checkCompileTimeCompatibility = (param, arg) => checkParamArgCompileTimeCompatibilityAndSubstitute(param, arg, substitutions);
 
             return new OverloadCompatibility(callable: overload,
                                              substitutions: substitutions,
@@ -69,11 +68,11 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private IEnumerable<Substitution> GetSubstitutionsFromExplicitTypeArguments(IEnumerable<Type> explicitTypeArguments, Callable overload) {
+        private IEnumerable<Substitution> GetSubstitutionsFromExplicitTypeArguments(IEnumerable<IType> explicitTypeArguments, Callable overload) {
             var typeArguments = explicitTypeArguments.ToList();
-            var limit = typeArguments.Count < overload.TypeParameters.Count
+            var limit = typeArguments.Count < overload.TypeParameters.Length
                             ? typeArguments.Count
-                            : overload.TypeParameters.Count;
+                            : overload.TypeParameters.Length;
 
             var subs = new HashSet<Substitution>();
             for (int i = 0; i < limit; i++) {
@@ -90,7 +89,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             var potentialFunctionPointers = symbols.GetVisibleVariablesInScope(syntax)
                                                    .Where(variable => BindVariableType(variable) is FunctionPointerType pointerType
-                                                                   && pointerType.Parameters.Count == syntax.Arguments.Count)
+                                                                   && pointerType.Parameters.Length == syntax.Arguments.Length)
                                                    .Select(pointerVariable => {
                                                        var pointerType = (FunctionPointerType) BindVariableType(pointerVariable);
                                                        return new FunctionPointer(name: pointerVariable.Name,

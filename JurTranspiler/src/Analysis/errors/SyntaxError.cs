@@ -1,5 +1,3 @@
-using System;
-
 namespace JurTranspiler.compilerSource.Analysis {
 
     public class SyntaxError : SingleLocationError{

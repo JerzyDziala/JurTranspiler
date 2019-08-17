@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.src.syntax_tree.types;
 using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.Analysis {
@@ -15,7 +12,6 @@ namespace JurTranspiler.compilerSource.Analysis {
         public static Knowledge Analyse(HashSet<Error> errors, SyntaxTree tree) {
 
             var binder = new Binder(tree, errors);
-
 
             //multiple variables in scope
             foreach (var scope in tree.AllFunctions.Concat<ISyntaxNode>(tree.AllMains)) {

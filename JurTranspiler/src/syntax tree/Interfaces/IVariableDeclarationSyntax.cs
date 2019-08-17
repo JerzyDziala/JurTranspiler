@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
 
 namespace JurTranspiler.compilerSource.nodes {
 
@@ -10,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
         string Name { get; }
 
         //is null when inferred variable
-        ITypeSyntax Type { get; }
+        ITypeSyntax? Type { get; }
     }
 
 }

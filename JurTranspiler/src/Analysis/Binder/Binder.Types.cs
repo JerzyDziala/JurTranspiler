@@ -9,20 +9,19 @@ using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.src.syntax_tree.types;
 using JurTranspiler.syntax_tree.types;
 using UtilityLibrary;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        public Type BindStructDefinition(StructDefinitionSyntax syntax) {
+        public IType BindStructDefinition(StructDefinitionSyntax syntax) {
             return symbols.AlreadyBound(syntax)
                        ? symbols.GetBindingFor(syntax)
                        : symbols.MakeBindingFor(syntax, BindStructDefinitionCore(syntax));
         }
 
 
-        private Type BindStructDefinitionCore(StructDefinitionSyntax syntax) {
+        private IType BindStructDefinitionCore(StructDefinitionSyntax syntax) {
 
             //check for inheriting from non-struct types
             var invalidInlines = syntax.InlinedTypes.Where(x => !(x is StructTypeSyntax));
@@ -50,27 +49,27 @@ namespace JurTranspiler.compilerSource.Analysis {
             //we want the construction of typeArguments to happen lazily only after the struct constructor has run
             //but to create a FullName for the StructType we need to eagerly load their names
             var typeArgumentsNames = syntax.TypeParameters.Select(p => p.FullName);
-            var lazyTypeArguments = syntax.TypeParameters.Select(p => new Lazy<Type>(() => BindType(p)));
+            var lazyTypeArguments = syntax.TypeParameters.Select(p => new Lazy<IType>(() => BindType(p)));
 
-            var lazyInlinedTypes = hasCycles ? new Lazy<Type>[0] : validInlines.Select(inline => new Lazy<Type>(() => BindType(inline)));
+            var lazyInlinedTypes = hasCycles ? new Lazy<IType>[0] : validInlines.Select(inline => new Lazy<IType>(() => BindType(inline)));
             var lazyFields = syntax.Fields.Select(f => new Lazy<Field>(() => new Field(f, syntax, BindType(f.Type))));
 
             return new StructType(originalSyntax: syntax,
-                                  typeArguments: lazyTypeArguments.ToImmutableList(),
-                                  typeArgumentsNames: typeArgumentsNames.ToImmutableList(),
-                                  inlinedTypes: lazyInlinedTypes.ToImmutableList(),
-                                  fields: lazyFields.ToImmutableList());
+                                  typeArguments: lazyTypeArguments.ToImmutableArray(),
+                                  typeArgumentsNames: typeArgumentsNames.ToImmutableArray(),
+                                  inlinedTypes: lazyInlinedTypes.ToImmutableArray(),
+                                  fields: lazyFields.ToImmutableArray());
         }
 
 
-        public Type BindType(ITypeSyntax syntax) {
+        public IType BindType(ITypeSyntax syntax) {
             return symbols.AlreadyBound(syntax)
                        ? symbols.GetBindingFor(syntax)
                        : symbols.MakeBindingFor(syntax, BindTypeCore(syntax));
         }
 
 
-        private Type BindTypeCore(ITypeSyntax syntax) {
+        private IType BindTypeCore(ITypeSyntax syntax) {
             if (syntax is AnyTypeSyntax) return new AnyType();
             if (syntax is VoidTypeSyntax) return new VoidType();
             if (syntax is ArrayTypeSyntax arrayType) return new ArrayType(BindType(arrayType.ElementType));
@@ -136,7 +135,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                     if (isDeclared) {
 
                         if (parentDeclaration is StructDefinitionSyntax) {
-                            return new TypeParameterType(typeParameter.Name, parentDeclaration, ImmutableList<Lazy<TypeParameterType>>.Empty);
+                            return new TypeParameterType(typeParameter.Name, parentDeclaration, ImmutableArray<Lazy<TypeParameterType>>.Empty);
                         }
                         if (parentDeclaration is FunctionDefinitionSyntax function) {
 
@@ -146,7 +145,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                             return new TypeParameterType(name: typeParameter.FullName,
                                                          originalDeclarer: function,
                                                          constraints: validConstraints.Select(x => new Lazy<TypeParameterType>(() => (TypeParameterType) BindType(x.constrain)))
-                                                                                      .ToImmutableList());
+                                                                                      .ToImmutableArray());
                         }
                     }
                 }

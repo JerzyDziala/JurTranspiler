@@ -7,30 +7,40 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
 
     public abstract class Callable : ICallable {
 
-        public abstract string Name { get; }
+        public string Name { get; }
+        public int Arity { get; }
+        public ImmutableArray<IType> ParametersTypes { get; }
+        public ImmutableArray<IType> TypeParameters { get; }
+        public int GenericArity { get; }
+        public IType ReturnType { get; }
 
-        public abstract ImmutableList<Type> ParametersTypes { get; }
 
-        public abstract ImmutableList<Type> TypeParameters { get; }
-
-        public abstract int GenericArity { get; }
-
-        public abstract int Arity { get; }
-
-        public abstract Type ReturnType { get; }
+        protected Callable(string name,
+                           ImmutableArray<IType> parametersTypes,
+                           ImmutableArray<IType> typeParameters,
+                           IType returnType) {
+            Name = name;
+            Arity = parametersTypes.Length;
+            ParametersTypes = parametersTypes;
+            TypeParameters = typeParameters;
+            GenericArity = typeParameters.Length;
+            ReturnType = returnType;
+        }
 
 
         public bool IsConsideredSameAs(Callable other) {
 
-            if (Name == other.Name && GenericArity == other.GenericArity && ParametersTypes.Count == other.ParametersTypes.Count) {
+            if (Name == other.Name && GenericArity == other.GenericArity && ParametersTypes.Length == other.ParametersTypes.Length) {
                 //they're considered same if theirs parameter types lists are the same BUT ignoring the names of the type Parameters.
                 //I'm just going to take a lazy suboptimal route here and simply substitute theirs type parameters such that they're the same
 
                 var typeMap = new HashSet<Substitution>();
                 var typeArguments = other.TypeParameters.Cast<TypeParameterType>().ToList();
+
                 for (int i = 0; i < typeArguments.Count; i++) {
                     typeMap.Add(new Substitution(typeArguments[i], TypeParameters[i]));
                 }
+
                 var otherParametersAfterSubstitution = other.ParametersTypes.Select(p => p.WithSubstitutedTypes(typeMap));
 
                 //if there is no parameters that are different from it's counterparts then the signatures are considered equals
@@ -38,7 +48,6 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
             }
             return false;
         }
-
 
     }
 

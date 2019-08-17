@@ -1,35 +1,34 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.parsing.Implementations;
 using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.compilerSource.semantic_model.functions;
-using Type = JurTranspiler.compilerSource.semantic_model.Type;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
     public class Knowledge {
 
-        public ImmutableArray<Type> AllTypes { get; }
-        public ImmutableDictionary<ITypeSyntax, Type> TypesBindings { get; }
-        public ImmutableDictionary<StructDefinitionSyntax, Type> StructDefinitionsBindings { get; }
+        public ImmutableArray<IType> AllTypes { get; }
+        public ImmutableDictionary<ITypeSyntax, IType> TypesBindings { get; }
+        public ImmutableDictionary<StructDefinitionSyntax, IType> StructDefinitionsBindings { get; }
         public ImmutableDictionary<StructType, ImmutableArray<Field>> Fields { get; }
         public ImmutableDictionary<FunctionDefinitionSyntax, FunctionSignature> FunctionSignaturesBindings { get; }
         public ImmutableDictionary<FunctionCallSyntax, FunctionCallInfo> FunctionCallsBindings { get; }
-        public ImmutableDictionary<IExpressionSyntax, Type> ExpressionsBindings { get; }
-        private ImmutableDictionary<ICallable, string> NewNames;
+        public ImmutableDictionary<IExpressionSyntax, IType> ExpressionsBindings { get; }
+
+        private readonly ImmutableDictionary<ICallable, string> NewNames;
 
 
-        public Knowledge(IEnumerable<Type> allTypes,
-                         IDictionary<ITypeSyntax, Type> typesBindings,
+        public Knowledge(IEnumerable<IType> allTypes,
+                         IDictionary<ITypeSyntax, IType> typesBindings,
                          IDictionary<StructType, ImmutableArray<Field>> fields,
                          IDictionary<ICallable, string> newNames,
                          IDictionary<FunctionDefinitionSyntax, FunctionSignature> functionSignaturesBindings,
                          IDictionary<FunctionCallSyntax, FunctionCallInfo> functionCallsBindings,
-                         IDictionary<StructDefinitionSyntax, Type> structDefinitionsBindings,
-                         IDictionary<IExpressionSyntax, Type> expressionsBindings) {
+                         IDictionary<StructDefinitionSyntax, IType> structDefinitionsBindings,
+                         IDictionary<IExpressionSyntax, IType> expressionsBindings) {
             ExpressionsBindings = expressionsBindings.ToImmutableDictionary();
             StructDefinitionsBindings = structDefinitionsBindings.ToImmutableDictionary();
             FunctionCallsBindings = functionCallsBindings.ToImmutableDictionary();
@@ -51,7 +50,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         public string GetNewNameFor(FunctionCallSyntax call) {
             var callable = FunctionCallsBindings[call].Callable;
 
-            if (callable is Dispatcher d) return d.Name + $"$Arity_{d.Arity}_dispatcher";
+            if (callable is Dispatcher d) return d.Name + $"$Arity_{d.Arity.ToString()}_dispatcher";
 
             if (callable is FunctionPointer pointer) return pointer.Name;
 

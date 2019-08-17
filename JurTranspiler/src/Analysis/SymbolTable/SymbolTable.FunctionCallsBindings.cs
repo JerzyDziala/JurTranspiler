@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.semantic_model.functions;
 
 namespace JurTranspiler.compilerSource.Analysis {
 

@@ -7,11 +7,11 @@ namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
 
-        private bool IsEqualToWithSubstitutions(Type self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsEqualToWithSubstitutions(IType self, IType type, ICollection<Substitution> substitutions) {
             return IsEqualToWithSubstitutionsCore((dynamic) self, (dynamic) type, substitutions);
         }
 
-        private bool IsEqualToWithSubstitutionsCore(ArrayType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsEqualToWithSubstitutionsCore(ArrayType self, IType type, ICollection<Substitution> substitutions) {
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
                 return true;
@@ -21,27 +21,27 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsEqualToWithSubstitutionsCore(FunctionPointerType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsEqualToWithSubstitutionsCore(FunctionPointerType self, IType type, ICollection<Substitution> substitutions) {
             if (type is TypeParameterType typeParameterType) {
                 substitutions.Add(new Substitution(typeParameterType, self));
                 return true;
             }
             if (type is FunctionPointerType func &&IsEqualToWithSubstitutions( self.ReturnType,func.ReturnType,substitutions)) {
-                if (self.Parameters.Count != func.Parameters.Count) return false;
+                if (self.Parameters.Length != func.Parameters.Length) return false;
                 return func.Parameters.All((t, i) => IsEqualToWithSubstitutions(t,self.Parameters[i],substitutions));
             }
             return false;
         }
 
 
-		private bool IsEqualToWithSubstitutionsCore(NullType self, Type type, ICollection<Substitution> substitutions) {
+		private bool IsEqualToWithSubstitutionsCore(NullType self, IType type, ICollection<Substitution> substitutions) {
 			if (type is TypeParameterType t) {
 				substitutions.Add(new Substitution(t, self));
 			}
 			return true;
 		}
 
-        private bool IsEqualToWithSubstitutionsCore(AnyType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsEqualToWithSubstitutionsCore(AnyType self, IType type, ICollection<Substitution> substitutions) {
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
                 return true;
@@ -50,7 +50,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-		private bool IsEqualToWithSubstitutionsCore(PrimitiveType self, Type type, ICollection<Substitution> substitutions) {
+		private bool IsEqualToWithSubstitutionsCore(PrimitiveType self, IType type, ICollection<Substitution> substitutions) {
 			if (type is TypeParameterType t) {
 				substitutions.Add(new Substitution(t, self));
 				return true;
@@ -59,7 +59,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 		}
 
 
-        private bool IsEqualToWithSubstitutionsCore(StructType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsEqualToWithSubstitutionsCore(StructType self, IType type, ICollection<Substitution> substitutions) {
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
                 return true;
@@ -86,7 +86,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-		private bool IsEqualToWithSubstitutionsCore(TypeParameterType self, Type type, ICollection<Substitution> substitutions) {
+		private bool IsEqualToWithSubstitutionsCore(TypeParameterType self, IType type, ICollection<Substitution> substitutions) {
 			if (type is TypeParameterType t) {
 				substitutions.Add(new Substitution(t, self));
 				return true;
@@ -94,7 +94,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 			return false;
 		}
 
-        private bool IsEqualToWithSubstitutionsCore(UndeclaredStructType self, Type type, ICollection<Substitution> substitutions) {
+        private bool IsEqualToWithSubstitutionsCore(UndeclaredStructType self, IType type, ICollection<Substitution> substitutions) {
             if (type is UndeclaredStructType undeclaredType && undeclaredType.Name == self.Name) return true;
             if (type is TypeParameterType t) {
                 substitutions.Add(new Substitution(t, self));
@@ -104,14 +104,14 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-		private bool IsEqualToWithSubstitutionsCore(UndefinedType self, Type type, ICollection<Substitution> substitutions) {
+		private bool IsEqualToWithSubstitutionsCore(UndefinedType self, IType type, ICollection<Substitution> substitutions) {
 			if (type is TypeParameterType t) {
 				substitutions.Add(new Substitution(t, self));
 			}
 			return true;
 		}
 
-		private bool IsEqualToWithSubstitutionsCore(VoidType self, Type type, ICollection<Substitution> substitutions) => false;
+		private bool IsEqualToWithSubstitutionsCore(VoidType self, IType type, ICollection<Substitution> substitutions) => false;
 
     }
 

@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace JurTranspiler.compilerSource.Analysis {
 
     public class UseOfUndeclaredVariable : SingleLocationError{

@@ -3,11 +3,12 @@ using System;
 namespace JurTranspiler.compilerSource.semantic_model {
 
     public class Substitution : IEquatable<Substitution> {
+
         public TypeParameterType typeParameter { get; }
-        public Type typeArgument { get; }
+        public IType typeArgument { get; }
 
 
-        public Substitution(TypeParameterType typeParameter, Type typeArgument) {
+        public Substitution(TypeParameterType typeParameter, IType typeArgument) {
             this.typeParameter = typeParameter;
             this.typeArgument = typeArgument;
         }
