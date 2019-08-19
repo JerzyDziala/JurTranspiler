@@ -98,7 +98,6 @@ namespace JurTranspilerTests {
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
 
-
 	}
 
 }

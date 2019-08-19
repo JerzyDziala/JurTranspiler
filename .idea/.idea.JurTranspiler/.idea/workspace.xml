@@ -2,126 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb67d417-4c1d-4a1e-9c9d-14e568fb91a0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/riderModule.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/FunctionDeclarationsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/FunctionDeclarationsTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/JurTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/JurTests.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTests/LambdasTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/LambdasTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/StructDefinitionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/StructDefinitionsTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/VariablesScopesTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/VariablesScopesTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/JurTranspiler.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/JurTranspiler.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Analyser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Analyser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignments.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignments.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Calls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Calls.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Variables.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Variables.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.Searching.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.Searching.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/AmbiguousFieldReference.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/AmbiguousFieldReference.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/CallArgumentsViolateParametersConstraints.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/CallArgumentsViolateParametersConstraints.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/CouldNotResolveAmbiguousFunctionCall.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/CouldNotResolveAmbiguousFunctionCall.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/IndexAccessOnNonArray.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/IndexAccessOnNonArray.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/InliningOfNonStructType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/InliningOfNonStructType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/InliningResultsInMultipleFieldsWithTheSameName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/InliningResultsInMultipleFieldsWithTheSameName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MissingReturnStatement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MissingReturnStatement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfFunction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfFunction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfStruct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfStruct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfVariableInScope.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfVariableInScope.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleFieldsWithTheSameName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleFieldsWithTheSameName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleTypeParametersWithTheSameName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleTypeParametersWithTheSameName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NoMatchingFieldFound.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NoMatchingFieldFound.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NoMatchingOverloadForCall.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NoMatchingOverloadForCall.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/StructDeclarationContainsInheritanceCycles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/StructDeclarationContainsInheritanceCycles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/SyntaxError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/SyntaxError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TriedToAccessFieldOnNonStruct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TriedToAccessFieldOnNonStruct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInAssignmentError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInAssignmentError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInReturnStatement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInReturnStatement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInUseOfOperator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInUseOfOperator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UnableToInferReturnType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UnableToInferReturnType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfAmbiguousType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfAmbiguousType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfNonTypeParameterInConstraint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfNonTypeParameterInConstraint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredFunction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredFunction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredVariable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredVariable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/Error.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/Error.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/MultipleLocationError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/MultipleLocationError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Compiler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Compiler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Parser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Parser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Field.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Field.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Substitution.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Substitution.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/Callable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/Callable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionSignature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionSignature.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/ArrayType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/ArrayType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/FunctionPointerType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/FunctionPointerType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/IType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/IType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/NullType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/NullType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/PrimitiveType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/PrimitiveType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/Type.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/Type.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/TypeParameterType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/TypeParameterType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/UndeclaredStructType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/UndeclaredStructType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/UndefinedType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/UndefinedType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/VoidType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/VoidType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IExpressionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IExpressionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ISyntaxNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ISyntaxNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ITypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ITypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/bases/SyntaxNode.Creation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/bases/SyntaxNode.Creation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/bases/SyntaxNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/bases/SyntaxNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/AbstractionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/AbstractionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FieldDeclarationSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FieldDeclarationSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FunctionDefinitionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FunctionDefinitionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/InferredVariableDeclarationSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/InferredVariableDeclarationSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/InitializedVariableDeclarationSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/InitializedVariableDeclarationSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/MainSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/MainSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/ProgramFileSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/ProgramFileSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/SyntaxTree.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/SyntaxTree.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/TypeParameterConstraintSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/TypeParameterConstraintSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/UninitializedVariableDeclarationSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/UninitializedVariableDeclarationSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/AnonymousFunctionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/AnonymousFunctionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ArrayIndexAccessSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ArrayIndexAccessSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ConstructorSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ConstructorSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/DefaultTypeValueSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/DefaultTypeValueSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FieldAccessSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FieldAccessSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/OperationSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/OperationSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ParenthesisSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/ParenthesisSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/PrimitiveValueSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/PrimitiveValueSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/TypeExpressionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/TypeExpressionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/VariableAccessSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/VariableAccessSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/Extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/Extensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/AssignmentStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/AssignmentStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/BlockStatement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/BlockStatement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/BreakStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/BreakStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ContinueStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ContinueStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExitStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExitStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExpressionStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExpressionStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ForStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ForStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/GeneratedScopeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/GeneratedScopeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/IfStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/IfStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ReturnStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ReturnStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/AnyTypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/AnyTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/ArrayTypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/ArrayTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/FunctionPointerTypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/FunctionPointerTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/PrimitiveTypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/PrimitiveTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/StructTypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/StructTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/TypeParameterSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/TypeParameterSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/VoidTypeSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/VoidTypeSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UtilityLibrary/CollectionsExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UtilityLibrary/CollectionsExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UtilityLibrary/Comparer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UtilityLibrary/Comparer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UtilityLibrary/UtilityLibrary.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UtilityLibrary/UtilityLibrary.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UtilityLibrary/_.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UtilityLibrary/_.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -132,10 +14,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/JurTests/VariablesScopesTest.cs">
+        <entry file="file://$PROJECT_DIR$/JurTests/LambdasTests.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
+            <state relative-caret-position="387">
+              <caret line="86" column="41" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -391,9 +273,7 @@
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Analyser.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignments.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" />
-        <option value="$PROJECT_DIR$/JurTests/LambdasTests.cs" />
         <option value="$PROJECT_DIR$/UtilityLibrary/CollectionsExtensions.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/AmbiguousFieldReference.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/CallArgumentsViolateParametersConstraints.cs" />
@@ -421,6 +301,8 @@
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Calls.cs" />
+        <option value="$PROJECT_DIR$/JurTests/LambdasTests.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" />
       </list>
     </option>
   </component>
@@ -638,7 +520,7 @@
       <workItem from="1565522038213" duration="6772000" />
       <workItem from="1565719015511" duration="5000" />
       <workItem from="1566053763998" duration="723000" />
-      <workItem from="1566054951997" duration="32601000" />
+      <workItem from="1566054951997" duration="33148000" />
     </task>
     <task id="LOCAL-00001" summary="podstawy refleksji działają, pętla for działa, lambdy zaraz będą działać. większość generacji kodu już działa.&#10;przede mną najtrudniejsze wyzwanie jakim będą multimetody.">
       <created>1563561117211</created>
@@ -658,7 +540,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33324000" />
+    <option name="totallyTimeSpent" value="33871000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -673,11 +555,12 @@
     <frame x="0" y="23" width="1920" height="1128" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16145833" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16145833" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection Results" />
       <window_info anchor="bottom" id="Build" weight="0.18583333" />
+      <window_info anchor="bottom" id="Inspection Results" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -693,7 +576,7 @@
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Statistic" order="13" />
       <window_info anchor="bottom" id="Unit Tests" order="14" />
-      <window_info anchor="bottom" id="Terminal" order="15" visible="true" weight="0.32911393" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="15" visible="true" weight="0.32911393" />
       <window_info anchor="bottom" id="Event Log" order="16" side_tool="true" />
       <window_info anchor="bottom" id="ANTLR Preview" order="17" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -949,20 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JurTests/LambdasTests.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="659">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/AmbiguousFieldReference.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1152,13 +1021,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="48" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/Error.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -1215,8 +1077,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/JurTests/VariablesScopesTest.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
+        <state relative-caret-position="303">
+          <caret line="233" column="33" selection-start-line="233" selection-start-column="33" selection-end-line="233" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="48" selection-start-line="2" selection-start-column="48" selection-end-line="2" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="75" column="87" selection-start-line="75" selection-start-column="87" selection-end-line="75" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/JurTests/LambdasTests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="86" column="41" selection-start-line="86" selection-start-column="41" selection-end-line="86" selection-end-column="41" />
         </state>
       </provider>
     </entry>
