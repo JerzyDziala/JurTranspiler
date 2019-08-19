@@ -3,21 +3,18 @@ using System.Linq;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-    public class MultipleDeclarationsOfFunction : Error {
+	public class MultipleDeclarationsOfFunction : MultipleLocationError {
 
-        private IEnumerable<(string file, int line)> locations;
-        private string Name;
-
-
-        public MultipleDeclarationsOfFunction(IEnumerable<(string file, int line)> locations, string name) {
-            this.locations = locations;
-            Name = name;
-        }
+		private string name { get; }
 
 
-        private string GetLocationsString() => $"{string.Join(",\\n", locations.Select(x => $"File: {x.file}, Line: {x.line}"))}";
+		public MultipleDeclarationsOfFunction(IEnumerable<(string file, int line)> locations, string name) : base(locations) {
+			this.name = name;
+		}
 
-        public override string GetMessage() => $"MultipleDeclarationsOfFunction ### Name: {Name}, Locations: {GetLocationsString()}";
-    }
+
+		protected override string MessageBody => $"Name: {name}";
+
+	}
 
 }

@@ -6,28 +6,29 @@ using UtilityLibrary;
 
 namespace JurTranspiler {
 
-    static class Program {
-        static void Main(string[] args) {
-            var projectDirectory = Environment.CurrentDirectory + "/" + args[0];
-            var outputDirectory = Environment.CurrentDirectory + "/" + args[1];
+	static class Program {
 
-            var projectJsFiles = Directory.GetFiles(projectDirectory, "*.js", SearchOption.AllDirectories);
-            var projectJurFiles = Directory.GetFiles(projectDirectory, "*.jur", SearchOption.AllDirectories);
+		static void Main(string[] args) {
+			var projectDirectory = Environment.CurrentDirectory + "/" + args[0];
+			var outputDirectory = Environment.CurrentDirectory + "/" + args[1];
 
-            var jsCode = projectJsFiles.Select(File.ReadAllText).Glue("\n\n");
-            var jurCode = projectJurFiles.Select(x => (File.ReadAllText(x), x));
+			var projectJsFiles = Directory.GetFiles(projectDirectory, "*.js", SearchOption.AllDirectories);
+			var projectJurFiles = Directory.GetFiles(projectDirectory, "*.jur", SearchOption.AllDirectories);
 
-            var (diagnostics, js) = Compiler.Compile(jurCode);
+			var jsCode = projectJsFiles.Select(File.ReadAllText).Glue("\n\n");
+			var jurCode = projectJurFiles.Select(x => (File.ReadAllText(x), x));
 
-            Console.ForegroundColor = ConsoleColor.Red;
-            diagnostics.Select(x => x.GetMessage())
-                       .ToList()
-                       .ForEach(Console.WriteLine);
-            Console.ForegroundColor = ConsoleColor.White;
+			var (diagnostics, js) = Compiler.Compile(jurCode);
 
-            File.WriteAllText(outputDirectory + "/output.js", js + "\n" + jsCode);
-        }
+			Console.ForegroundColor = ConsoleColor.Red;
+			diagnostics.Select(x => x.ToString())
+			           .ToList()
+			           .ForEach(Console.Write);
+			Console.ForegroundColor = ConsoleColor.White;
 
-    }
+			File.WriteAllText(outputDirectory + "/output.js", js + "\n" + jsCode);
+		}
+
+	}
 
 }

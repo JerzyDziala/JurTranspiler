@@ -12,7 +12,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
     public class FunctionPointerType : Type, IEquatable<FunctionPointerType> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public override string Name { get; }
 
@@ -26,7 +26,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
             Name = ReturnType.Name + "(" + string.Join(",", Parameters.Select(x => x.Name)) + ")";
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ReturnType).AddRange(Parameters);
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -43,10 +43,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((FunctionPointerType) obj);
         }
 

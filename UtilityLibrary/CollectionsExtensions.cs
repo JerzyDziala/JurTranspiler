@@ -7,8 +7,8 @@ namespace UtilityLibrary {
 
 	public static class CollectionsExtensions {
 
-		public static ImmutableArray<T> AddIfNotNull<T>(this ImmutableArray<T> list, T item) {
-			return item == null ? list : list.Add(item);
+		public static ImmutableArray<T> AddIfNotNull<T>(this ImmutableArray<T> list, T? item) where T : class {
+			return item == null ? list : list.Add(item!);
 		}
 
 
@@ -33,20 +33,17 @@ namespace UtilityLibrary {
 
 
 		public static bool AllHaveSame<T, G>(this IEnumerable<T> list, Func<T, G> selector) {
-            var enumerable = list.ToList();
-            var first = selector(enumerable.FirstOrDefault());
-			return enumerable.All(element => first.Equals(selector(element)));
+			var enumerable = list.ToList();
+			var first = selector(enumerable.FirstOrDefault());
+			return first == null || enumerable.All(element => first.Equals(selector(element)));
 		}
+
 
 		public static bool AllAreSame<T>(this IEnumerable<T> list) {
-            var enumerable = list.ToList();
-            var first = enumerable.FirstOrDefault();
-			return enumerable.All(element => first.Equals(element));
-		}
+			var enumerable = list.ToList();
+			var first = enumerable.FirstOrDefault();
 
-
-		public static bool HaveDuplicates<T, G>(this IEnumerable<T> list, Func<T, G> getter) {
-			return list.GroupBy(getter).Any(g => g.MoreThenOne());
+			return first == null || enumerable.All(element => first.Equals(element));
 		}
 
 
@@ -59,6 +56,11 @@ namespace UtilityLibrary {
 			foreach (var element in collection) {
 				set.Add(element);
 			}
+		}
+
+
+		public static bool IsSuperSetOf<T>(this IEnumerable<T> a, IEnumerable<T> b) {
+			return !ReferenceEquals(a, b) && a.All(b.Contains);
 		}
 
 

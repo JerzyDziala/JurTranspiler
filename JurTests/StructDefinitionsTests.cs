@@ -4,18 +4,15 @@ using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.nodes;
 using NUnit.Framework;
 
-namespace JurTranspilerTests
-{
+namespace JurTranspilerTests {
 
-    [TestFixture]
-    public class StructDefinitionsTests
-    {
+	[TestFixture]
+	public class StructDefinitionsTests {
 
-        [Test]
-        [Parallelizable]
-        public void DirectCycle()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void DirectCycle() {
+			var code = @"
 						abstraction 0 {
 							struct A {
 								is B;
@@ -25,17 +22,19 @@ namespace JurTranspilerTests
 							}
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[] {new StructDeclarationContainsInheritanceCycles("__TEST__", 3, "A"), new StructDeclarationContainsInheritanceCycles("__TEST__", 6, "B")};
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 3, "A"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 6, "B")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void IndirectCycle()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void IndirectCycle() {
+			var code = @"
 						abstraction 0 {
 							struct A {
 								is B;
@@ -48,22 +47,20 @@ namespace JurTranspilerTests
 							}
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 3, "A"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 6, "B"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 9, "C")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 3, "A"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 6, "B"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 9, "C")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleInheritanceNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleInheritanceNoError() {
+			var code = @"
 						abstraction 0 {
 							struct A {
 								is B;
@@ -76,17 +73,16 @@ namespace JurTranspilerTests
 							}
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[0];
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[0];
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void ComplexMultipleInheritanceNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void ComplexMultipleInheritanceNoError() {
+			var code = @"
 						abstraction 0 {
 							struct A {
 								is B;
@@ -109,18 +105,17 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[0];
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[0];
 
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void ComplexCycle()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void ComplexCycle() {
+			var code = @"
 						abstraction 0 {
 							struct A {
 								is B;
@@ -144,24 +139,22 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 3, "A"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 7, "B"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 10, "C"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 15, "D"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 18, "E")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 3, "A"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 7, "B"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 10, "C"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 15, "D"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 18, "E")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void DuplicateFields()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void DuplicateFields() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string a;
@@ -169,21 +162,22 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new MultipleFieldsWithTheSameName(filesLinesLocations: new (string file, int line)[] {("__TEST__", 4), ("__TEST__", 5)},
-                                                  name: "a")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
+					                                  ("__TEST__", 4),
+					                                  ("__TEST__", 5)
+				                                  },
+				                                  name: "a")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void DuplicateFieldsMoreThenTwo()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void DuplicateFieldsMoreThenTwo() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string a;
@@ -196,35 +190,31 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new MultipleFieldsWithTheSameName(filesLinesLocations: new (string file, int line)[]
-                                                  {
-                                                      ("__TEST__", 4),
-                                                      ("__TEST__", 5),
-                                                      ("__TEST__", 6),
-                                                      ("__TEST__", 7)
-                                                  },
-                                                  name: "a"),
-                new MultipleFieldsWithTheSameName(filesLinesLocations: new (string file, int line)[]
-                                                  {
-                                                      ("__TEST__", 8),
-                                                      ("__TEST__", 9),
-                                                      ("__TEST__", 10)
-                                                  },
-                                                  name: "b"),
-                new UseOfUndeclaredType(file: "__TEST__", line: 7, name: "undeclared")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
+					                                  ("__TEST__", 4),
+					                                  ("__TEST__", 5),
+					                                  ("__TEST__", 6),
+					                                  ("__TEST__", 7)
+				                                  },
+				                                  name: "a"),
+				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
+					                                  ("__TEST__", 8),
+					                                  ("__TEST__", 9),
+					                                  ("__TEST__", 10)
+				                                  },
+				                                  name: "b"),
+				new UseOfUndeclaredType(file: "__TEST__", line: 7, name: "undeclared")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void InheritanceCausesMultipleFieldsError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void InheritanceCausesMultipleFieldsError() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string a;
@@ -239,32 +229,25 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new InliningResultsInMultipleFieldsWithTheSameName(file: "__TEST__",
-                                                                   line: 3,
-                                                                   name: "a",
-                                                                   fieldOwnersNames: new[]
-                                                                   {
-                                                                       "A",
-                                                                       "B",
-                                                                       "C"
-                                                                   }),
-                new InliningResultsInMultipleFieldsWithTheSameName(file: "__TEST__",
-                                                                   line: 7,
-                                                                   name: "a",
-                                                                   fieldOwnersNames: new[] {"B", "C"}),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new InliningResultsInMultipleFieldsWithTheSameName(file: "__TEST__",
+				                                                   line: 3,
+				                                                   fieldName: "a",
+				                                                   fieldOwnersNames: new[] { "A", "B", "C" }),
+				new InliningResultsInMultipleFieldsWithTheSameName(file: "__TEST__",
+				                                                   line: 7,
+				                                                   fieldName: "a",
+				                                                   fieldOwnersNames: new[] { "B", "C" }),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleFieldsInDifferentStructsNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleFieldsInDifferentStructsNoError() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string a;
@@ -274,17 +257,16 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[0];
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[0];
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleFieldsOfTheSameTypeNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleFieldsOfTheSameTypeNoError() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string a;
@@ -300,17 +282,16 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[0];
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[0];
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void IndirectFieldTypesCycleNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void IndirectFieldTypesCycleNoError() {
+			var code = @"
 						abstraction 0 {
                             struct A {
 								B field;
@@ -323,34 +304,32 @@ namespace JurTranspilerTests
 							a := new A;
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[0];
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[0];
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleGenericTypeNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleGenericTypeNoError() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
 								T t;
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[0];
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[0];
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleGenericTypeCycle()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleGenericTypeCycle() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
 								is A<string>;
@@ -358,17 +337,16 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[] {new StructDeclarationContainsInheritanceCycles(file: "__TEST__", line: 3, structName: "A<T>")};
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] { new StructDeclarationContainsInheritanceCycles(file: "__TEST__", line: 3, structName: "A<T>") };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void ComplexGenericTypeCycle()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void ComplexGenericTypeCycle() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
 								is B<A<string>>;
@@ -384,22 +362,20 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new StructDeclarationContainsInheritanceCycles(file: "__TEST__", line: 3, structName: "A<T>"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 7, "B<T>"),
-                new StructDeclarationContainsInheritanceCycles("__TEST__", 11, "C<T>")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new StructDeclarationContainsInheritanceCycles(file: "__TEST__", line: 3, structName: "A<T>"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 7, "B<T>"),
+				new StructDeclarationContainsInheritanceCycles("__TEST__", 11, "C<T>")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleDuplicateFieldsGenerics()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleDuplicateFieldsGenerics() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
 								T t;
@@ -411,21 +387,22 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new MultipleFieldsWithTheSameName(filesLinesLocations: new (string file, int line)[] {("__TEST__", 8), ("__TEST__", 9)},
-                                                  name: "t"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
+					                                  ("__TEST__", 8),
+					                                  ("__TEST__", 9)
+				                                  },
+				                                  name: "t"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void GenericInliningDuplicateFieldsJoinedNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void GenericInliningDuplicateFieldsJoinedNoError() {
+			var code = @"
 						abstraction 0 {
                             struct A {
 								is G<string>;
@@ -436,17 +413,16 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] { };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void GenericInliningCausesDuplicateFields()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void GenericInliningCausesDuplicateFields() {
+			var code = @"
 						abstraction 0 {
                             struct A {
 								is B<bool>;
@@ -458,23 +434,24 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new InliningResultsInMultipleFieldsWithTheSameName(file: "__TEST__",
-                                                                   line: 3,
-                                                                   name: "t",
-                                                                   fieldOwnersNames: new[] {"A", "B<T>"}),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new InliningResultsInMultipleFieldsWithTheSameName(file: "__TEST__",
+				                                                   line: 3,
+				                                                   fieldName: "t",
+				                                                   fieldOwnersNames: new[] {
+					                                                   "A",
+					                                                   "B<T>"
+				                                                   }),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void InliningOfInvalidType()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void InliningOfInvalidType() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
 								is string[];
@@ -483,22 +460,20 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new[]
-            {
-                new InliningOfNonStructType("__TEST__", 4, "string[]"),
-                new InliningOfNonStructType("__TEST__", 5, "A<A<void(bool)>>(string,bool)"),
-                new InliningOfNonStructType("__TEST__", 6, "T"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new[] {
+				new InliningOfNonStructType("__TEST__", 4, "string[]"),
+				new InliningOfNonStructType("__TEST__", 5, "A<A<void(bool)>>(string,bool)"),
+				new InliningOfNonStructType("__TEST__", 6, "T"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleStructDefinitionsSimple()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleStructDefinitionsSimple() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string b;
@@ -509,22 +484,23 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new MultipleDeclarationsOfStruct(new (string file, int line)[] {("__TEST__", 3), ("__TEST__", 6)},
-                                                 "A"),
-                new UseOfAmbiguousType("__TEST__", 8, "A")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
+					                                 ("__TEST__", 3),
+					                                 ("__TEST__", 6)
+				                                 },
+				                                 "A"),
+				new UseOfAmbiguousType("__TEST__", 8, "A")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleStructDefinitionsMultipleAbstractions()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleStructDefinitionsMultipleAbstractions() {
+			var code = @"
 						abstraction 0 {
                             struct A {
                                 string b;
@@ -537,22 +513,23 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new MultipleDeclarationsOfStruct(new (string file, int line)[] {("__TEST__", 3), ("__TEST__", 8)},
-                                                 "A"),
-                new UseOfAmbiguousType("__TEST__", 10, "A")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
+					                                 ("__TEST__", 3),
+					                                 ("__TEST__", 8)
+				                                 },
+				                                 "A"),
+				new UseOfAmbiguousType("__TEST__", 10, "A")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleStructDefinitionsDifferentArityNoError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleStructDefinitionsDifferentArityNoError() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
                                 T b;
@@ -566,17 +543,16 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] { };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleStructDefinitionsSameArityError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleStructDefinitionsSameArityError() {
+			var code = @"
 						abstraction 0 {
                             struct A<T> {
                                 T b;
@@ -594,27 +570,24 @@ namespace JurTranspilerTests
                             struct A<T> {}
                         }
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new MultipleDeclarationsOfStruct(new (string file, int line)[]
-                                                 {
-                                                     ("__TEST__", 3),
-                                                     ("__TEST__", 8),
-                                                     ("__TEST__", 13),
-                                                     ("__TEST__", 16),
-                                                 },
-                                                 "A"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
+					                                 ("__TEST__", 3),
+					                                 ("__TEST__", 8),
+					                                 ("__TEST__", 13),
+					                                 ("__TEST__", 16),
+				                                 },
+				                                 "A"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultipleTypeParametersWithSameName()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultipleTypeParametersWithSameName() {
+			var code = @"
                         abstraction 1 {
                             struct A<T,T,T,T2> {
                                 T c;
@@ -623,26 +596,23 @@ namespace JurTranspilerTests
                             }
 						}
 ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new MultipleTypeParametersWithTheSameName(new (string file, int line)[]
-                                                          {
-                                                              ("__TEST__", 3),
-                                                              ("__TEST__", 3),
-                                                              ("__TEST__", 3),
-                                                          },
-                                                          "T")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleTypeParametersWithTheSameName(new (string file, int line)[] {
+					                                          ("__TEST__", 3),
+					                                          ("__TEST__", 3),
+					                                          ("__TEST__", 3),
+				                                          },
+				                                          "T")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void VisibilityError()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void VisibilityError() {
+			var code = @"
         		abstraction 0 {
         		    struct A {
                         B b;
@@ -657,17 +627,18 @@ namespace JurTranspilerTests
 
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {new UseOfUndeclaredType("__TEST__", 4, "B"),};
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new UseOfUndeclaredType("__TEST__", 4, "B"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void UseOfDuplicateDeclaredStruct()
-        {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void UseOfDuplicateDeclaredStruct() {
+			var code = @"
         		abstraction 0 {
         		    struct A { }
                     struct A { }
@@ -676,15 +647,18 @@ namespace JurTranspilerTests
         		    A a;
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[]
-            {
-                new MultipleDeclarationsOfStruct(new (string file, int line)[] {("__TEST__", 3), ("__TEST__", 4)},
-                                                 "A"),
-                new UseOfAmbiguousType("__TEST__", 7, "A"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
-    }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
+					                                 ("__TEST__", 3),
+					                                 ("__TEST__", 4)
+				                                 },
+				                                 "A"),
+				new UseOfAmbiguousType("__TEST__", 7, "A"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
+	}
 
 }

@@ -9,7 +9,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class ProgramFileSyntax : SyntaxNode {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public ImmutableArray<AbstractionSyntax> Abstractions { get; }
         public ImmutableArray<MainSyntax> Mains { get; }
@@ -28,7 +28,7 @@ namespace JurTranspiler.compilerSource.nodes {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .AddRange(Abstractions)
                                               .AddRange(Mains);
-            AllChildren = GetAllChildren();
+
         }
 
 

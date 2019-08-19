@@ -4,8 +4,8 @@ namespace JurTranspiler.Analysis.errors {
 
     public class NoMatchingFieldFound : SingleLocationError{
 
-        private string fieldName;
-        private string typeName;
+        private string fieldName { get; }
+        private string typeName { get; }
 
         public NoMatchingFieldFound(string file, int line, string fieldName,string typeName) : base(file, line) {
             this.fieldName = fieldName;
@@ -13,9 +13,8 @@ namespace JurTranspiler.Analysis.errors {
         }
 
 
+        protected override string MessageBody => $"FieldName: {fieldName}, on type: {typeName}";
 
-
-
-        public override string GetMessage() => $"NoMatchingFieldFound ### {GetLocationString}, FieldName: {fieldName}, on type: {typeName}";    }
+    }
 
 }

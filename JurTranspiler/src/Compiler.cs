@@ -7,46 +7,47 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource {
 
-    public static class Compiler {
+	public static class Compiler {
 
-        public static (HashSet<Error> diagnostics, string jsCode) Compile(string jurCode) {
+		public static (HashSet<Error> diagnostics, string jsCode) Compile(string jurCode) {
 
-            var diagnostics = new HashSet<Error>();
+			var diagnostics = new HashSet<Error>();
 
-            var tree = Parser.ParseString(diagnostics, jurCode);
+			var tree = Parser.ParseString(diagnostics, jurCode);
 
-            if (tree == null) return (diagnostics, string.Empty);
+			if (tree == null) return (diagnostics, string.Empty);
 
-            var knowledge = Analyser.Analyse(diagnostics, tree);
+			var knowledge = Analyser.Analyse(diagnostics, tree);
 
-            if (diagnostics.Any()) return (diagnostics, string.Empty);
+			if (diagnostics.Any()) return (diagnostics, string.Empty);
 
-            var jsCode = new Generator(knowledge, tree).GenerateJs();
+			var jsCode = new Generator(knowledge, tree).GenerateJs();
 
-            if (diagnostics.Any()) throw new Exception($"code generation found errors:\n{diagnostics.Select(x => x.GetMessage()).Glue("\n")}");
+			if (diagnostics.Any()) throw new Exception($"code generation found errors:\n{diagnostics.Select(x => x.ToString()).Glue()}");
 
-            return (diagnostics, jsCode);
-        }
+			return (diagnostics, jsCode);
+		}
 
 
-        public static (HashSet<Error> diagnostics, string jsCode) Compile(IEnumerable<(string code, string file)> jurCode) {
+		public static (HashSet<Error> diagnostics, string jsCode) Compile(IEnumerable<(string code, string file)> jurCode) {
 
-            var diagnostics = new HashSet<Error>();
+			var diagnostics = new HashSet<Error>();
 
-            var tree = Parser.ParseFiles(diagnostics, jurCode);
+			var tree = Parser.ParseFiles(diagnostics, jurCode);
 
-            if (tree == null) return (diagnostics, string.Empty);
+			if (tree == null) return (diagnostics, string.Empty);
 
-            var knowledge = Analyser.Analyse(diagnostics, tree);
+			var knowledge = Analyser.Analyse(diagnostics, tree);
 
-            if (diagnostics.Any()) return (diagnostics, string.Empty);
+			if (diagnostics.Any()) return (diagnostics, string.Empty);
 
-            var jsCode = new Generator(knowledge, tree).GenerateJs();
+			var jsCode = new Generator(knowledge, tree).GenerateJs();
 
-            if (diagnostics.Any()) throw new Exception($"code generation found errors:\n{diagnostics.Select(x => x.GetMessage()).Glue("\n")}");
+			if (diagnostics.Any()) throw new Exception($"code generation found errors:\n{diagnostics.Select(x => x.ToString()).Glue()}");
 
-            return (diagnostics, jsCode);
-        }
-    }
+			return (diagnostics, jsCode);
+		}
+
+	}
 
 }

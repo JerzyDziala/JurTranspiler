@@ -8,7 +8,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
         //INode
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public IExpressionSyntax Array { get; }
         public IExpressionSyntax Index { get; }
@@ -20,7 +20,7 @@ namespace JurTranspiler.compilerSource.nodes {
             Index = ToExpression(context.expression(1));
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Array).Add(Index);
-            AllChildren = GetAllChildren();
+
         }
 
 

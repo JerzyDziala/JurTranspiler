@@ -8,7 +8,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class UninitializedVariableDeclarationSyntax : SyntaxNode, IStatementSyntax, IVariableDeclarationSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name { get; }
         public ITypeSyntax? Type { get; }
@@ -23,7 +23,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .Add(Type);
-            AllChildren = GetAllChildren();
+
         }
 
 

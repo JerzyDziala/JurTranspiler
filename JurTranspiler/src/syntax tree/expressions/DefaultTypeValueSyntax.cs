@@ -9,7 +9,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class DefaultTypeValueSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public ITypeSyntax Type { get; }
 
@@ -19,7 +19,7 @@ namespace JurTranspiler.compilerSource.nodes {
             Type = ToType(context.type());
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Type);
-            AllChildren = GetAllChildren();
+
         }
 
 

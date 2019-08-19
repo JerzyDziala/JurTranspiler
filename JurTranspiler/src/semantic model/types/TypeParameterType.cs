@@ -12,7 +12,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
     public class TypeParameterType : Type, IEquatable<TypeParameterType> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
         public override string Name { get; }
 
         public IStructOrFunctionDeclarationSyntax OriginalDeclarer { get; }
@@ -26,7 +26,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
             OriginalDeclarer = originalDeclarer;
             Constraints = constraints;
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -60,10 +60,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((TypeParameterType) obj);
         }
 

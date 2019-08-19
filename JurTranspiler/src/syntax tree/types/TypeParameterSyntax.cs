@@ -10,7 +10,7 @@ namespace JurTranspiler.src.syntax_tree.types {
     public class TypeParameterSyntax : SyntaxNode, ITypeSyntax, IEquatable<TypeParameterSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name { get; }
         public string FullName => Name;
@@ -21,7 +21,7 @@ namespace JurTranspiler.src.syntax_tree.types {
             OriginalDeclarer = originalDeclarer;
             Name = context.ID().GetText();
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -32,7 +32,7 @@ namespace JurTranspiler.src.syntax_tree.types {
             OriginalDeclarer = originalDeclarer;
             Name = name;
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -46,10 +46,10 @@ namespace JurTranspiler.src.syntax_tree.types {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((TypeParameterSyntax) obj);
         }
 

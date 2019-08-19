@@ -11,7 +11,7 @@ namespace JurTranspiler.src.syntax_tree.types {
     public class FunctionPointerTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<FunctionPointerTypeSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name => ReturnType.FullName + "(" + string.Join(",", Parameters.Select(x => x.FullName)) + ")";
         public ITypeSyntax ReturnType { get; }
@@ -33,7 +33,7 @@ namespace JurTranspiler.src.syntax_tree.types {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .Add(ReturnType)
                                               .AddRange(Parameters);
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -49,10 +49,10 @@ namespace JurTranspiler.src.syntax_tree.types {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((FunctionPointerTypeSyntax) obj);
         }
 

@@ -19,7 +19,8 @@ namespace JurTranspiler.Analysis.errors {
         private string leftName;
         private string rightName;
 
-        public override string GetMessage() => $"TypeMismatchInUseOfOperator ### {GetLocationString}, cannot perform operation: '{op}' on values of types '{leftName}' and '{rightName}'";
+        protected override string MessageBody => $"cannot perform operation: '{op}' on values of types '{leftName}' and '{rightName}'";
+
     }
 
 }

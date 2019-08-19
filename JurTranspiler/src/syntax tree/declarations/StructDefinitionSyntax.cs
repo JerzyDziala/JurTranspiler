@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class StructDefinitionSyntax : SyntaxNode, IStructOrFunctionDeclarationSyntax, IEquatable<StructDefinitionSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name { get; }
         public string FullName { get; }
@@ -37,7 +37,7 @@ namespace JurTranspiler.compilerSource.nodes {
                                               .AddRange(InlinedTypes)
                                               .AddRange(Fields);
 
-            AllChildren = GetAllChildren();
+
 
         }
 
@@ -54,10 +54,10 @@ namespace JurTranspiler.compilerSource.nodes {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((StructDefinitionSyntax) obj);
         }
 

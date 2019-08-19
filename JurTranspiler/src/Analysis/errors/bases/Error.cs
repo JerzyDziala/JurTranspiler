@@ -2,21 +2,24 @@ using System;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-    public class Error : IEquatable<Error> {
+	public abstract class Error : IEquatable<Error> {
 
-        public virtual string GetMessage() => "";
-
-
-        public virtual bool Equals(Error other) {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return string.Equals(GetMessage(), other.GetMessage());
-        }
+		protected abstract string Localization { get; }
+		protected abstract string MessageBody { get; }
+		protected string Message => GetType().Name + " --- " + Localization + " --- " + MessageBody;
 
 
-        public override string ToString() => GetMessage() + "\n";
+		public virtual bool Equals(Error other) {
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return string.Equals(Message, other.Message);
+		}
 
-        public override int GetHashCode() => GetMessage().GetHashCode();
-    }
+
+		public override string ToString() => Message + "\n";
+
+		public override int GetHashCode() => Message.GetHashCode();
+
+	}
 
 }

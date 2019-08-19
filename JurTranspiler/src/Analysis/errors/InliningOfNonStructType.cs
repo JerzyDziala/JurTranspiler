@@ -12,7 +12,8 @@ namespace JurTranspiler.compilerSource.nodes {
         }
 
 
-        public override string GetMessage() => $"InliningOfNonStructType ### {GetLocationString}, Name: {name}";
+        protected override string MessageBody => $"Name: {name}";
+
     }
 
 }

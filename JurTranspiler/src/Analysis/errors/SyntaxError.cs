@@ -1,16 +1,17 @@
 namespace JurTranspiler.compilerSource.Analysis {
 
-    public class SyntaxError : SingleLocationError{
+	public class SyntaxError : SingleLocationError {
 
-        private string Details;
-
-
-        public SyntaxError(string file, int line, string details) : base(file, line) {
-            Details = details;
-        }
+		private string details { get; }
 
 
-        public override string GetMessage() => $"SyntaxError ### {GetLocationString} ### {Details}";
-    }
+		public SyntaxError(string file, int line, string details) : base(file, line) {
+			this.details = details;
+		}
+
+
+		protected override string MessageBody => $"{details}";
+
+	}
 
 }

@@ -8,7 +8,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class GeneratedScopeSyntax : SyntaxNode, IStatementSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public IStatementSyntax Body { get; }
 
@@ -16,7 +16,7 @@ namespace JurTranspiler.compilerSource.nodes {
         public GeneratedScopeSyntax(ISyntaxNode parent, JurParser.StatementContext body) : base(parent, body, parent.Line) {
             Body = ToStatement(body);
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().AddIfNotNull(Body);
-            AllChildren = GetAllChildren();
+
         }
 
 

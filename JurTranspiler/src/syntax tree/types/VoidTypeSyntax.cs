@@ -10,7 +10,7 @@ namespace JurTranspiler.src.syntax_tree.types {
     public class VoidTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<VoidTypeSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name => "void";
         public string FullName => Name;
@@ -18,7 +18,7 @@ namespace JurTranspiler.src.syntax_tree.types {
 
         public VoidTypeSyntax(ISyntaxNode parent, int line) : base(parent, line) {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -34,10 +34,10 @@ namespace JurTranspiler.src.syntax_tree.types {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((VoidTypeSyntax) obj);
         }
 

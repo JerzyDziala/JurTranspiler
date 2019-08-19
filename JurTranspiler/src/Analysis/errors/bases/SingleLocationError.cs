@@ -2,6 +2,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 	public abstract class SingleLocationError : Error {
 
+		protected override string Localization => $"file: {file}line: {line}";
 		protected string file { get; }
 		protected int line { get; }
 
@@ -10,9 +11,6 @@ namespace JurTranspiler.compilerSource.Analysis {
 			this.file = file;
 			this.line = line;
 		}
-
-
-		protected string GetLocationString => $"File: {file}, Line: {line}";
 
 	}
 

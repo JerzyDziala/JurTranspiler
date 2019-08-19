@@ -11,7 +11,8 @@ namespace JurTranspiler.Analysis.errors {
 
 		private string name;
 
-		public override string GetMessage() => $"UseOfAmbiguousType ### {GetLocationString}, Name: {name}";
+		protected override string MessageBody => $"Name: {name}";
+
     }
 
 }

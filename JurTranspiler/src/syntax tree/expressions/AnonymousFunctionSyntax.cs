@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class AnonymousFunctionSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public ImmutableArray<UninitializedVariableDeclarationSyntax> Parameters { get; }
         public IStatementSyntax Body { get; }
@@ -31,7 +31,7 @@ namespace JurTranspiler.compilerSource.nodes {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .AddRange(Parameters)
                                               .AddIfNotNull(Body);
-            AllChildren = GetAllChildren();
+
 
         }
 

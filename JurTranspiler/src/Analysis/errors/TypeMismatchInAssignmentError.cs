@@ -11,11 +11,8 @@ namespace JurTranspiler.compilerSource.Analysis {
         private string leftName;
         private string rightName;
 
+        protected override string MessageBody => $"cannot assign value of type {rightName} to an expression of type {leftName}";
 
-
-
-
-        public override string GetMessage() => $"TypeMismatchInAssignment ### {GetLocationString}, cannot assign value of type {rightName} to an expression of type {leftName}";
     }
 
 }

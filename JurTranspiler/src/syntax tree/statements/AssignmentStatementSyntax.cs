@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class AssignmentStatementSyntax : SyntaxNode, IAssignment {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public IExpressionSyntax Left { get; }
         public IExpressionSyntax Right { get; }
@@ -19,7 +19,7 @@ namespace JurTranspiler.compilerSource.nodes {
             Right = ToExpression(context.expression(1));
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Left).Add(Right);
-            AllChildren = GetAllChildren();
+
         }
 
 

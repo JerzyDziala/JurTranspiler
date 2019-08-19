@@ -3,23 +3,23 @@ using System.Linq;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-    public class InliningResultsInMultipleFieldsWithTheSameName : SingleLocationError {
+	public class InliningResultsInMultipleFieldsWithTheSameName : SingleLocationError {
 
-        private string Name;
-        private IEnumerable<string> FieldOwnersNames;
-
-
-        public InliningResultsInMultipleFieldsWithTheSameName(string file,
-                                                              int line,
-                                                              string name,
-                                                              IEnumerable<string> fieldOwnersNames) : base(file, line) {
-            Name = name;
-            FieldOwnersNames = fieldOwnersNames;
-        }
+		private string fieldName { get; }
+		private IEnumerable<string> fieldOwnersNames { get; }
 
 
-        public override string GetMessage() => $"InliningResultsInMultipleFieldsWithTheSameName ### {GetLocationString} ### types: {string.Join(", ", FieldOwnersNames.Select(name => $"\"{name}\""))} all have field named: \"{Name}\"";
+		public InliningResultsInMultipleFieldsWithTheSameName(string file,
+		                                                      int line,
+		                                                      string fieldName,
+		                                                      IEnumerable<string> fieldOwnersNames) : base(file, line) {
+			this.fieldName = fieldName;
+			this.fieldOwnersNames = fieldOwnersNames;
+		}
 
-    }
+
+		protected override string MessageBody => $"types: {string.Join(", ", fieldOwnersNames.Select(name => $"\"{name}\""))} all have field named: \"{fieldName}\"";
+
+	}
 
 }

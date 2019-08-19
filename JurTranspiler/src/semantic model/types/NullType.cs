@@ -11,13 +11,12 @@ namespace JurTranspiler.compilerSource.semantic_model {
     public class NullType : Type, IEquatable<NullType> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
         public override string Name => "null";
 
 
         public NullType() {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = ImmutableArray.Create<ITreeNode>();
         }
 
 
@@ -31,10 +30,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((NullType) obj);
         }
 

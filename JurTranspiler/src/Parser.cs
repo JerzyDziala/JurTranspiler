@@ -7,37 +7,38 @@ using JurTranspiler.compilerSource.parsing.Implementations;
 
 namespace JurTranspiler.compilerSource {
 
-    public static class Parser {
+	public static class Parser {
 
-        public static SyntaxTree? ParseString(HashSet<Error> errors, string source) {
+		public static SyntaxTree? ParseString(HashSet<Error> errors, string source) {
 
-            var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(source))));
+			var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(source))));
 
-            parser.RemoveErrorListeners();
-            parser.AddErrorListener(new ParserErrorListener("__TEST__", errors));
+			parser.RemoveErrorListeners();
+			parser.AddErrorListener(new ParserErrorListener("__TEST__", errors));
 
-            var parsedProgram = parser.program();
+			var parsedProgram = parser.program();
 
-            return errors.Any() ? null : new SyntaxTree(parsedProgram);
-        }
+			return errors.Any() ? null : new SyntaxTree(parsedProgram);
+		}
 
 
-        public static SyntaxTree? ParseFiles(HashSet<Error> errors, IEnumerable<(string code, string file)> files) {
+		public static SyntaxTree? ParseFiles(HashSet<Error> errors, IEnumerable<(string code, string file)> files) {
 
-            List<(JurParser.ProgramContext, string)> parsedFiles = new List<(JurParser.ProgramContext, string)>();
+			var parsedFiles = new List<(JurParser.ProgramContext, string)>();
 
-            foreach ( (string code, string file) in files) {
-                var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(code))));
+			foreach (var (code, file) in files) {
+				var parser = new JurParser(new CommonTokenStream(new JurLexer(new AntlrInputStream(code))));
 
-                parser.RemoveErrorListeners();
-                parser.AddErrorListener(new ParserErrorListener(file, errors));
+				parser.RemoveErrorListeners();
+				parser.AddErrorListener(new ParserErrorListener(file, errors));
 
-                parsedFiles.Add((parser.program(), file));
+				parsedFiles.Add((parser.program(), file));
 
-            }
-            return errors.Any() ? null : new SyntaxTree(parsedFiles);
+			}
+			return errors.Any() ? null : new SyntaxTree(parsedFiles);
 
-        }
-    }
+		}
+
+	}
 
 }

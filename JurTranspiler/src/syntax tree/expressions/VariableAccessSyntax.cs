@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class VariableAccessSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name { get; }
 
@@ -16,7 +16,7 @@ namespace JurTranspiler.compilerSource.nodes {
             Name = context.ID().GetText();
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 

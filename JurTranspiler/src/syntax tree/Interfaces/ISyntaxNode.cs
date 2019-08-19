@@ -3,20 +3,17 @@ using JurTranspiler.compilerSource.Analysis;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public interface ISyntaxNode : ITreeNode {
+	public interface ISyntaxNode : ITreeNode {
 
-        int Abstraction { get; }
-        string File { get; }
-        int Line { get; }
-        ISyntaxNode Root { get; }
-        ISyntaxNode Parent { get; }
-        ImmutableArray<ISyntaxNode> AllParents { get; }
+		int Abstraction { get; }
+		string File { get; }
+		int Line { get; }
+		ISyntaxNode Root { get; }
+		ISyntaxNode? Parent { get; }
+		ImmutableArray<ISyntaxNode> AllParents { get; }
 
+		string ToJs(Knowledge knowledge);
 
-        string ToJs(Knowledge knowledge);
-
-    }
-
-
+	}
 
 }

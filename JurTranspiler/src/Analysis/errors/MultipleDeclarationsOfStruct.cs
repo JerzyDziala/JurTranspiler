@@ -3,21 +3,18 @@ using System.Linq;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-    public class MultipleDeclarationsOfStruct : Error {
+	public class MultipleDeclarationsOfStruct : MultipleLocationError {
 
-        private IEnumerable<(string file, int line)> locations;
-        private string Name;
-
-
-        public MultipleDeclarationsOfStruct(IEnumerable<(string file, int line)> locations, string name) {
-            this.locations = locations;
-            Name = name;
-        }
+		private string fieldName { get; }
 
 
-        private string GetLocationsString() => $"{string.Join(",\\n", locations.Select(x => $"File: {x.file}, Line: {x.line}"))}";
+		public MultipleDeclarationsOfStruct(IEnumerable<(string file, int line)> locations, string fieldName) : base(locations) {
+			this.fieldName = fieldName;
+		}
 
-        public override string GetMessage() => $"MultipleDeclarationsOfStructError ### Name: {Name}, Locations: {GetLocationsString()}";
-    }
+
+		protected override string MessageBody => $"FieldName: {fieldName}";
+
+	}
 
 }

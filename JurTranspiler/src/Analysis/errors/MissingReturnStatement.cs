@@ -8,7 +8,7 @@ namespace JurTranspiler.Analysis.errors {
 		}
 
 
-		public override string GetMessage() => $" ###MissingReturnStatement {GetLocationString}";
+		protected override string MessageBody => "";
 
 	}
 

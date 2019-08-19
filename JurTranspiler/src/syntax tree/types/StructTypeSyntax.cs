@@ -11,7 +11,7 @@ namespace JurTranspiler.src.syntax_tree.types {
     public class StructTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<StructTypeSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name { get; }
         public ImmutableArray<ITypeSyntax> TypeArguments { get; }
@@ -25,7 +25,7 @@ namespace JurTranspiler.src.syntax_tree.types {
             Name = context.ID().GetText();
             TypeArguments = ImmutableArray.Create<ITypeSyntax>();
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -33,7 +33,7 @@ namespace JurTranspiler.src.syntax_tree.types {
             Name = context.ID().GetText();
             TypeArguments = ToTypes(context.type());
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().AddRange(TypeArguments);
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -50,10 +50,10 @@ namespace JurTranspiler.src.syntax_tree.types {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((StructTypeSyntax) obj);
         }
 

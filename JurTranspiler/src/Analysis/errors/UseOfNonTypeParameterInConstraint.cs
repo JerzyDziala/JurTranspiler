@@ -11,10 +11,8 @@ namespace JurTranspiler.Analysis.errors {
 
         private string name;
 
+        protected override string MessageBody => $"Name: {name}";
 
-
-
-        public override string GetMessage() => $" ###UseOfNonTypeParameterInConstraint {GetLocationString}, Name: {name}";
     }
 
 }

@@ -2,11 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+        <NullableContextOptions>enable</NullableContextOptions>
+        <NullableReferenceTypes>true</NullableReferenceTypes>
+        <Nullable>enable</Nullable>
+        <LangVersion>8</LangVersion>
+        <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Roslynator" Version="0.2.10" />
-      <PackageReference Include="Roslynator.Analyzers" Version="2.1.0" />
-    </ItemGroup>
 
 </Project>

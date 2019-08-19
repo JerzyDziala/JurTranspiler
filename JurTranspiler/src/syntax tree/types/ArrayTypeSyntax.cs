@@ -10,7 +10,7 @@ namespace JurTranspiler.src.syntax_tree.types {
     public class ArrayTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<ArrayTypeSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public ITypeSyntax ElementType { get; }
         public string Name => ElementType.Name + "[]";
@@ -20,7 +20,7 @@ namespace JurTranspiler.src.syntax_tree.types {
         public ArrayTypeSyntax(ISyntaxNode parent, JurParser.ArrayTypeContext context) : base(parent, context) {
             ElementType = ToType(context.type());
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ElementType);
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -36,10 +36,10 @@ namespace JurTranspiler.src.syntax_tree.types {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((ArrayTypeSyntax) obj);
         }
 

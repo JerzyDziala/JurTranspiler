@@ -14,7 +14,7 @@ namespace JurTranspiler.Analysis.errors {
 		}
 
 
-		public override string GetMessage() => $" ###TypeMismatchInReturnStatement {GetLocationString}, returned type {returned} is not compatible with expected type {expected}";
+		protected override string MessageBody => $"returned type {returned} is not compatible with expected type {expected}";
 
 	}
 

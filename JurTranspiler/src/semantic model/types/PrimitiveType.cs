@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
     public class PrimitiveType : Type, IEquatable<PrimitiveType> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public override string Name => PrimitiveKind.ToString().ToLower();
 
@@ -21,7 +21,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public PrimitiveType(PrimitiveKind primitiveKind) {
             PrimitiveKind = primitiveKind;
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -35,10 +35,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((PrimitiveType) obj);
         }
 

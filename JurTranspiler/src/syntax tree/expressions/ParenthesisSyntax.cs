@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class ParenthesisSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public IExpressionSyntax Expression { get; }
 
@@ -15,7 +15,7 @@ namespace JurTranspiler.compilerSource.nodes {
         public ParenthesisSyntax(ISyntaxNode parent, JurParser.ParExpressionContext context) : base(parent, context) {
             Expression = ToExpression(context.expression());
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Expression);
-            AllChildren = GetAllChildren();
+
         }
 
 

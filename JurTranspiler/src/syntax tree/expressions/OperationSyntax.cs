@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class OperationSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Operator { get; }
         public IExpressionSyntax Left { get; }
@@ -17,11 +17,11 @@ namespace JurTranspiler.compilerSource.nodes {
         public OperationSyntax(ISyntaxNode parent, JurParser.OperationContext context) : base(parent, context) {
 
             var op = context.@operator?.Text ?? context.LOGICAL_AND()?.GetText() ?? context.OR()?.GetText();
-            Operator = op;
+            Operator = op!;
             Left = ToExpression(context.expression(0));
             Right = ToExpression(context.expression(1));
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Left).Add(Right);
-            AllChildren = GetAllChildren();
+
         }
 
 

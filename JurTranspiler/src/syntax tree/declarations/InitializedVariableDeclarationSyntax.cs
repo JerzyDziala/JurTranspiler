@@ -5,30 +5,30 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class InitializedVariableDeclarationSyntax : SyntaxNode, IStatementSyntax, IVariableDeclarationSyntax, IAssignment {
+	public class InitializedVariableDeclarationSyntax : SyntaxNode, IVariableDeclarationSyntax, IAssignment {
 
-        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+
 
 		public string Name { get; }
 		public IExpressionSyntax Initializer { get; }
 		public ITypeSyntax? Type { get; }
 
 
-		public InitializedVariableDeclarationSyntax(ISyntaxNode parent, JurParser.InitializedVariableDeclarationContext context) : base(parent, context){
+		public InitializedVariableDeclarationSyntax(ISyntaxNode parent, JurParser.InitializedVariableDeclarationContext context) : base(parent, context) {
 			Name = context.ID().GetText();
 			Initializer = ExpressionSyntaxFactory.Create(this, context.expression());
 			Type = ToType(context.type());
 
 			ImmediateChildren = ImmutableArray.Create<ITreeNode>()
-			                                 .Add(Type)
-			                                 .Add(Initializer);
-			AllChildren = GetAllChildren();
+			                                  .Add(Type)
+			                                  .Add(Initializer);
+
 
 		}
 
 
-                public override string ToJs(Knowledge knowledge) {
+		public override string ToJs(Knowledge knowledge) {
 			return $"let {Name} = {Initializer.ToJs(knowledge)};\n";
 		}
 

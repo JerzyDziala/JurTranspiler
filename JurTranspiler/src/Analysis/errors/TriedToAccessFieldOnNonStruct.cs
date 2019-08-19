@@ -15,7 +15,8 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        public override string GetMessage() => $"TriedToAccessFieldOnNonStruct ### {GetLocationString}, FieldName: {fieldName}, on type: {typeName}";
+        protected override string MessageBody => $"FieldName: {fieldName}, on type: {typeName}";
+
     }
 
 }

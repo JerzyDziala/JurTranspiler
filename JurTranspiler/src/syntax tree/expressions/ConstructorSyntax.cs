@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class ConstructorSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public ITypeSyntax ConstructedType { get; }
 
@@ -20,7 +20,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
             ConstructedType = ToType(context.type());
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ConstructedType);
-            AllChildren = GetAllChildren();
+
         }
 
 

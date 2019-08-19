@@ -2,21 +2,23 @@ using JurTranspiler.compilerSource.Analysis;
 
 namespace JurTranspiler.Analysis.errors {
 
-    public class AmbiguousFieldReference : SingleLocationError{
+	public class AmbiguousFieldReference : SingleLocationError {
 
-        private readonly string fieldName;
-        private readonly string typeName;
-
-        public AmbiguousFieldReference(string file, int line, string fieldName,string typeName) : base(file, line) {
-            this.fieldName = fieldName;
-            this.typeName = typeName;
-        }
+		private string fieldName { get; }
+		private string typeName { get; }
 
 
+		public AmbiguousFieldReference(string file,
+		                               int line,
+		                               string fieldName,
+		                               string typeName) : base(file, line) {
+			this.fieldName = fieldName;
+			this.typeName = typeName;
+		}
 
 
+		protected override string MessageBody => $"FieldName: {fieldName}, on type: {typeName}";
 
-        public override string GetMessage() => $"AmbiguousFieldReference ### {GetLocationString}, FieldName: {fieldName}, on type: {typeName}";
-    }
+	}
 
 }

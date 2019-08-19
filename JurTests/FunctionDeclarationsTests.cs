@@ -62,7 +62,7 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new MultipleDeclarationsOfVariableInScope(filesLinesLocations: new (string file, int line)[] {
+                new MultipleDeclarationsOfVariableInScope(locations: new (string file, int line)[] {
                                                               ("__TEST__", 3),
                                                               ("__TEST__", 3),
                                                               ("__TEST__", 4)

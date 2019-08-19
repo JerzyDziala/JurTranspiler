@@ -1,7 +1,5 @@
 using System;
-using System.Runtime.CompilerServices;
 using Antlr4.Runtime.Tree;
-using JurTranspiler.compilerSource.semantic_model;
 using JurTranspiler.src.syntax_tree.types;
 
 namespace JurTranspiler.compilerSource.nodes {

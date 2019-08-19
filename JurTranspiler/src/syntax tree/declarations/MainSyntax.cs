@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class MainSyntax : SyntaxNode {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public IStatementSyntax Body { get; }
 
@@ -17,7 +17,7 @@ namespace JurTranspiler.compilerSource.nodes {
             Body = StatementSyntaxFactory.Create(this, context.statement());
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Body);
-            AllChildren = GetAllChildren();
+
         }
 
 

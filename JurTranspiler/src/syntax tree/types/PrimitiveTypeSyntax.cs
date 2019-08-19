@@ -9,7 +9,7 @@ namespace JurTranspiler.compilerSource.parsing.Implementations {
     public class PrimitiveTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<PrimitiveTypeSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public virtual string Name { get; }
         public string FullName => Name;
@@ -18,7 +18,7 @@ namespace JurTranspiler.compilerSource.parsing.Implementations {
         public PrimitiveTypeSyntax(ISyntaxNode parent, JurParser.PrimitiveTypeContext context) : base(parent, context) {
             Name = context.PRIMITIVE().GetText();
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -29,10 +29,10 @@ namespace JurTranspiler.compilerSource.parsing.Implementations {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((PrimitiveTypeSyntax) obj);
         }
 

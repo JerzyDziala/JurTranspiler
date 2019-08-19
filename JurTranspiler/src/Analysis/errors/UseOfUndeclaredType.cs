@@ -9,7 +9,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 		private string name;
 
-		public override string GetMessage() => $"UseOfUndeclaredType ### {GetLocationString}, Name: {name}";
+		protected override string MessageBody => $"Name: {name}";
 
 	}
 

@@ -4,14 +4,15 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <NullableContextOptions>enable</NullableContextOptions>
+        <NullableReferenceTypes>true</NullableReferenceTypes>
+        <Nullable>enable</Nullable>
         <LangVersion>8</LangVersion>
+        <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.2" />
-        <PackageReference Include="Roslynator" Version="0.2.10" />
-        <PackageReference Include="Roslynator.Analyzers" Version="2.1.0" />
-        <PackageReference Include="System.Collections.Immutable" Version="1.6.0-preview6.19303.8" />
+        <PackageReference Include="System.Collections.Immutable" Version="1.6.0-preview8.19405.3" />
     </ItemGroup>
 
     <ItemGroup>

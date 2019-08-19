@@ -11,13 +11,13 @@ namespace JurTranspiler.compilerSource.semantic_model {
     public class UndefinedType : Type, IEquatable<UndefinedType> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
         public override string Name => "undefined";
 
 
         public UndefinedType() {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -31,10 +31,10 @@ namespace JurTranspiler.compilerSource.semantic_model {
         }
 
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((UndefinedType) obj);
         }
 

@@ -11,7 +11,7 @@ namespace JurTranspiler.Analysis.errors {
 
 		private string fullName;
 
-		public override string GetMessage() => $"UseOfUndeclaredFunction ### {GetLocationString}, Name: {fullName}";
+		protected override string MessageBody => $"Name: {fullName}";
 
 	}
 

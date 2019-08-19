@@ -2,16 +2,18 @@ using JurTranspiler.compilerSource.Analysis;
 
 namespace JurTranspiler.Analysis.errors {
 
-    public class CallArgumentsViolateParametersConstraints : SingleLocationError {
+	public class CallArgumentsViolateParametersConstraints : SingleLocationError {
 
-        private string callString;
-        public CallArgumentsViolateParametersConstraints(string file, int line, string callString) : base(file, line) {
-            this.callString = callString;
-        }
+		private string callString { get; }
 
 
-        public override string GetMessage() => $"FunctionCallArgumentsViolateGenericParametersConstraints ## {GetLocationString}, call: {callString}";
-    }
+		public CallArgumentsViolateParametersConstraints(string file, int line, string callString) : base(file, line) {
+			this.callString = callString;
+		}
 
+
+		protected override string MessageBody => $"call: {callString}";
+
+	}
 
 }

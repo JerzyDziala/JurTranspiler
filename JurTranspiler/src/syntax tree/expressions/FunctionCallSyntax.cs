@@ -12,7 +12,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class FunctionCallSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Name { get; }
         public bool IsPoly { get; }
@@ -31,7 +31,7 @@ namespace JurTranspiler.compilerSource.nodes {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .AddRange(Arguments)
                                               .AddRange(ExplicitTypeArguments);
-            AllChildren = GetAllChildren();
+
         }
 
 
@@ -45,7 +45,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
             if (boundCallableInfo.Substitutions.Any()) {
 
-                Func<string, string> withSubs = s => this.IsInGenericFunction() ? $"{s}._wst_(_s_)" : s;
+                Func<string, string> withSubs = s => IsInGenericFunction() ? $"{s}._wst_(_s_)" : s;
                 Func<string, string> toTypeArgumentString = s => withSubs($"_t_[{s.AsString()}]");
 
                 var subs = boundCallableInfo.Substitutions

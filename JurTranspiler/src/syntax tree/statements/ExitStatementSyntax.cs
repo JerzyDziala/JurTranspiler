@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
     public class ExitStatementSyntax : SyntaxNode, IStatementSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public string Message { get; }
 
@@ -17,7 +17,7 @@ namespace JurTranspiler.compilerSource.nodes {
             Message = context.STRING_VALUE().GetText();
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-            AllChildren = GetAllChildren();
+
         }
 
 

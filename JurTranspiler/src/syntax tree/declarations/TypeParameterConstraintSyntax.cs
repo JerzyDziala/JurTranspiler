@@ -7,7 +7,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
     public class TypeParameterConstraintSyntax : SyntaxNode {
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-        public override ImmutableArray<ITreeNode> AllChildren { get; }
+
 
         public ITypeSyntax Left { get; }
         public ITypeSyntax Right { get; }
@@ -21,7 +21,7 @@ namespace JurTranspiler.compilerSource.nodes {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .Add(Left)
                                               .Add(Right);
-            AllChildren = GetAllChildren();
+
         }
 
 

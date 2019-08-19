@@ -1,22 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using JurTranspiler.compilerSource.Analysis;
 
 namespace JurTranspiler.Analysis.errors {
 
-    public class UnableToInferReturnType : Error {
+	public class UnableToInferReturnType : MultipleLocationError {
 
-        private IEnumerable<(string file, int line)> locations;
-
-
-        public UnableToInferReturnType(IEnumerable<(string file, int line)> locations) {
-            this.locations = locations;
-        }
+		public UnableToInferReturnType(IEnumerable<(string file, int line)> locations) : base(locations) {
+		}
 
 
-        private string GetLocationsString() => $"{string.Join(",\\n", locations.Select(x => $"File: {x.file}, Line: {x.line}"))}";
+		protected override string MessageBody => $"";
 
-        public override string GetMessage() => $"UnableToInferReturnType ### Locations: {GetLocationsString()}";
-    }
+	}
 
 }

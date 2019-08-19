@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
 using JurTranspiler.compilerSource.nodes;
 
 namespace JurTranspiler.compilerSource.semantic_model {
