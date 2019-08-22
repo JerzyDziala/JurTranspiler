@@ -12,7 +12,6 @@ namespace JurTranspiler.compilerSource.nodes {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-
         public ITypeSyntax ConstructedType { get; }
 
 

@@ -31,6 +31,7 @@ GREQUAL: '>=';
 EQUAL: '==';
 WHERE: 'where';
 NOT_EQUAL: '!=';
+NOT: '!';
 LOGICAL_AND: '&&';
 OR: '||';
 
@@ -99,7 +100,6 @@ ANY: 'any';
 RETURN: 'return';
 BREAK: 'break';
 CONTINUE: 'continue';
-EXIT: 'exit';
 IF: 'if';
 ABSTRACTION : 'abstraction';
 MAIN: 'main';
@@ -199,7 +199,6 @@ statement : '{' statement* '}' #blockStatement
 		  | uninitializedVarDeclaration ';' #uninitializedVarDeclarationStatement
 		  | expression ASSIGN expression ';' #assignmentStatement
 		  | expression ';' #expressionStatement
-		  | EXIT '(' STRING_VALUE ')' #exitStatement
 		  ;
 
 block: '{' statement* '}'
@@ -217,6 +216,7 @@ expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE ) #pri
 		   | ID #variableAccess
 		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess
 		   | LEFT_PARENT expression RIGHT_PARENT #parExpression
+           | NOT expression #negation
            | expression operator=( TIMES | DIVIDE ) expression #operation
            | expression operator=( ADD | SUBTRACT ) expression #operation
            | expression operator=( LESS | GREATER | LEQUAL | GREQUAL ) expression #operation

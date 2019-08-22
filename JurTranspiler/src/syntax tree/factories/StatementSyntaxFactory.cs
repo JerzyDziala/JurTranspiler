@@ -16,7 +16,6 @@ namespace JurTranspiler.compilerSource.nodes {
 			if(context is JurParser.UninitializedVarDeclarationStatementContext uninitializedContext) return new UninitializedVariableDeclarationSyntax(parent,uninitializedContext.uninitializedVarDeclaration(),false);
 			if(context is JurParser.AssignmentStatementContext assignmentContext) return new AssignmentStatementSyntax(parent,assignmentContext);
 			if (context is JurParser.ExpressionStatementContext expressionContext) return new ExpressionStatementSyntax(parent, expressionContext);
-			if (context is JurParser.ExitStatementContext exitStatementContext) return new ExitStatementSyntax(parent, exitStatementContext);
 
             throw new Exception("WTF");
 		}

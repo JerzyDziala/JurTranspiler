@@ -16,6 +16,7 @@ namespace JurTranspiler.compilerSource.nodes {
             if (context is JurParser.OperationContext operationContext) return new OperationSyntax(parent, operationContext);
             if (context is JurParser.DefaultValueContext defaultContext) return new DefaultTypeValueSyntax(parent, defaultContext);
             if (context is JurParser.TypeExpressionContext typeExpressionContext) return new TypeExpressionSyntax(parent, typeExpressionContext);
+            if (context is JurParser.NegationContext negationContext) return new NegationExpressionSyntax(parent, negationContext);
 
             throw new Exception("You forgot to add new expression here");
         }
