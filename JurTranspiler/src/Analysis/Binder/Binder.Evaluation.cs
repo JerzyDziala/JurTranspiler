@@ -235,7 +235,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
         private IType BindExpressionCore(VariableAccessSyntax syntax) {
-            var declaration = symbols.GetVisibleDeclarationOrNull(syntax);
+            var declaration = syntax.GetVisibleDeclarationOrNull();
 
             if (declaration == null) {
                 //error: use of undeclared variable

@@ -10,124 +10,125 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-	public partial class Binder {
+    public partial class Binder {
 
-		private FunctionCallInfo CheckConstraintsAndReturn(OverloadCompatibility compatibility, CallLocation location) {
-			if (RespectsAllConstraints(compatibility.Substitutions)) {
-				return new FunctionCallInfo(AfterSubstitution(compatibility), compatibility.Substitutions);
-			}
+        private FunctionCallInfo CheckConstraintsAndReturn(OverloadCompatibility compatibility, CallLocation location) {
+            if (RespectsAllConstraints(compatibility.Substitutions)) {
+                return new FunctionCallInfo(AfterSubstitution(compatibility), compatibility.Substitutions);
+            }
 
-			errors.Add(new CallArgumentsViolateParametersConstraints(location.File, location.Line, location.CallString));
-			return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
-		}
-
-
-		private IEnumerable<OverloadCompatibility> GetOverloadsCompatibilityInfo(IReadOnlyList<IType> explicitTypeArguments,
-		                                                                         IReadOnlyList<IType> argumentsTypes,
-		                                                                         IEnumerable<Callable> overloads,
-		                                                                         bool isPoly) {
-
-			return overloads.Select(overload => GetOverloadCompatibility(explicitTypeArguments: explicitTypeArguments,
-			                                                             argumentsTypes: argumentsTypes,
-			                                                             isPoly: isPoly,
-			                                                             checkParamArgCompileTimeCompatibilityAndSubstitute: (par, arg, subs) => IsAssignableToWithSubstitutions(arg, par, subs),
-			                                                             checkParamArgRuntimeCompatibility: (par, arg) => symbols.TypesBindings.Values.Any(t => IsAssignableTo(t, arg) && IsAssignableTo(t, par)),
-			                                                             overload: overload));
-		}
+            errors.Add(new CallArgumentsViolateParametersConstraints(location.File, location.Line, location.CallString));
+            return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
+        }
 
 
-		private bool IsPerfectCompatibility(OverloadCompatibility overloadCompatibility) {
+        private IEnumerable<OverloadCompatibility> GetOverloadsCompatibilityInfo(IReadOnlyList<IType> explicitTypeArguments,
+                                                                                 IReadOnlyList<IType> argumentsTypes,
+                                                                                 IEnumerable<Callable> overloads,
+                                                                                 bool isPoly) {
 
-			var callableWithSubstitutions = AfterSubstitution(overloadCompatibility);
-
-			Func<Func<IType, IType, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(callableWithSubstitutions.ParametersTypes, overloadCompatibility.argumentTypes, predicate);
-			Func<IType, IType, bool> arePerfectlyCompatible = (param, arg) => param.Equals(arg);
-
-			return AllParamArgPairs(arePerfectlyCompatible);
-		}
-
-
-		private OverloadCompatibility GetOverloadCompatibility(IEnumerable<IType> explicitTypeArguments,
-		                                                       IReadOnlyList<IType> argumentsTypes,
-		                                                       bool isPoly,
-		                                                       Func<IType, IType, HashSet<Substitution>, bool> checkParamArgCompileTimeCompatibilityAndSubstitute,
-		                                                       Func<IType, IType, bool> checkParamArgRuntimeCompatibility,
-		                                                       Callable overload) {
-
-			var substitutions = new HashSet<Substitution>(GetSubstitutionsFromExplicitTypeArguments(explicitTypeArguments, overload));
-
-			//partial applications
-			Func<Func<IType, IType, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(overload.ParametersTypes, argumentsTypes, predicate);
-			Func<IType, IType, bool> checkCompileTimeCompatibility = (param, arg) => checkParamArgCompileTimeCompatibilityAndSubstitute(param, arg, substitutions);
-
-			return new OverloadCompatibility(callable: overload,
-			                                 substitutions: substitutions,
-			                                 allArgumentsAreCompatible: isPoly ? AllParamArgPairs(checkParamArgRuntimeCompatibility) : AllParamArgPairs(checkCompileTimeCompatibility),
-			                                 allTypeParametersHaveOneSubstitution: overload.TypeParameters.All(t => substitutions.One(sub => sub.typeParameter.Equals(t))),
-			                                 argumentsTypes);
-		}
+            return overloads.Select(overload => GetOverloadCompatibility(explicitTypeArguments: explicitTypeArguments,
+                                                                         argumentsTypes: argumentsTypes,
+                                                                         isPoly: isPoly,
+                                                                         checkParamArgCompileTimeCompatibilityAndSubstitute: (par, arg, subs) => IsAssignableToWithSubstitutions(arg, par, subs),
+                                                                         checkParamArgRuntimeCompatibility: (par, arg) => symbols.TypesBindings.Values.Any(t => IsAssignableTo(t, arg) && IsAssignableTo(t, par)),
+                                                                         overload: overload));
+        }
 
 
-		private IEnumerable<Substitution> GetSubstitutionsFromExplicitTypeArguments(IEnumerable<IType> explicitTypeArguments, Callable overload) {
-			var typeArguments = explicitTypeArguments.ToList();
-			var limit = typeArguments.Count < overload.TypeParameters.Length
-				            ? typeArguments.Count
-				            : overload.TypeParameters.Length;
+        private bool IsPerfectCompatibility(OverloadCompatibility overloadCompatibility) {
 
-			var subs = new HashSet<Substitution>();
-			for (var i = 0; i < limit; i++) {
-				subs.Add(new Substitution((TypeParameterType) overload.TypeParameters[i], typeArguments[i]));
-			}
+            var callableWithSubstitutions = AfterSubstitution(overloadCompatibility);
 
-			return subs;
-		}
+            Func<Func<IType, IType, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(callableWithSubstitutions.ParametersTypes, overloadCompatibility.argumentTypes, predicate);
+            Func<IType, IType, bool> arePerfectlyCompatible = (param, arg) => param.Equals(arg);
+
+            return AllParamArgPairs(arePerfectlyCompatible);
+        }
 
 
-		private List<Callable> GetOverloadsFor(FunctionCallSyntax syntax) {
-			var potentialFunctions = symbols.GetVisibleDefinitionsFor(syntax)
-			                                .Select(BindFunctionDefinition);
+        private OverloadCompatibility GetOverloadCompatibility(IEnumerable<IType> explicitTypeArguments,
+                                                               IReadOnlyList<IType> argumentsTypes,
+                                                               bool isPoly,
+                                                               Func<IType, IType, HashSet<Substitution>, bool> checkParamArgCompileTimeCompatibilityAndSubstitute,
+                                                               Func<IType, IType, bool> checkParamArgRuntimeCompatibility,
+                                                               Callable overload) {
 
-			var potentialFunctionPointers = symbols.GetVisibleVariablesInScope(syntax)
-			                                       .Where(variable => BindVariableType(variable) is FunctionPointerType pointerType
-			                                                       && pointerType.Parameters.Length == syntax.Arguments.Length
-			                                                       && variable.Name == syntax.Name)
-			                                       .Select(pointerVariable => {
-				                                       var pointerType = (FunctionPointerType) BindVariableType(pointerVariable);
-				                                       return new FunctionPointer(name: pointerVariable.Name,
-				                                                                  parametersTypes: pointerType.Parameters,
-				                                                                  returnType: pointerType.ReturnType);
-			                                       });
+            var substitutions = new HashSet<Substitution>(GetSubstitutionsFromExplicitTypeArguments(explicitTypeArguments, overload));
 
-			return potentialFunctions.Concat<Callable>(potentialFunctionPointers).ToList();
-		}
+            //partial applications
+            Func<Func<IType, IType, bool>, bool> AllParamArgPairs = predicate => _.TrueForAllPairs(overload.ParametersTypes, argumentsTypes, predicate);
+            Func<IType, IType, bool> checkCompileTimeCompatibility = (param, arg) => checkParamArgCompileTimeCompatibilityAndSubstitute(param, arg, substitutions);
 
-
-		private bool RespectsAllConstraints(ImmutableHashSet<Substitution> substitutions) {
-			return substitutions.All(sub => sub.typeParameter
-			                                   .GetAllConstraints()
-			                                   .All(constraint => IsAssignableTo(sub.typeArgument,
-			                                                                     substitutions.First(s => s.typeParameter.Equals(constraint)).typeArgument)));
-		}
+            return new OverloadCompatibility(callable: overload,
+                                             substitutions: substitutions,
+                                             allArgumentsAreCompatible: isPoly ? AllParamArgPairs(checkParamArgRuntimeCompatibility) : AllParamArgPairs(checkCompileTimeCompatibility),
+                                             allTypeParametersHaveOneSubstitution: overload.TypeParameters.All(t => substitutions.One(sub => sub.typeParameter.Equals(t))),
+                                             argumentsTypes);
+        }
 
 
-		private Callable AfterSubstitution(OverloadCompatibility overload) {
-			return overload.Callable is FunctionSignature signature
-				       ? signature.WithSubstitutedTypes(overload.Substitutions)
-				       : overload.Callable;
-		}
+        private IEnumerable<Substitution> GetSubstitutionsFromExplicitTypeArguments(IEnumerable<IType> explicitTypeArguments, Callable overload) {
+            var typeArguments = explicitTypeArguments.ToList();
+            var limit = typeArguments.Count < overload.TypeParameters.Length
+                            ? typeArguments.Count
+                            : overload.TypeParameters.Length;
+
+            var subs = new HashSet<Substitution>();
+            for (var i = 0; i < limit; i++) {
+                subs.Add(new Substitution((TypeParameterType) overload.TypeParameters[i], typeArguments[i]));
+            }
+
+            return subs;
+        }
 
 
-		private FunctionCallInfo CouldNotFindMatchingOverload(CallLocation location) {
-			errors.Add(new NoMatchingOverloadForCall(location.File, location.Line, location.CallString));
-			return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
-		}
+        private List<Callable> GetOverloadsFor(FunctionCallSyntax syntax) {
+            var potentialFunctions = symbols.GetVisibleDefinitionsFor(syntax)
+                                            .Select(BindFunctionDefinition);
+
+            var potentialFunctionPointers = syntax.GetVisibleVariablesInScope()
+                                                  .Where(variable => BindVariableType(variable) is FunctionPointerType pointerType
+                                                                  && pointerType.Parameters.Length == syntax.Arguments.Length
+                                                                  && variable.Name == syntax.Name)
+                                                  .Select(pointerVariable => {
+                                                      var pointerType = (FunctionPointerType) BindVariableType(pointerVariable);
+                                                      return new FunctionPointer(declaration: pointerVariable,
+                                                                                 name: pointerVariable.Name,
+                                                                                 parametersTypes: pointerType.Parameters,
+                                                                                 returnType: pointerType.ReturnType);
+                                                  });
+
+            return potentialFunctions.Concat<Callable>(potentialFunctionPointers).ToList();
+        }
 
 
-		private FunctionCallInfo AmbiguousFunctionCall(CallLocation location) {
-			errors.Add(new CouldNotResolveAmbiguousFunctionCall(location.File, location.Line, location.CallString));
-			return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
-		}
+        private bool RespectsAllConstraints(ImmutableHashSet<Substitution> substitutions) {
+            return substitutions.All(sub => sub.typeParameter
+                                               .GetAllConstraints()
+                                               .All(constraint => IsAssignableTo(sub.typeArgument,
+                                                                                 substitutions.First(s => s.typeParameter.Equals(constraint)).typeArgument)));
+        }
 
-	}
+
+        private Callable AfterSubstitution(OverloadCompatibility overload) {
+            return overload.Callable is FunctionSignature signature
+                       ? signature.WithSubstitutedTypes(overload.Substitutions)
+                       : overload.Callable;
+        }
+
+
+        private FunctionCallInfo CouldNotFindMatchingOverload(CallLocation location) {
+            errors.Add(new NoMatchingOverloadForCall(location.File, location.Line, location.CallString));
+            return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
+        }
+
+
+        private FunctionCallInfo AmbiguousFunctionCall(CallLocation location) {
+            errors.Add(new CouldNotResolveAmbiguousFunctionCall(location.File, location.Line, location.CallString));
+            return new FunctionCallInfo(new ErrorSignature(new UndefinedType()), ImmutableHashSet<Substitution>.Empty);
+        }
+
+    }
 
 }

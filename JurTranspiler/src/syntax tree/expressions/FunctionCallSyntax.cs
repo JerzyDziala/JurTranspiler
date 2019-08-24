@@ -4,6 +4,7 @@ using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.compilerSource.CodeGeneration;
 using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.compilerSource.semantic_model.functions;
 using JurTranspiler.syntax_tree.bases;
 using UtilityLibrary;
 
@@ -12,7 +13,6 @@ namespace JurTranspiler.compilerSource.nodes {
     public class FunctionCallSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-
 
         public string Name { get; }
         public bool IsPoly { get; }
@@ -41,6 +41,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
             if (IsPoly) throw new NotImplementedException("poly methods are not supported yet");
 
+            //generate arguments with or without substitutions
             var args = $"{Arguments.Select(x => x.ToJs(knowledge)).Glue(", ")}";
 
             if (boundCallableInfo.Substitutions.Any()) {
@@ -53,9 +54,16 @@ namespace JurTranspiler.compilerSource.nodes {
                                             .AsArray();
                 if (boundCallableInfo.Callable.Arity > 0) args += ", ";
                 args += subs;
-
             }
-            return $"{knowledge.GetNewNameFor(this)}({args})";
+
+            string getNewName() {
+                //if it is a function pointer then we have to use the new name of the variable in with it was declared
+                return boundCallableInfo.Callable is FunctionPointer pointer
+                           ? knowledge.GetNewNameFor(pointer.declaration)
+                           : knowledge.GetNewNameFor(this);
+            }
+
+            return $"{getNewName()}({args})";
         }
 
     }

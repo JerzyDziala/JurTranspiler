@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
+using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
@@ -18,15 +19,21 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        public void GenerateNewCallableNames() {
+        private void GenerateNewCallableNames() {
             //TODO: check for mistakes
             symbols.FunctionSignaturesBindings.Values.ToImmutableArray()
                    .Where(x => !x.IsExtern)
                    .GroupBy(x => x.Name)
-                   .ToList()
                    .ForEach(g => {
-                       foreach (var f in g) symbols.NewNames.Add(f, f.Name + "$" + GetUniqueId().ToString());
+                       foreach (var f in g) symbols.NewFunctionNames.Add(f, f.Name + "$" + GetUniqueId().ToString());
                    });
+        }
+
+
+        private void GenerateNewVariableNames() {
+
+            symbols.Tree.VariableDeclarations
+                   .ForEach(declaration => symbols.NewVariableNames[declaration] = declaration.Name + "$" + GetUniqueId().ToString());
         }
 
     }

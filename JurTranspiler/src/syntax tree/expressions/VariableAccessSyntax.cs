@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Linq;
 using JurTranspiler.compilerSource.Analysis;
 using JurTranspiler.syntax_tree.bases;
 
@@ -7,7 +8,6 @@ namespace JurTranspiler.compilerSource.nodes {
     public class VariableAccessSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-
 
         public string Name { get; }
 
@@ -21,9 +21,22 @@ namespace JurTranspiler.compilerSource.nodes {
 
 
         public override string ToJs(Knowledge knowledge) {
-            return Name;
+            return knowledge.GetNewNameFor(this);
         }
 
+
+        private ImmutableArray<IVariableDeclarationSyntax> GetVisibleDeclarations() {
+            return GetVisibleVariablesInScope().Where(x => x.Name == this.Name).ToImmutableArray();
+        }
+
+
+        public IVariableDeclarationSyntax? GetVisibleDeclarationOrNull() {
+            var declarations = GetVisibleDeclarations();
+            return declarations.Any()
+                       ? declarations.First()
+                       : null;
+
+        }
     }
 
 }

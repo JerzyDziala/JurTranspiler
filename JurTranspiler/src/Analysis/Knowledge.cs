@@ -18,22 +18,25 @@ namespace JurTranspiler.compilerSource.Analysis {
         public ImmutableDictionary<FunctionCallSyntax, FunctionCallInfo> FunctionCallsBindings { get; }
         public ImmutableDictionary<IExpressionSyntax, IType> ExpressionsBindings { get; }
 
-        private readonly ImmutableDictionary<ICallable, string> NewNames;
+        private readonly ImmutableDictionary<ICallable, string> NewCallableNames;
+        private readonly ImmutableDictionary<IVariableDeclarationSyntax, string> NewVariableNames;
 
 
         public Knowledge(IEnumerable<IType> allTypes,
                          IDictionary<ITypeSyntax, IType> typesBindings,
                          IDictionary<StructType, ImmutableArray<Field>> fields,
                          IDictionary<ICallable, string> newNames,
+                         IDictionary<IVariableDeclarationSyntax, string> newVariableNames,
                          IDictionary<FunctionDefinitionSyntax, FunctionSignature> functionSignaturesBindings,
                          IDictionary<FunctionCallSyntax, FunctionCallInfo> functionCallsBindings,
                          IDictionary<StructDefinitionSyntax, IType> structDefinitionsBindings,
                          IDictionary<IExpressionSyntax, IType> expressionsBindings) {
+            NewVariableNames = newVariableNames.ToImmutableDictionary();
+            NewCallableNames = newNames.ToImmutableDictionary();
             ExpressionsBindings = expressionsBindings.ToImmutableDictionary();
             StructDefinitionsBindings = structDefinitionsBindings.ToImmutableDictionary();
             FunctionCallsBindings = functionCallsBindings.ToImmutableDictionary();
             FunctionSignaturesBindings = functionSignaturesBindings.ToImmutableDictionary();
-            NewNames = newNames.ToImmutableDictionary();
             Fields = fields.ToImmutableDictionary();
             AllTypes = allTypes.ToImmutableArray();
             TypesBindings = typesBindings.ToImmutableDictionary();
@@ -43,7 +46,7 @@ namespace JurTranspiler.compilerSource.Analysis {
         public string GetNewNameFor(FunctionDefinitionSyntax definition) {
             return definition.IsExtern
                        ? definition.Name
-                       : NewNames[FunctionSignaturesBindings[definition]];
+                       : NewCallableNames[FunctionSignaturesBindings[definition]];
         }
 
 
@@ -55,10 +58,20 @@ namespace JurTranspiler.compilerSource.Analysis {
             if (callable is FunctionPointer pointer) return pointer.Name;
 
             if (callable is FunctionSignature signature) {
-                return signature.IsExtern ? signature.Name : NewNames[signature];
+                return signature.IsExtern ? signature.Name : NewCallableNames[signature];
             }
 
             throw new Exception("impossible");
+        }
+
+
+        public string GetNewNameFor(VariableAccessSyntax access) {
+            return GetNewNameFor(access.GetVisibleDeclarationOrNull()!);
+        }
+
+
+        public string GetNewNameFor(IVariableDeclarationSyntax declaration) {
+            return NewVariableNames[declaration];
         }
     }
 

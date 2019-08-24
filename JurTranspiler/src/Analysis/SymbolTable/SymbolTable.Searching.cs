@@ -18,40 +18,6 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 
 		//searching
-		public IVariableDeclarationSyntax? GetVisibleDeclarationOrNull(VariableAccessSyntax variableAccess) {
-			var declarations = GetVisibleDeclarations(variableAccess);
-			return declarations.Any()
-				       ? declarations.First()
-				       : null;
-
-		}
-
-
-		private ImmutableArray<IVariableDeclarationSyntax> GetVisibleDeclarations(VariableAccessSyntax accessSyntax) {
-			return GetVisibleVariablesInScope(accessSyntax).Where(x => x.Name == accessSyntax.Name).ToImmutableArray();
-		}
-
-
-		public ImmutableArray<IVariableDeclarationSyntax> GetVisibleVariablesInScope(ISyntaxNode scope) {
-
-			var declarations = new List<IVariableDeclarationSyntax>();
-			ITreeNode previousScope = scope;
-			var parentScope = scope.Parent;
-
-			while (parentScope != null) {
-				foreach (var node in parentScope.ImmediateChildren) {
-					if (ReferenceEquals(node, previousScope)) break;
-					if (node is IVariableDeclarationSyntax declaration) {
-						declarations.Add(declaration);
-					}
-				}
-				previousScope = parentScope;
-				parentScope = parentScope.Parent;
-			}
-
-			return declarations.ToImmutableArray();
-		}
-
 
 		public StructDefinitionSyntax? GetVisibleDefinitionOrNull(StructTypeSyntax syntax) {
 			var definitions = GetVisibleDefinitionsFor(syntax);

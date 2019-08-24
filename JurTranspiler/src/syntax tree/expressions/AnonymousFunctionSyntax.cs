@@ -12,7 +12,6 @@ namespace JurTranspiler.compilerSource.nodes {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-
         public ImmutableArray<UninitializedVariableDeclarationSyntax> Parameters { get; }
         public IStatementSyntax Body { get; }
         public bool IsExpressionStatementLambda { get; }
@@ -32,7 +31,6 @@ namespace JurTranspiler.compilerSource.nodes {
                                               .AddRange(Parameters)
                                               .AddIfNotNull(Body);
 
-
         }
 
 
@@ -50,9 +48,10 @@ namespace JurTranspiler.compilerSource.nodes {
 
             return (Body is ExpressionStatementSyntax statement
                         ? knowledge.ExpressionsBindings[statement.ExpressionSyntax] is VoidType
-                              ? $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{{statement.ExpressionSyntax.ToJs(knowledge)};}}"
-                              : $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{return {statement.ExpressionSyntax.ToJs(knowledge)};}}"
-                        : $"function({Parameters.Select(x => x.Name).Glue(", ")}) {{{Body.ToJs(knowledge)}}}").WithTypeNameNoParents($"{t}.name");
+                              ? $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{{statement.ExpressionSyntax.ToJs(knowledge)};}}"
+                              : $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{return {statement.ExpressionSyntax.ToJs(knowledge)};}}"
+                        : $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{{Body.ToJs(knowledge)}}}")
+                .WithTypeNameNoParents($"{t}.name");
         }
 
     }

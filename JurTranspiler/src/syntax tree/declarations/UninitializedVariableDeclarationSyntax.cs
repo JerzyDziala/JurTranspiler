@@ -9,7 +9,6 @@ namespace JurTranspiler.compilerSource.nodes {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-
         public string Name { get; }
         public ITypeSyntax? Type { get; }
         public bool IsParameter { get; }
@@ -28,7 +27,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
 
         public override string ToJs(Knowledge knowledge) {
-            return $"let {Name};\n";
+            return $"let {knowledge.GetNewNameFor(this)};\n";
         }
 
     }

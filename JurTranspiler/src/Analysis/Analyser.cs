@@ -7,17 +7,16 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-	public static class Analyser {
+    public static class Analyser {
 
-		public static Knowledge Analyse(HashSet<Error> errors, SyntaxTree tree) {
+        public static Knowledge Analyse(HashSet<Error> errors, SyntaxTree tree) {
 
-			var binder = new Binder(tree, errors);
+            var binder = new Binder(tree, errors);
 
 
-			binder.GenerateNewCallableNames();
-			return binder.Knowledge;
-		}
+            return binder.Knowledge;
+        }
 
-	}
+    }
 
 }
