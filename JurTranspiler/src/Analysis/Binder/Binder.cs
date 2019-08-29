@@ -99,7 +99,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                                           .GroupBy(x => x.NonGenericName + " " + x.Arity.ToString())
                                           .Where(x => x.MoreThenOne());
             foreach (var duplicate in structDuplicates) {
-                errors.Add(new MultipleDeclarationsOfStruct(duplicate.Select(x => (x.OriginalDefinitionSyntax.File, x.OriginalDefinitionSyntax.Line)),
+                errors.Add(new MultipleDeclarationsOfStruct(duplicate.Select(x => new Location(x.OriginalDefinitionSyntax.File, x.OriginalDefinitionSyntax.Line)),
                                                             duplicate.First().NonGenericName));
             }
 
@@ -109,7 +109,7 @@ namespace JurTranspiler.compilerSource.Analysis {
                                              .Where(x => x.MoreThenOne())
                                              .ToList();
             foreach (var duplicate in functionsDuplicates) {
-                errors.Add(new MultipleDeclarationsOfFunction(duplicate.Select(x => (x.OriginalDefinition.File, x.OriginalDefinition.Line)), duplicate.First().Name));
+                errors.Add(new MultipleDeclarationsOfFunction(duplicate.Select(x => new Location(x.OriginalDefinition.File, x.OriginalDefinition.Line)), duplicate.First().Name));
             }
         }
 

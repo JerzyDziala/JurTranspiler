@@ -230,7 +230,7 @@ namespace JurTranspilerTests {
                                             line: 10,
                                             fieldName: "a",
                                             typeName: "A"),
-                new MultipleFieldsWithTheSameName(new (string file, int line)[] {("__TEST__", 4), ("__TEST__", 5)},
+                new MultipleFieldsWithTheSameName(new Location[] {new Location("__TEST__", 4), new Location("__TEST__", 5)},
                                                   "a"),
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
@@ -333,7 +333,7 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new MultipleTypeParametersWithTheSameName(locations: new (string file, int line)[] {("__TEST__", 3), ("__TEST__", 3)},
+                new MultipleTypeParametersWithTheSameName(locations: new Location[] {new Location("__TEST__", 3), new Location("__TEST__", 3)},
                                                           name: "T"),
                 new UseOfUndeclaredType(file: "__TEST__", line: 5, name: "G"),
 

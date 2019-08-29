@@ -62,10 +62,10 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new MultipleDeclarationsOfVariableInScope(locations: new (string file, int line)[] {
-                                                              ("__TEST__", 3),
-                                                              ("__TEST__", 3),
-                                                              ("__TEST__", 4)
+                new MultipleDeclarationsOfVariableInScope(locations: new Location[] {
+                                                              new Location("__TEST__", 3),
+                                                              new Location("__TEST__", 3),
+                                                              new Location("__TEST__", 4)
                                                           },
                                                           name: "a"),
             };
@@ -88,9 +88,9 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new MultipleTypeParametersWithTheSameName(locations: new (string file, int line)[] {
-                                                              ("__TEST__", 3),
-                                                              ("__TEST__", 3)
+                new MultipleTypeParametersWithTheSameName(locations: new Location[] {
+                                                              new Location("__TEST__", 3),
+                                                              new Location("__TEST__", 3)
                                                           },
                                                           name: "T")
             };

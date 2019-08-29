@@ -19,7 +19,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public IType ReturnType { get; }
         public ImmutableArray<IType> Parameters { get; }
 
-
         public FunctionPointerType(IType returnType, IEnumerable<IType> parameters) {
             ReturnType = returnType;
             Parameters = parameters.ToImmutableArray();

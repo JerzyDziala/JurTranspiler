@@ -23,9 +23,9 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 4),
-					                                          ("__TEST__", 5)
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 4),
+					                                          new Location("__TEST__", 5)
 				                                          },
 				                                          "a"),
 			};
@@ -49,10 +49,10 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 3),
-					                                          ("__TEST__", 4),
-					                                          ("__TEST__", 5)
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 3),
+					                                          new Location("__TEST__", 4),
+					                                          new Location("__TEST__", 5)
 				                                          },
 				                                          "a"),
 			};
@@ -87,34 +87,34 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 3),
-					                                          ("__TEST__", 4),
-					                                          ("__TEST__", 6),
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 3),
+					                                          new Location("__TEST__", 4),
+					                                          new Location("__TEST__", 6),
 				                                          },
 				                                          "a"),
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 8),
-					                                          ("__TEST__", 4),
-					                                          ("__TEST__", 3),
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 8),
+					                                          new Location("__TEST__", 4),
+					                                          new Location("__TEST__", 3),
 				                                          },
 				                                          "a"),
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 3),
-					                                          ("__TEST__", 4),
-					                                          ("__TEST__", 9),
-					                                          ("__TEST__", 10),
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 3),
+					                                          new Location("__TEST__", 4),
+					                                          new Location("__TEST__", 9),
+					                                          new Location("__TEST__", 10),
 				                                          },
 				                                          "a"),
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 3),
-					                                          ("__TEST__", 4),
-					                                          ("__TEST__", 12),
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 3),
+					                                          new Location("__TEST__", 4),
+					                                          new Location("__TEST__", 12),
 				                                          },
 				                                          "a"),
-				new MultipleDeclarationsOfVariableInScope(new (string file, int line)[] {
-					                                          ("__TEST__", 14),
-					                                          ("__TEST__", 15),
+				new MultipleDeclarationsOfVariableInScope(new Location[] {
+					                                          new Location("__TEST__", 14),
+					                                          new Location("__TEST__", 15),
 				                                          },
 				                                          "a"),
 			};
@@ -155,9 +155,9 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(jurCode: code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfVariableInScope(locations: new (string file, int line)[] {
-					                                          ("__TEST__", 6),
-					                                          ("__TEST__", 6)
+				new MultipleDeclarationsOfVariableInScope(locations: new Location[] {
+					                                          new Location("__TEST__", 6),
+					                                          new Location("__TEST__", 6)
 				                                          },
 				                                          name: "a"),
 				new TypeMismatchInAssignmentError(file: "__TEST__",
@@ -239,20 +239,20 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(jurCode: code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfVariableInScope(locations: new (string file, int line)[] {
-					                                          ("__TEST__", 17),
-					                                          ("__TEST__", 7)
+				new MultipleDeclarationsOfVariableInScope(locations: new Location[] {
+					                                          new Location("__TEST__", 17),
+					                                          new Location("__TEST__", 7)
 				                                          },
 				                                          name: "a"),
-				new MultipleDeclarationsOfVariableInScope(locations: new (string file, int line)[] {
-					                                          ("__TEST__", 14),
-					                                          ("__TEST__", 13),
-					                                          ("__TEST__", 7)
+				new MultipleDeclarationsOfVariableInScope(locations: new Location[] {
+					                                          new Location("__TEST__", 14),
+					                                          new Location("__TEST__", 13),
+					                                          new Location("__TEST__", 7)
 				                                          },
 				                                          name: "a"),
-				new MultipleDeclarationsOfVariableInScope(locations: new (string file, int line)[] {
-					                                          ("__TEST__", 10),
-					                                          ("__TEST__", 7)
+				new MultipleDeclarationsOfVariableInScope(locations: new Location[] {
+					                                          new Location("__TEST__", 10),
+					                                          new Location("__TEST__", 7)
 				                                          },
 				                                          name: "a"),
 			};

@@ -5,6 +5,8 @@ using UtilityLibrary;
 namespace JurTranspiler.compilerSource.Analysis {
 
     public partial class Binder {
+
+
         public bool IsAssignableTo(IType a, IType b) {
             return symbols.AlreadyBound((a, b))
                        ? symbols.GetBindingFor((a, b))

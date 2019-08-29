@@ -24,7 +24,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             //Error: DuplicateFieldsNames
             foreach (var duplicateGroup in duplicates) {
-                errors.Add(new MultipleFieldsWithTheSameName(duplicateGroup.Select(field => (field.OriginalFile, field.OriginalLine)), duplicateGroup.First().Name));
+                errors.Add(new MultipleFieldsWithTheSameName(duplicateGroup.Select(field => new Location(field.OriginalFile, field.OriginalLine)),
+                                                             duplicateGroup.First().Name));
             }
 
             foreach (var inlinedType in type.InlinedTypes.Select(x => x.Value).ToList()) {

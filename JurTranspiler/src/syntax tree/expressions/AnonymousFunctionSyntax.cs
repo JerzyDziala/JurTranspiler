@@ -8,13 +8,19 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class AnonymousFunctionSyntax : SyntaxNode, IExpressionSyntax {
+    public class AnonymousFunctionSyntax : SyntaxNode, IExpressionSyntax, IFunctionDefinitionOrLambdaSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
         public ImmutableArray<UninitializedVariableDeclarationSyntax> Parameters { get; }
-        public IStatementSyntax Body { get; }
-        public bool IsExpressionStatementLambda { get; }
+        public IStatementSyntax? Body { get; }
+        public bool IsArrow => Body is ExpressionStatementSyntax;
+        public bool IsExtern => false;
+
+        public ImmutableArray<ReturnStatementSyntax> TopLevelReturns => AllChildren
+                                                                        .OfType<ReturnStatementSyntax>()
+                                                                        .Where(x => ReferenceEquals(x.EnclosingFunctionOrLambda, this))
+                                                                        .ToImmutableArray();
 
 
         public AnonymousFunctionSyntax(ISyntaxNode parent, JurParser.AnonymusFunctionContext context) : base(parent, context) {
@@ -24,8 +30,6 @@ namespace JurTranspiler.compilerSource.nodes {
             Body = context.expression() != null
                        ? new ExpressionStatementSyntax(this, context.expression())
                        : (IStatementSyntax) new BlockStatement(this, context.block());
-
-            IsExpressionStatementLambda = Body is ExpressionStatementSyntax;
 
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .AddRange(Parameters)
@@ -50,7 +54,7 @@ namespace JurTranspiler.compilerSource.nodes {
                         ? knowledge.ExpressionsBindings[statement.ExpressionSyntax] is VoidType
                               ? $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{{statement.ExpressionSyntax.ToJs(knowledge)};}}"
                               : $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{return {statement.ExpressionSyntax.ToJs(knowledge)};}}"
-                        : $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{{Body.ToJs(knowledge)}}}")
+                        : $"function({Parameters.Select(knowledge.GetNewNameFor).Glue(", ")}) {{{Body!.ToJs(knowledge)}}}")
                 .WithTypeNameNoParents($"{t}.name");
         }
 

@@ -9,7 +9,7 @@ namespace JurTranspiler.Analysis.errors {
 		private string name { get; }
 
 
-		public MultipleTypeParametersWithTheSameName(IEnumerable<(string file, int line)> locations, string name) : base(locations) {
+		public MultipleTypeParametersWithTheSameName(IEnumerable<Location> locations, string name) : base(locations) {
 			this.name = name;
 		}
 

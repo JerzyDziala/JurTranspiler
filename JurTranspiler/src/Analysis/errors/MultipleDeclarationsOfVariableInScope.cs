@@ -8,7 +8,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 		private string name { get; }
 
 
-		public MultipleDeclarationsOfVariableInScope(IEnumerable<(string file, int line)> locations, string name) : base(locations) {
+		public MultipleDeclarationsOfVariableInScope(IEnumerable<Location> locations, string name) : base(locations) {
 			this.name = name;
 		}
 

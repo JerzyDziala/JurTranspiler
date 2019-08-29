@@ -59,7 +59,7 @@ namespace JurTranspiler.compilerSource.nodes {
             string getNewName() {
                 //if it is a function pointer then we have to use the new name of the variable in with it was declared
                 return boundCallableInfo.Callable is FunctionPointer pointer
-                           ? knowledge.GetNewNameFor(pointer.declaration)
+                           ? knowledge.GetNewNameFor(pointer.declaration!)
                            : knowledge.GetNewNameFor(this);
             }
 

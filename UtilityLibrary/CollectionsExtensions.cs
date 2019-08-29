@@ -64,6 +64,11 @@ namespace UtilityLibrary {
         }
 
 
+        public static ImmutableArray<T> AsImmutableArray<T>(this T obj) {
+            return ImmutableArray.Create(obj);
+        }
+
+
         public static bool IsSuperSetOf<T>(this IEnumerable<T> a, IEnumerable<T> b) {
             return !ReferenceEquals(a, b) && a.All(b.Contains);
         }

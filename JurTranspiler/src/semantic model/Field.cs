@@ -6,7 +6,7 @@ using JurTranspiler.compilerSource.nodes;
 namespace JurTranspiler.compilerSource.semantic_model {
 
     [DebuggerDisplay("Name = {" + nameof(Name) + "}, Type = {Type.Name}")]
-    public class Field : IEquatable<Field>, ITreeNode {
+    public class Field : IEquatable<Field>, ITreeNode, IHaveType {
 
         public ImmutableArray<ITreeNode> ImmediateChildren { get; }
         public ImmutableArray<ITreeNode> AllChildren { get; }

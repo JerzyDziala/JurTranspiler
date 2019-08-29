@@ -164,9 +164,9 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new[] {
-				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
-					                                  ("__TEST__", 4),
-					                                  ("__TEST__", 5)
+				new MultipleFieldsWithTheSameName(locations: new Location[] {
+					                                  new Location("__TEST__", 4),
+					                                  new Location("__TEST__", 5)
 				                                  },
 				                                  name: "a")
 			};
@@ -192,17 +192,17 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
-					                                  ("__TEST__", 4),
-					                                  ("__TEST__", 5),
-					                                  ("__TEST__", 6),
-					                                  ("__TEST__", 7)
+				new MultipleFieldsWithTheSameName(locations: new Location[] {
+					                                  new Location("__TEST__", 4),
+					                                  new Location("__TEST__", 5),
+					                                  new Location("__TEST__", 6),
+					                                  new Location("__TEST__", 7)
 				                                  },
 				                                  name: "a"),
-				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
-					                                  ("__TEST__", 8),
-					                                  ("__TEST__", 9),
-					                                  ("__TEST__", 10)
+				new MultipleFieldsWithTheSameName(locations: new Location[] {
+					                                  new Location("__TEST__", 8),
+					                                  new Location("__TEST__", 9),
+					                                  new Location("__TEST__", 10)
 				                                  },
 				                                  name: "b"),
 				new UseOfUndeclaredType(file: "__TEST__", line: 7, name: "undeclared")
@@ -389,9 +389,9 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new[] {
-				new MultipleFieldsWithTheSameName(locations: new (string file, int line)[] {
-					                                  ("__TEST__", 8),
-					                                  ("__TEST__", 9)
+				new MultipleFieldsWithTheSameName(locations: new Location[] {
+					                                  new Location("__TEST__", 8),
+					                                  new Location("__TEST__", 9)
 				                                  },
 				                                  name: "t"),
 			};
@@ -486,9 +486,9 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
-					                                 ("__TEST__", 3),
-					                                 ("__TEST__", 6)
+				new MultipleDeclarationsOfStruct(new Location[] {
+					                                 new Location("__TEST__", 3),
+					                                 new Location("__TEST__", 6)
 				                                 },
 				                                 "A"),
 				new UseOfAmbiguousType("__TEST__", 8, "A")
@@ -515,9 +515,9 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
-					                                 ("__TEST__", 3),
-					                                 ("__TEST__", 8)
+				new MultipleDeclarationsOfStruct(new Location[] {
+					                                 new Location("__TEST__", 3),
+					                                 new Location("__TEST__", 8)
 				                                 },
 				                                 "A"),
 				new UseOfAmbiguousType("__TEST__", 10, "A")
@@ -572,11 +572,11 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
-					                                 ("__TEST__", 3),
-					                                 ("__TEST__", 8),
-					                                 ("__TEST__", 13),
-					                                 ("__TEST__", 16),
+				new MultipleDeclarationsOfStruct(new Location[] {
+					                                 new Location("__TEST__", 3),
+					                                 new Location("__TEST__", 8),
+					                                 new Location("__TEST__", 13),
+					                                 new Location("__TEST__", 16),
 				                                 },
 				                                 "A"),
 			};
@@ -598,10 +598,10 @@ namespace JurTranspilerTests {
 ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleTypeParametersWithTheSameName(new (string file, int line)[] {
-					                                          ("__TEST__", 3),
-					                                          ("__TEST__", 3),
-					                                          ("__TEST__", 3),
+				new MultipleTypeParametersWithTheSameName(new Location[] {
+					                                          new Location("__TEST__", 3),
+					                                          new Location("__TEST__", 3),
+					                                          new Location("__TEST__", 3),
 				                                          },
 				                                          "T")
 			};
@@ -649,9 +649,9 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new MultipleDeclarationsOfStruct(new (string file, int line)[] {
-					                                 ("__TEST__", 3),
-					                                 ("__TEST__", 4)
+				new MultipleDeclarationsOfStruct(new Location[] {
+					                                 new Location("__TEST__", 3),
+					                                 new Location("__TEST__", 4)
 				                                 },
 				                                 "A"),
 				new UseOfAmbiguousType("__TEST__", 7, "A"),

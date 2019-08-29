@@ -68,10 +68,11 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new TypeMismatchInAssignmentError("__TEST__",9,"num","string")
+                new TypeMismatchInAssignmentError("__TEST__", 9, "num", "string")
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
+
 
         [Test]
         [Parallelizable]
@@ -94,6 +95,7 @@ namespace JurTranspilerTests {
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
 
+
         [Test]
         [Parallelizable]
         public void NoTypeArgumentSpecified() {
@@ -107,10 +109,11 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new NoMatchingOverloadForCall("__TEST__",6,"generic(string)"),
+                new NoMatchingOverloadForCall("__TEST__", 6, "generic(string)"),
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
+
 
         [Test]
         [Parallelizable]
@@ -139,9 +142,9 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__",18,"gen<bool,string>(bool,string)"),
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__",20,"gen(num,num)"),
-                new NoMatchingOverloadForCall("__TEST__",19,"gen<string,num>(num,num)"),
+                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 18, "gen<bool,string>(bool,string)"),
+                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 20, "gen(num,num)"),
+                new NoMatchingOverloadForCall("__TEST__", 19, "gen<string,num>(num,num)"),
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
@@ -173,16 +176,18 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new MultipleDeclarationsOfFunction(new (string file, int line)[] {
-                    ("__TEST__",3),
-                    ("__TEST__",7),
-                },"gen"),
-                new MultipleDeclarationsOfFunction(new (string file, int line)[] {
-                    ("__TEST__",10),
-                    ("__TEST__",13),
-                },"gen"),
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__",18,"gen(string)"),
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__",19,"gen(num)"),
+                new MultipleDeclarationsOfFunction(new Location[] {
+                                                       new Location("__TEST__", 3),
+                                                       new Location("__TEST__", 7),
+                                                   },
+                                                   "gen"),
+                new MultipleDeclarationsOfFunction(new Location[] {
+                                                       new Location("__TEST__", 10),
+                                                       new Location("__TEST__", 13),
+                                                   },
+                                                   "gen"),
+                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 18, "gen(string)"),
+                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 19, "gen(num)"),
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
@@ -254,6 +259,7 @@ namespace JurTranspilerTests {
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
 
+
         [Test]
         [Parallelizable]
         public void SubstitutionsAndInheritance() {
@@ -277,10 +283,11 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] {
-                new NoMatchingOverloadForCall("__TEST__",16,"add(Entity<num>[],Dog)"),
+                new NoMatchingOverloadForCall("__TEST__", 16, "add(Entity<num>[],Dog)"),
             };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
+
 
         [Test]
         [Parallelizable]
@@ -305,6 +312,52 @@ namespace JurTranspilerTests {
         ";
             var (errors, _) = Compiler.Compile(code);
             var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+
+        [Test]
+        [Parallelizable]
+        public void LambdaReturningUndeclaredStructTypeAsFunctionArgumentCompilerCrash() {
+            var code = @"
+        		abstraction 0 {
+                    num fun(num(num) arg ){
+                        return arg(5);
+                    }
+        		}
+        		main {
+                    fun( (num x) -> new Undeclared );
+        		}
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new UseOfUndeclaredType("__TEST__", 8, "Undeclared"),
+                new NoMatchingOverloadForCall("__TEST__", 8, "fun(Undeclared(num))")
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+
+        [Test]
+        [Parallelizable]
+        public void MultilineLambdaReturningUndeclaredStructTypeAsFunctionArgument() {
+            var code = @"
+        		abstraction 0 {
+                    num fun(num(num) arg ){
+                        return arg(5);
+                    }
+        		}
+        		main {
+                    fun( (num x) -> {
+                        return new Undeclared;
+                    });
+        		}
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new UseOfUndeclaredType("__TEST__", 9, "Undeclared"),
+                new NoMatchingOverloadForCall("__TEST__", 8, "fun(Undeclared(num))")
+            };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
     }

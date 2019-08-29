@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Antlr4.Runtime.Atn;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource.nodes;
 using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.compilerSource.semantic_model.functions;
+using JurTranspiler.src.syntax_tree.types;
 using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.Analysis {
@@ -14,23 +17,35 @@ namespace JurTranspiler.compilerSource.Analysis {
     public partial class Binder {
 
         public void BindFunctionBodies() {
-            var functionsAndMains = symbols.Tree.AllFunctionDefinitions.Concat<ISyntaxNode>(symbols.Tree.AllMains);
-            foreach (var body in functionsAndMains) {
-                BindFunctionBody(body);
+
+            var functions = symbols.Tree.AllFunctionDefinitions;
+            var lambdas = symbols.Tree.AllLambdas;
+            var mains = symbols.Tree.AllMains;
+
+            foreach (var function in functions) {
+
+                CheckForInvalidAssignments(function);
+                CheckForDuplicateVariables(function);
+
+                if (!function.IsExtern) {
+                    CheckForNonReturningCodePaths(function);
+                    CheckForReturnTypeMismatch(function);
+                }
+
+            }
+
+            foreach (var lambda in lambdas) {
+                CheckForNonReturningCodePaths(lambda);
+            }
+
+            foreach (var main in mains) {
+                CheckForInvalidAssignments(main);
+                CheckForDuplicateVariables(main);
             }
         }
 
 
-        private void BindFunctionBody(ISyntaxNode scope) {
-            CheckForInvalidAssignments(scope);
-            CheckForDuplicateVariables(scope);
-
-            //TODO: check for returns in main
-            if (scope is FunctionDefinitionSyntax notMain) CheckForReturnTypeMismatch(notMain);
-        }
-
-
-        private void CheckForDuplicateVariables(ISyntaxNode scope) {
+        private void CheckForDuplicateVariables(ITreeNode scope) {
 
             var localsAndParameters = scope.AllChildren
                                            .OfType<IVariableDeclarationSyntax>()
@@ -38,7 +53,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
             var duplicatesGroup = localsAndParameters.Select(x => x.GetVisibleVariablesInScope()
                                                                    .Where(v => v.Name == x.Name)
-                                                                   .Concat(new[] {x}))
+                                                                   .Concat(new[] {x})
+                                                                   .ToImmutableList())
                                                      .Where(x => x.MoreThenOne())
                                                      .ToImmutableList();
 
@@ -47,13 +63,50 @@ namespace JurTranspiler.compilerSource.Analysis {
             var withoutSubSets = duplicatesGroup.RemoveAll(isSubsetOfOther);
 
             foreach (var group in withoutSubSets) {
-                errors.Add(new MultipleDeclarationsOfVariableInScope(locations: group.Select(v => (v.File, v.Line)),
+                errors.Add(new MultipleDeclarationsOfVariableInScope(locations: group.Select(v => new Location(v.File, v.Line)),
                                                                      name: group.First().Name));
             }
         }
 
 
-        private void CheckForInvalidAssignments(ISyntaxNode scope) {
+        private void CheckForNonReturningCodePaths(IFunctionDefinitionOrLambdaSyntax syntax) {
+
+            if (syntax.IsArrow) return;
+            if (syntax is FunctionDefinitionSyntax function && BindFunctionDefinition(function).ReturnType is VoidType) return;
+            if (syntax is AnonymousFunctionSyntax lambda && BindExpression(lambda).As<FunctionPointerType>()!.ReturnType is VoidType) return;
+
+            var body = syntax.Body?.As<BlockStatement>();
+
+            if (!AllPathsReturnValue(body?.Body ?? ImmutableArray<IStatementSyntax>.Empty)) {
+                errors.Add(new NotAllCodePathReturnValue(syntax));
+            }
+        }
+
+
+        private bool AllPathsReturnValue(ImmutableArray<IStatementSyntax> nodes) {
+
+            if (nodes.None()) return false;
+
+            var onlyControlFlow = nodes.FlattenBlockStatements()
+                                       .Where(x => x is IfStatementSyntax || x is ReturnStatementSyntax)
+                                       .ToImmutableArray();
+
+            if (onlyControlFlow.Any(x => x is ReturnStatementSyntax)) return true;
+
+            return onlyControlFlow.OfType<IfStatementSyntax>().Any(x => {
+
+                var body = x.Body.As<GeneratedScopeSyntax>()!.Body;
+                var elseBody = x.ElseBody?.As<GeneratedScopeSyntax>()?.Body;
+
+                var ifBodyReturns = AllPathsReturnValue(body.AsImmutableArray());
+                var elseBodyReturns = AllPathsReturnValue(elseBody?.AsImmutableArray() ?? ImmutableArray<IStatementSyntax>.Empty);
+
+                return ifBodyReturns && elseBodyReturns;
+            });
+        }
+
+
+        private void CheckForInvalidAssignments(ITreeNode scope) {
             foreach (var assignment in scope.AllChildren.OfType<IAssignment>()) {
                 var (leftType, rightType) = BindAssignment(assignment);
 
@@ -72,24 +125,12 @@ namespace JurTranspiler.compilerSource.Analysis {
             if (function.IsExtern) return;
 
             var signature = BindFunctionDefinition(function);
-            var returns = function.AllChildren.OfType<ReturnStatementSyntax>().ToList();
+            var returns = GetAllReturns(function);
 
-            if (!(signature.ReturnType is VoidType) && returns.None()) {
-                errors.Add(new MissingReturnStatement(function.File, function.Line));
-            }
+            bool returnedTypeIsNotAssignableToDeclaredReturnType(FunctionReturn returned) => !IsAssignableTo(returned.Type, signature.ReturnType);
 
-            foreach (var returnStatement in returns) {
-                var returnType = returnStatement.IsVoid
-                                     ? new VoidType()
-                                     : BindExpression(returnStatement.ReturnValue!);
-
-                if (!IsAssignableTo(returnType, signature.ReturnType)) {
-                    errors.Add(new TypeMismatchInReturnStatement(file: returnStatement.File,
-                                                                 line: returnStatement.Line,
-                                                                 returned: returnType.Name,
-                                                                 expected: signature.ReturnType.Name));
-                }
-            }
+            returns.Where(returnedTypeIsNotAssignableToDeclaredReturnType)
+                   .ForEach(x => errors.Add(new TypeMismatchInReturnStatement(x.Location, x.Type.Name, signature.ReturnType.Name)));
 
         }
 

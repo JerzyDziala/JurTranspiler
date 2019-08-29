@@ -8,7 +8,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 		private string fieldName { get; }
 
 
-		public MultipleDeclarationsOfStruct(IEnumerable<(string file, int line)> locations, string fieldName) : base(locations) {
+		public MultipleDeclarationsOfStruct(IEnumerable<Location> locations, string fieldName) : base(locations) {
 			this.fieldName = fieldName;
 		}
 

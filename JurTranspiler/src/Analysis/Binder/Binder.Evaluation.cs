@@ -17,34 +17,15 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private IType BindExpressionCore(AnonymousFunctionSyntax syntax) {
+        private FunctionPointerType BindExpressionCore(AnonymousFunctionSyntax syntax) {
 
-            Func<IType, IType> functionPointerTypeWithReturnType = returnType => new FunctionPointerType(returnType, syntax.Parameters.Select(x => BindType(x.Type!)));
+            var returns = GetAllReturns(syntax);
 
-            if (syntax.IsExpressionStatementLambda) {
-                var bodyExpression = ((ExpressionStatementSyntax) syntax.Body).ExpressionSyntax;
-                return functionPointerTypeWithReturnType(BindExpression(bodyExpression));
-            }
-            else {
-                var block = (BlockStatement) syntax.Body;
-
-                var returnStatements = block.Body.SelectMany(x => x.AllChildren)
-                                            .OfType<ReturnStatementSyntax>()
-                                            .ToImmutableArray();
-
-                Func<IType> addUnableToInferAndReturnUndefined = () => {
-                    errors.Add(new UnableToInferReturnType(returnStatements.GetLocations()));
-                    return functionPointerTypeWithReturnType(new UndefinedType());
-                };
-
-                return returnStatements
-                       .Select(x => x.IsVoid ? new VoidType() : BindExpression(x.ReturnValue!))
-                       .ToImmutableArray() switch {
-                    var x when x.None() => functionPointerTypeWithReturnType(new VoidType()),
-                    var x when x.AllAreSame() => functionPointerTypeWithReturnType(x[0]),
-                    _ => addUnableToInferAndReturnUndefined()
-                };
-            }
+            return returns switch {
+                var x when x.None() => CreateFunctionPointer(syntax, new VoidType()),
+                var x when x.AllHaveSame(y => y.Type) => CreateFunctionPointer(syntax, x[0].Type),
+                _ => AddErrorAndReturn(new UnableToInferReturnType(returns.GetLocations()), CreateFunctionPointer(syntax, new UndefinedType()))
+            };
 
         }
 

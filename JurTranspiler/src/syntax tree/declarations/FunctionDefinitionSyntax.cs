@@ -9,7 +9,7 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class FunctionDefinitionSyntax : SyntaxNode, IStructOrFunctionDeclarationSyntax, IEquatable<FunctionDefinitionSyntax> {
+    public class FunctionDefinitionSyntax : SyntaxNode, IStructOrFunctionDeclarationSyntax, IFunctionDefinitionOrLambdaSyntax, IEquatable<FunctionDefinitionSyntax> {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
@@ -32,6 +32,12 @@ namespace JurTranspiler.compilerSource.nodes {
         public ImmutableArray<TypeParameterSyntax> TypeParameters { get; }
         public ImmutableArray<(ITypeSyntax constrained, ITypeSyntax constrain)> Constraints { get; }
         public IStatementSyntax? Body { get; }
+        public bool IsArrow => Body is ExpressionStatementSyntax;
+
+        public ImmutableArray<ReturnStatementSyntax> TopLevelReturns => AllChildren
+                                                                        .OfType<ReturnStatementSyntax>()
+                                                                        .Where(x => ReferenceEquals(x.EnclosingFunctionOrLambda, this))
+                                                                        .ToImmutableArray();
 
 
         public FunctionDefinitionSyntax(ISyntaxNode parent, JurParser.FunctionDeclarationContext context) : base(parent, context) {
@@ -79,7 +85,11 @@ namespace JurTranspiler.compilerSource.nodes {
                 parameters += "_s_";
             }
 
-            return $@"function {name}({parameters}) {Body?.ToJs(knowledge) ?? ""} ";
+            return Body is ExpressionStatementSyntax statementSyntax
+                       ? ReturnType is VoidTypeSyntax
+                             ? $@"function {name}({parameters}) {{{Body?.ToJs(knowledge) ?? ""}}}"
+                             : $@"function {name}({parameters}) {{return {Body?.ToJs(knowledge) ?? ""}}}"
+                       : $@"function {name}({parameters}) {{{Body?.ToJs(knowledge) ?? ""}}}";
         }
 
 

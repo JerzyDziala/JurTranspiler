@@ -25,12 +25,16 @@ namespace JurTranspiler.syntax_tree.bases {
             }
         }
 
+        public IFunctionDefinitionOrLambdaSyntax? EnclosingFunctionOrLambda => AllParents.OfType<IFunctionDefinitionOrLambdaSyntax>().FirstOrDefault();
+
         public ISyntaxNode Root { get; }
         public ISyntaxNode? Parent { get; }
+
         public ImmutableArray<ISyntaxNode> AllParents { get; }
         public int Abstraction { get; }
         public string File { get; }
         public int Line { get; }
+        public Location Location => new Location(File, Line);
         public string OriginalText { get; }
 
 
@@ -171,6 +175,8 @@ namespace JurTranspiler.syntax_tree.bases {
 
             return declarations.ToImmutableArray();
         }
+
+
     }
 
 }

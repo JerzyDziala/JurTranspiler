@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
 using UtilityLibrary;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
 namespace JurTranspiler.compilerSource.nodes {
 
@@ -15,7 +17,8 @@ namespace JurTranspiler.compilerSource.nodes {
 		public bool HaveElse => ElseBody != null;
 
 
-		public IfStatementSyntax(ISyntaxNode parent, JurParser.IfStatementContext context) : base(parent, context) {
+
+        public IfStatementSyntax(ISyntaxNode parent, JurParser.IfStatementContext context) : base(parent, context) {
 
 			Condition = ExpressionSyntaxFactory.Create(this, context.expression());
 			Body = new GeneratedScopeSyntax(this, context.statement(0));
@@ -37,6 +40,7 @@ namespace JurTranspiler.compilerSource.nodes {
                       {e}";
 		}
 
-	}
+
+    }
 
 }

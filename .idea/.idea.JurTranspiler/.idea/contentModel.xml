@@ -23,6 +23,7 @@
           </e>
         </e>
         <e p="OperationsTests.cs" t="Include" />
+        <e p="ReturnsTests.cs" t="Include" />
         <e p="StructDefinitionsTests.cs" t="Include" />
         <e p="VariablesScopesTest.cs" t="Include" />
       </e>
@@ -53,14 +54,15 @@
               <e p="Binder.OverloadResolution.cs" t="Include" />
               <e p="Binder.Substitutions.cs" t="Include" />
               <e p="Binder.Types.cs" t="Include" />
+              <e p="Binder.Utils.cs" t="Include" />
               <e p="Binder.Variables.cs" t="Include" />
             </e>
             <e p="errors" t="Include">
               <e p="AmbiguousFieldReference.cs" t="Include" />
               <e p="bases" t="Include">
                 <e p="CallLocation.cs" t="Include" />
+                <e p="CallLocationBase.cs" t="Include" />
                 <e p="Error.cs" t="Include" />
-                <e p="ErrorExtensions.cs" t="Include" />
                 <e p="MultipleLocationError.cs" t="Include" />
                 <e p="SingleLocationError.cs" t="Include" />
               </e>
@@ -78,6 +80,7 @@
               <e p="NegationOperatorUsedWithNonBooleanType.cs" t="Include" />
               <e p="NoMatchingFieldFound.cs" t="Include" />
               <e p="NoMatchingOverloadForCall.cs" t="Include" />
+              <e p="NotAllCodePathReturnValue.cs" t="Include" />
               <e p="StructDeclarationContainsInheritanceCycles.cs" t="Include" />
               <e p="SyntaxError.cs" t="Include" />
               <e p="TriedToAccessFieldOnNonStruct.cs" t="Include" />
@@ -126,6 +129,7 @@
           <e p="semantic model" t="Include">
             <e p="Field.cs" t="Include" />
             <e p="FunctionCallInfo.cs" t="Include" />
+            <e p="FunctionReturn.cs" t="Include" />
             <e p="functions" t="Include">
               <e p="Callable.cs" t="Include" />
               <e p="Dispatcher.cs" t="Include" />
@@ -135,6 +139,7 @@
               <e p="ICallable.cs" t="Include" />
               <e p="SubstitutedCallable.cs" t="Include" />
             </e>
+            <e p="IhaveType.cs" t="Include" />
             <e p="Substitution.cs" t="Include" />
             <e p="types" t="Include">
               <e p="AnyType.cs" t="Include" />
@@ -195,7 +200,10 @@
             </e>
             <e p="Interfaces" t="Include">
               <e p="IAssignment.cs" t="Include" />
+              <e p="IControlFlowStatement.cs" t="Include" />
               <e p="IExpressionSyntax.cs" t="Include" />
+              <e p="IFunctionDefinitionOrLambdaSyntax.cs" t="Include" />
+              <e p="IHaveLocation.cs" t="Include" />
               <e p="IStatementSyntax.cs" t="Include" />
               <e p="ISyntaxNode.cs" t="Include" />
               <e p="ITreeNode.cs" t="Include" />

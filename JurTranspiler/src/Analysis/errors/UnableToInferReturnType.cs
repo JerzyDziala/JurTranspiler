@@ -7,7 +7,7 @@ namespace JurTranspiler.Analysis.errors {
 
 	public class UnableToInferReturnType : MultipleLocationError {
 
-		public UnableToInferReturnType(IEnumerable<(string file, int line)> locations) : base(locations) {
+		public UnableToInferReturnType(IEnumerable<Location> locations) : base(locations) {
 		}
 
 

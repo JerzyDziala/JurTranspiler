@@ -90,9 +90,9 @@ namespace JurTranspilerTests {
         ";
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
-				new UnableToInferReturnType(new (string file, int line)[] {
-					("__TEST__", 4),
-					("__TEST__", 5)
+				new UnableToInferReturnType(new Location[] {
+					new Location("__TEST__", 4),
+					new Location("__TEST__", 5)
 				})
 			};
 			CollectionAssert.AreEquivalent(expectedErrors, errors);

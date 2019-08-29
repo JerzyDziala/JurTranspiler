@@ -22,6 +22,7 @@ namespace JurTranspiler.compilerSource.nodes {
         public ImmutableArray<MainSyntax> AllMains { get; }
         public ImmutableArray<VariableAccessSyntax> VariableUsages { get; }
         public ImmutableArray<IVariableDeclarationSyntax> VariableDeclarations { get; }
+        public ImmutableArray<AnonymousFunctionSyntax> AllLambdas { get; set; }
 
 
         public SyntaxTree(IEnumerable<(JurParser.ProgramContext context, string fileName)> files) : base() {
@@ -41,6 +42,7 @@ namespace JurTranspiler.compilerSource.nodes {
             AllMains = AllChildren.OfType<MainSyntax>().ToImmutableArray();
             VariableDeclarations = AllChildren.OfType<IVariableDeclarationSyntax>().ToImmutableArray();
             VariableUsages = AllChildren.OfType<VariableAccessSyntax>().ToImmutableArray();
+            AllLambdas = AllChildren.OfType<AnonymousFunctionSyntax>().ToImmutableArray();
         }
 
 
@@ -61,6 +63,9 @@ namespace JurTranspiler.compilerSource.nodes {
             AllAssignments = AllChildren.OfType<IAssignment>().ToImmutableArray();
             AllFunctions = AllChildren.OfType<FunctionDefinitionSyntax>().ToImmutableArray();
             AllMains = AllChildren.OfType<MainSyntax>().ToImmutableArray();
+            VariableDeclarations = AllChildren.OfType<IVariableDeclarationSyntax>().ToImmutableArray();
+            VariableUsages = AllChildren.OfType<VariableAccessSyntax>().ToImmutableArray();
+            AllLambdas = AllChildren.OfType<AnonymousFunctionSyntax>().ToImmutableArray();
         }
 
 
