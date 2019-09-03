@@ -2,58 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb67d417-4c1d-4a1e-9c9d-14e568fb91a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/JurTests/ReturnsTests.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Utils.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NotAllCodePathReturnValue.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/CallLocationBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/FunctionReturn.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/IHaveType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IControlFlowStatement.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IFunctionDefinitionOrLambdaSyntax.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IHaveLocation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.JurTranspiler/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/FunctionCallsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/FunctionCallsTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/FunctionDeclarationsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/FunctionDeclarationsTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/JurTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/JurTests.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/LambdasTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/LambdasTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTests/StructDefinitionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/StructDefinitionsTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTests/VariablesScopesTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTests/VariablesScopesTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Assignability.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Calls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Calls.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Fields.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Fields.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Variables.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Variables.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfFunction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfFunction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfStruct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfStruct.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfVariableInScope.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfVariableInScope.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleFieldsWithTheSameName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleFieldsWithTheSameName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleTypeParametersWithTheSameName.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleTypeParametersWithTheSameName.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInReturnStatement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/TypeMismatchInReturnStatement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UnableToInferReturnType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UnableToInferReturnType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/CallLocation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/CallLocation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/ErrorExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/MultipleLocationError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/MultipleLocationError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Field.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Field.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/TypesExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/TypesExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionPointer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionPointer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/FunctionPointerType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/FunctionPointerType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ISyntaxNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ISyntaxNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/bases/SyntaxNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/bases/SyntaxNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.interp" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/ANTLR/JurParser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.Searching.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.Searching.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Substitution.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/Substitution.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionSignature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionSignature.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/TypeParameterType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/TypeParameterType.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FunctionDefinitionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FunctionDefinitionSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/SyntaxTree.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/SyntaxTree.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/AnonymousFunctionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/AnonymousFunctionSyntax.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/IStructOrFunctionDeclarationSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/IStructOrFunctionDeclarationSyntax.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/BlockStatement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/BlockStatement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExpressionStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ExpressionStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/IfStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/IfStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ReturnStatementSyntax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JurTranspiler/src/syntax tree/statements/ReturnStatementSyntax.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UtilityLibrary/CollectionsExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UtilityLibrary/CollectionsExtensions.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +35,6 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/NegationExpressionSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NegationOperatorUsedWithNonBooleanType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/TypesExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/obj/Debug/netcoreapp3.0/JurTranspiler.AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
@@ -116,6 +82,7 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MissingReturnStatement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfUndeclaredType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NoMatchingFieldFound.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/UseOfNonTypeParameterInConstraint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/SingleLocationError.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/Error.cs" root0="FORCE_HIGHLIGHTING" />
@@ -126,6 +93,7 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.FunctionCallsBindings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.FieldsBindings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.NewNames.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.ExpressionsBindings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.ToKnowledge.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.AssignabilityBindings.cs" root0="FORCE_HIGHLIGHTING" />
@@ -145,13 +113,13 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/types/TypeParameterSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/ExpressionSyntaxFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/CallLocationBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/StatementSyntaxFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/factories/TypeSyntaxFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IVariableDeclarationSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IAssignment.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/56/1f9e824e/ValueTuple`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ITreeNode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ITypeSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/ISyntaxNode.cs" root0="FORCE_HIGHLIGHTING" />
@@ -194,12 +162,12 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/UninitializedVariableDeclarationSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/IStructOrFunctionDeclarationSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FieldDeclarationSyntax.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/TypeParameterConstraintSyntax.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/TypesTableGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/GenerationUtils.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/Generator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/CodeGeneration/JsStrings.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/Field.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/Substitution.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IControlFlowStatement.cs" root0="FORCE_HIGHLIGHTING" />
@@ -208,6 +176,7 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/ArrayType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/VoidType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/IType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/UndefinedType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/UndeclaredStructType.cs" root0="FORCE_HIGHLIGHTING" />
@@ -219,6 +188,7 @@
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/AnyType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/types/PrimitiveType.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/ICallable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionSignature.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/Callable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.local/share/Symbols/src/nunit/nunit/c933a883ea25263ec575a654dae69fa38000edd9/src/NUnitFramework/framework/Internal/Reflect.cs" root0="SKIP_HIGHLIGHTING" />
@@ -248,7 +218,12 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/74/255f601c/RuntimeHelpers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F744A629-8467-4F15-B5AA-57306C0D4543/26/6ea4ff90/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/.local/share/Symbols/src/nunit/nunit/c933a883ea25263ec575a654dae69fa38000edd9/src/NUnitFramework/framework/CollectionAssert.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5CEC446F-43EF-4C41-B998-7626DBA87FFB/67/5b5f499c/HashSet`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTests/FunctionCallsTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/f9/8b15508a/Lazy`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTests/OperationsTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTests/AssignmentsAndConversionsTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTests/VariablesScopesTest.cs" root0="FORCE_HIGHLIGHTING" />
@@ -257,28 +232,19 @@
     <setting file="file://$PROJECT_DIR$/JurTests/StructDefinitionsTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTests/FunctionDeclarationsTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Library/Preferences/Rider2019.1/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/83/16e26e23/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/a6/9c68a60d/Type.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/23/28223bb3/RuntimeType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/91/46d50a95/SignatureArrayType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9DF443E1-C904-41A9-8FE6-FAF5A9A11787/10/8f8450c0/SignatureHasElementType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F35F9CB0-7DDA-491D-9D94-3183FA467053/00/6a428488/List`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTests/obj/Debug/netcoreapp3.0/JurTests.Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/JurTranspiler/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Analyser.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.NameMangler.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/UninitializedVariableDeclarationSyntax.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/InitializedVariableDeclarationSyntax.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/InferredVariableDeclarationSyntax.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/VariableAccessSyntax.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/Callable.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.OverloadResolution.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IFunctionDefinitionOrLambda.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/NotAllCodePathRetunValue.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/CallLocation.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/MultipleLocationError.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/MultipleDeclarationsOfFunction.cs" />
@@ -288,7 +254,6 @@
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Fields.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/ErrorExtensions.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/errors/bases/CallLocationBase.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/TypesExtensions.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/FunctionPointerType.cs" />
@@ -313,13 +278,24 @@
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/Interfaces/IFunctionDefinitionOrLambdaSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/SyntaxTree.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionPointer.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Utils.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.FunctionBodies.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/AnonymousFunctionSyntax.cs" />
-        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FunctionDefinitionSyntax.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Evaluation.cs" />
         <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Variables.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/TypeParameterType.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Equality.cs" />
+        <option value="$PROJECT_DIR$/JurTests/StructDefinitionsTests.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/Substitution.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/types/StructType.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/semantic model/functions/FunctionSignature.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/ANTLR/Jur.g4" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/IStructOrFunctionDeclarationSyntax.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/FunctionDefinitionSyntax.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/declarations/StructDefinitionSyntax.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/Analysis/SymbolTable/SymbolTable.Searching.cs" />
+        <option value="$PROJECT_DIR$/JurTranspiler/src/syntax tree/expressions/FunctionCallSyntax.cs" />
       </list>
     </option>
   </component>
@@ -339,8 +315,14 @@
     <property name="do_not_show_solution_notification" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="ls" />
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -405,7 +387,8 @@
       <workItem from="1566054951997" duration="33148000" />
       <workItem from="1566244474879" duration="447000" />
       <workItem from="1566325344741" duration="53000" />
-      <workItem from="1566325565534" duration="42976000" />
+      <workItem from="1566325565534" duration="43881000" />
+      <workItem from="1567246666730" duration="8382000" />
     </task>
     <task id="LOCAL-00001" summary="podstawy refleksji działają, pętla for działa, lambdy zaraz będą działać. większość generacji kodu już działa.&#10;przede mną najtrudniejsze wyzwanie jakim będą multimetody.">
       <created>1563561117211</created>
@@ -459,58 +442,62 @@
     <option name="LAST_COMMIT_MESSAGE" value="cały język (poza runtime polimorfizmem) wydaję się działać. bardzo podstawowe refleksje już działają ale nawet proste przykłady z użyciem typów i funkcji generycznych już nie." />
   </component>
   <component name="WindowStateProjectService">
+    <state x="-1238" y="582" width="1218" height="618" key="#xdebugger.evaluate" />
+    <state x="-1238" y="582" width="1218" height="618" key="#xdebugger.evaluate/1920.1080/1920.1200" />
     <state width="1706" height="441" key="DebuggerActiveHint" />
     <state width="1706" height="441" key="DebuggerActiveHint/1920.1080/1920.1200" />
-    <state width="1920" height="242" key="GridCell.Tab.0.bottom" />
-    <state width="1920" height="242" key="GridCell.Tab.0.bottom/1920.1080/1920.1200" />
-    <state width="1920" height="242" key="GridCell.Tab.0.center" />
-    <state width="1920" height="242" key="GridCell.Tab.0.center/1920.1080/1920.1200" />
-    <state width="1920" height="242" key="GridCell.Tab.0.left" />
-    <state width="1920" height="242" key="GridCell.Tab.0.left/1920.1080/1920.1200" />
-    <state width="1920" height="242" key="GridCell.Tab.0.right" />
-    <state width="1920" height="242" key="GridCell.Tab.0.right/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.1.bottom" />
-    <state width="1920" height="645" key="GridCell.Tab.1.bottom/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.1.center" />
-    <state width="1920" height="645" key="GridCell.Tab.1.center/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.1.left" />
-    <state width="1920" height="645" key="GridCell.Tab.1.left/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.1.right" />
-    <state width="1920" height="645" key="GridCell.Tab.1.right/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.2.bottom" />
-    <state width="1920" height="645" key="GridCell.Tab.2.bottom/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.2.center" />
-    <state width="1920" height="645" key="GridCell.Tab.2.center/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.2.left" />
-    <state width="1920" height="645" key="GridCell.Tab.2.left/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.2.right" />
-    <state width="1920" height="645" key="GridCell.Tab.2.right/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.3.bottom" />
-    <state width="1920" height="645" key="GridCell.Tab.3.bottom/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.3.center" />
-    <state width="1920" height="645" key="GridCell.Tab.3.center/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.3.left" />
-    <state width="1920" height="645" key="GridCell.Tab.3.left/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.3.right" />
-    <state width="1920" height="645" key="GridCell.Tab.3.right/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.4.bottom" />
-    <state width="1920" height="645" key="GridCell.Tab.4.bottom/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.4.center" />
-    <state width="1920" height="645" key="GridCell.Tab.4.center/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.4.left" />
-    <state width="1920" height="645" key="GridCell.Tab.4.left/1920.1080/1920.1200" />
-    <state width="1920" height="645" key="GridCell.Tab.4.right" />
-    <state width="1920" height="645" key="GridCell.Tab.4.right/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.0.bottom" />
+    <state width="1920" height="424" key="GridCell.Tab.0.bottom/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.0.center" />
+    <state width="1920" height="424" key="GridCell.Tab.0.center/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.0.left" />
+    <state width="1920" height="424" key="GridCell.Tab.0.left/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.0.right" />
+    <state width="1920" height="424" key="GridCell.Tab.0.right/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.1.bottom" />
+    <state width="1920" height="424" key="GridCell.Tab.1.bottom/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.1.center" />
+    <state width="1920" height="424" key="GridCell.Tab.1.center/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.1.left" />
+    <state width="1920" height="424" key="GridCell.Tab.1.left/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.1.right" />
+    <state width="1920" height="424" key="GridCell.Tab.1.right/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.2.bottom" />
+    <state width="1920" height="424" key="GridCell.Tab.2.bottom/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.2.center" />
+    <state width="1920" height="424" key="GridCell.Tab.2.center/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.2.left" />
+    <state width="1920" height="424" key="GridCell.Tab.2.left/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.2.right" />
+    <state width="1920" height="424" key="GridCell.Tab.2.right/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.3.bottom" />
+    <state width="1920" height="424" key="GridCell.Tab.3.bottom/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.3.center" />
+    <state width="1920" height="424" key="GridCell.Tab.3.center/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.3.left" />
+    <state width="1920" height="424" key="GridCell.Tab.3.left/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.3.right" />
+    <state width="1920" height="424" key="GridCell.Tab.3.right/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.4.bottom" />
+    <state width="1920" height="424" key="GridCell.Tab.4.bottom/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.4.center" />
+    <state width="1920" height="424" key="GridCell.Tab.4.center/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.4.left" />
+    <state width="1920" height="424" key="GridCell.Tab.4.left/1920.1080/1920.1200" />
+    <state width="1920" height="424" key="GridCell.Tab.4.right" />
+    <state width="1920" height="424" key="GridCell.Tab.4.right/1920.1080/1920.1200" />
     <state x="-1920" y="19" key="RiderGenerateDialog" />
     <state x="-1920" y="19" key="RiderGenerateDialog/1920.1080/1920.1200" />
-    <state x="-1920" y="16" key="SettingsEditor" />
-    <state x="-1920" y="16" key="SettingsEditor/1920.1080/1920.1200" />
+    <state x="-1920" y="0" width="1920" height="1200" key="SettingsEditor" />
+    <state x="-1920" y="0" width="1920" height="1200" key="SettingsEditor/1920.1080/1920.1200" />
     <state width="1219" height="879" key="XDebugger.FullValuePopup" />
     <state width="1219" height="879" key="XDebugger.FullValuePopup/1920.1080/1920.1200" />
     <state x="-1311" y="248" width="974" height="645" key="find.popup" />
     <state x="-1311" y="248" width="974" height="645" key="find.popup/1920.1080/1920.1200" />
-    <state x="-1067" y="365" width="672" height="676" key="search.everywhere.popup" />
-    <state x="-1067" y="365" width="672" height="676" key="search.everywhere.popup/1920.1080/1920.1200" />
+    <state x="-1295" y="285" width="672" height="675" key="run.anything.popup" />
+    <state x="-1295" y="285" width="672" height="675" key="run.anything.popup/1920.1080/1920.1200" />
+    <state x="-745" y="229" width="672" height="676" key="search.everywhere.popup" />
+    <state x="-745" y="229" width="672" height="676" key="search.everywhere.popup/1920.1080/1920.1200" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -542,8 +529,44 @@
           </properties>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <condition expression="structTypeSyntax.FullName == &quot;TrainingData&lt;List&lt;num&gt;,List&lt;num&gt;&gt;&quot;" language="C#" custom="RiderImportsList:" />
+          <url>file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs</url>
+          <line>86</line>
+          <properties documentPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Types.cs" initialLine="86">
+            <startOffsets>
+              <option value="4432" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5049" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Fields.cs</url>
+          <line>22</line>
+          <properties documentPath="$PROJECT_DIR$/JurTranspiler/src/Analysis/Binder/Binder.Fields.cs" initialLine="22">
+            <startOffsets>
+              <option value="844" />
+              <option value="888" />
+              <option value="915" />
+            </startOffsets>
+            <endOffsets>
+              <option value="934" />
+              <option value="898" />
+              <option value="932" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <reveal-manager>
+      <revealed-members>
+        <RevealItemInfo typeName="System.Lazy`1[JurTranspiler.compilerSource.semantic_model.IType]" fieldName="Value" />
+      </revealed-members>
+    </reveal-manager>
     <watches-manager>
       <configuration name="DotNetProject">
         <watch expression="knowledge.AllTypes.FirstOrDefault(x =&gt; x.Name == &quot;Cat&lt;string,Dog&lt;string&gt;&gt;&quot;)" language="C#" custom="RiderImportsList:" />

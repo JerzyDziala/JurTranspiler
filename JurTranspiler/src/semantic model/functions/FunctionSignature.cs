@@ -8,7 +8,8 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
     public class FunctionSignature : Callable {
 
         public FunctionDefinitionSyntax OriginalDefinition { get; }
-        public bool IsExtern { get; }
+        public bool IsExtern => OriginalDefinition.IsExtern;
+        public bool IsMember => OriginalDefinition.IsMember;
 
 
         public FunctionSignature(FunctionDefinitionSyntax originalDefinitionSyntax,
@@ -16,7 +17,6 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
                                  ImmutableArray<IType> parameters,
                                  IType returnType) : base(originalDefinitionSyntax.Name, parameters, typeArguments, returnType) {
             OriginalDefinition = originalDefinitionSyntax;
-            IsExtern = originalDefinitionSyntax.IsExtern;
         }
 
 

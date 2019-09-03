@@ -56,7 +56,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
         public bool Equals(TypeParameterType other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Name, other.Name) && Equals(OriginalDeclarer, other.OriginalDeclarer);
+            return string.Equals(Name, other.Name); //&& Equals(OriginalDeclarer, other.OriginalDeclarer);
         }
 
 

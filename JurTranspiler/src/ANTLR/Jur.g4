@@ -113,6 +113,8 @@ FOR: 'for' ;
 EXTERN: 'extern';
 POLY: 'poly';
 ARROW: '->';
+MEMBER: 'member';
+PRIVATE: 'private';
 PRIMITIVE: 'num' | 'string' | 'bool' ;
 
 
@@ -150,9 +152,9 @@ inlinedType : IS type ';'
 
 //functions
 
-functionDeclaration : ( (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? block)
-					| ( (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? ARROW expression ';')
-					| ( EXTERN (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
+functionDeclaration : (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? block)
+					| (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? ARROW expression ';')
+					| (PRIVATE? EXTERN MEMBER? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
                     ;
 
 constraints : WHERE constrain (AND constrain)*

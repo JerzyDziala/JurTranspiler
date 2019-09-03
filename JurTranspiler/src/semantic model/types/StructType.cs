@@ -13,7 +13,6 @@ namespace JurTranspiler.compilerSource.semantic_model {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-
         public override string Name => IsGeneric
                                            ? NonGenericName + "<" + string.Join(",", TypeArgumentsNames) + ">"
                                            : NonGenericName;
@@ -50,7 +49,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
 
         public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) {
 
-            var typeArguments = TypeArguments.Select(arg => new Lazy<IType>(() => typeMap.FirstOrDefault(sub => sub.typeParameter.Equals(arg.Value))?.typeArgument ?? arg.Value)).ToImmutableArray();
+            var typeArguments = TypeArguments.Select(x => new Lazy<IType>(() => x.Value.WithSubstitutedTypes(typeMap))).ToImmutableArray();
 
             return new StructType(originalSyntax: OriginalDefinitionSyntax,
                                   typeArguments: typeArguments,

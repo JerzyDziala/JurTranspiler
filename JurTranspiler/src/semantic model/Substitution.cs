@@ -31,7 +31,7 @@ namespace JurTranspiler.compilerSource.semantic_model {
 
         public override int GetHashCode() {
             unchecked {
-                return ((typeParameter != null ? typeParameter.GetHashCode() : 0) * 397) ^ (typeArgument != null ? typeArgument.GetHashCode() : 0);
+                return ((typeParameter?.GetHashCode() ?? 0) * 397) ^ (typeArgument?.GetHashCode() ?? 0);
             }
         }
     }

@@ -12,10 +12,10 @@ namespace JurTranspiler.compilerSource.nodes {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-
         public string Name { get; }
         public string FullName { get; }
         public bool IsGeneric => GenericArity > 0;
+        public bool IsPrivate => false;
         public int GenericArity => TypeParameters.Length;
         public ImmutableArray<TypeParameterSyntax> TypeParameters { get; }
         public ImmutableArray<ITypeSyntax> InlinedTypes { get; }
@@ -36,8 +36,6 @@ namespace JurTranspiler.compilerSource.nodes {
             ImmediateChildren = ImmutableArray.Create<ITreeNode>()
                                               .AddRange(InlinedTypes)
                                               .AddRange(Fields);
-
-
 
         }
 

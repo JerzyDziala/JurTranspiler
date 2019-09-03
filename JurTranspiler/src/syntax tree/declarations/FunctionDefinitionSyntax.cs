@@ -26,6 +26,8 @@ namespace JurTranspiler.compilerSource.nodes {
         public int GenericArity => TypeParameters.Length;
         public int Arity => Parameters.Length;
         public bool IsExtern { get; }
+        public bool IsMember { get; }
+        public bool IsPrivate { get; }
 
         public ITypeSyntax ReturnType { get; }
         public ImmutableArray<UninitializedVariableDeclarationSyntax> Parameters { get; }
@@ -44,6 +46,8 @@ namespace JurTranspiler.compilerSource.nodes {
 
             Name = context.ID(0).GetText();
             IsExtern = context.EXTERN() != null;
+            IsMember = context.MEMBER() != null;
+            IsPrivate = context.PRIVATE() != null;
 
             TypeParameters = context.ID().Skip(1)
                                     .Select(x => new TypeParameterSyntax(parent: this,

@@ -5,6 +5,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
     public interface IStructOrFunctionDeclarationSyntax {
         bool IsGeneric { get; }
+        bool IsPrivate { get; }
         ImmutableArray<TypeParameterSyntax> TypeParameters { get; }
     }
 

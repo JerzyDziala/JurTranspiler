@@ -42,9 +42,10 @@ namespace JurTranspiler.compilerSource.nodes {
             if (IsPoly) throw new NotImplementedException("poly methods are not supported yet");
 
             //generate arguments with or without substitutions
-            var args = $"{Arguments.Select(x => x.ToJs(knowledge)).Glue(", ")}";
+            var args = Arguments.Select(x => x.ToJs(knowledge)).ToList();
 
-            if (boundCallableInfo.Substitutions.Any()) {
+            var isExternFunction = boundCallableInfo.Callable is FunctionSignature function && function.IsExtern;
+            if (boundCallableInfo.Substitutions.Any() && !isExternFunction) {
 
                 Func<string, string> withSubs = s => IsInGenericFunction() ? $"{s}._wst_(_s_)" : s;
                 Func<string, string> toTypeArgumentString = s => withSubs($"_t_[{s.AsString()}]");
@@ -52,8 +53,7 @@ namespace JurTranspiler.compilerSource.nodes {
                 var subs = boundCallableInfo.Substitutions
                                             .Select(x => $"new Sub(_t_[{x.typeParameter.Name.AsString()}], {toTypeArgumentString(x.typeArgument.Name)})")
                                             .AsArray();
-                if (boundCallableInfo.Callable.Arity > 0) args += ", ";
-                args += subs;
+                args.Add(subs);
             }
 
             string getNewName() {
@@ -63,7 +63,11 @@ namespace JurTranspiler.compilerSource.nodes {
                            : knowledge.GetNewNameFor(this);
             }
 
-            return $"{getNewName()}({args})";
+            if (boundCallableInfo.Callable is FunctionSignature functionSignature) {
+                if (functionSignature.IsMember) return $"{args.First()}.{getNewName()}({args.Skip(1).Glue(", ")})";
+            }
+
+            return $"{getNewName()}({args.Glue(", ")})";
         }
 
     }
