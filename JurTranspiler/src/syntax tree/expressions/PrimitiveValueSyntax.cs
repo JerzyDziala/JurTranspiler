@@ -11,6 +11,7 @@ namespace JurTranspiler.compilerSource.nodes {
 
         public string Value { get; }
         public bool IsNull => Value == "null";
+        public bool IsUndefined => Value == "undefined";
 
 
         public PrimitiveValueSyntax(ISyntaxNode parent, JurParser.PrimitiveValueContext context) : base(parent, context) {

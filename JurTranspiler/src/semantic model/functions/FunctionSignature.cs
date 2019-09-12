@@ -5,46 +5,51 @@ using JurTranspiler.compilerSource.nodes;
 
 namespace JurTranspiler.compilerSource.semantic_model.functions {
 
-    public class FunctionSignature : Callable {
+	public class FunctionSignature : Callable {
 
-        public FunctionDefinitionSyntax OriginalDefinition { get; }
-        public bool IsExtern => OriginalDefinition.IsExtern;
-        public bool IsMember => OriginalDefinition.IsMember;
-
-
-        public FunctionSignature(FunctionDefinitionSyntax originalDefinitionSyntax,
-                                 ImmutableArray<IType> typeArguments,
-                                 ImmutableArray<IType> parameters,
-                                 IType returnType) : base(originalDefinitionSyntax.Name, parameters, typeArguments, returnType) {
-            OriginalDefinition = originalDefinitionSyntax;
-        }
+		public FunctionDefinitionSyntax OriginalDefinition { get; }
+		public override bool IsStatic => OriginalDefinition.IsStatic;
+		public override bool IsExtern => OriginalDefinition.IsExtern;
+		public override bool IsMember => OriginalDefinition.IsMember;
+		public override string StaticTypeName => OriginalDefinition.StaticTypeName;
 
 
-        public FunctionSignature WithSubstitutedTypes(ISet<Substitution> typeMap) {
-            return new FunctionSignature(originalDefinitionSyntax: OriginalDefinition,
-                                         typeArguments: typeMap.Select(substitution => substitution.typeArgument).ToImmutableArray(),
-                                         parameters: ParametersTypes.Select(p => p.WithSubstitutedTypes(typeMap)).ToImmutableArray(),
-                                         returnType: ReturnType.WithSubstitutedTypes(typeMap));
-        }
+		public FunctionSignature(FunctionDefinitionSyntax originalDefinitionSyntax,
+		                         ImmutableArray<IType> typeArguments,
+		                         ImmutableArray<IType> parameters,
+		                         IType returnType) : base(originalDefinitionSyntax.Name,
+		                                                  parameters,
+		                                                  typeArguments,
+		                                                  returnType) {
+			OriginalDefinition = originalDefinitionSyntax;
+		}
 
 
-        protected bool Equals(FunctionSignature other) {
-            return Equals(OriginalDefinition, other.OriginalDefinition);
-        }
+		public FunctionSignature WithSubstitutedTypes(ISet<Substitution> typeMap) {
+			return new FunctionSignature(originalDefinitionSyntax: OriginalDefinition,
+			                             typeArguments: typeMap.Select(substitution => substitution.typeArgument).ToImmutableArray(),
+			                             parameters: ParametersTypes.Select(p => p.WithSubstitutedTypes(typeMap)).ToImmutableArray(),
+			                             returnType: ReturnType.WithSubstitutedTypes(typeMap));
+		}
 
 
-        public override bool Equals(object? obj) {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj?.GetType() != GetType()) return false;
-            return Equals((FunctionSignature) obj!);
-        }
+		protected bool Equals(FunctionSignature other) {
+			return Equals(OriginalDefinition, other.OriginalDefinition);
+		}
 
 
-        public override int GetHashCode() {
-            return OriginalDefinition?.GetHashCode() ?? 0;
-        }
+		public override bool Equals(object? obj) {
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj?.GetType() != GetType()) return false;
+			return Equals((FunctionSignature) obj!);
+		}
 
-    }
+
+		public override int GetHashCode() {
+			return OriginalDefinition?.GetHashCode() ?? 0;
+		}
+
+	}
 
 }

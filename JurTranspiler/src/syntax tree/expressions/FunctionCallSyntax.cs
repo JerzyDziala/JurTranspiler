@@ -10,66 +10,67 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class FunctionCallSyntax : SyntaxNode, IExpressionSyntax {
+	public class FunctionCallSyntax : SyntaxNode, IExpressionSyntax {
 
-        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-        public string Name { get; }
-        public bool IsPoly { get; }
-        public ImmutableArray<ITypeSyntax> ExplicitTypeArguments { get; }
-        public bool HasExplicitTypeArguments => ExplicitTypeArguments.Any();
-        public ImmutableArray<IExpressionSyntax> Arguments { get; }
-
-
-        public FunctionCallSyntax(ISyntaxNode parent, JurParser.FunctionCallContext context) : base(parent, context, context.ID()) {
-
-            Name = context.ID().GetText();
-            Arguments = ToExpressions(context.expression());
-            ExplicitTypeArguments = ToTypes(context.type());
-            IsPoly = context.POLY() != null;
-
-            ImmediateChildren = ImmutableArray.Create<ITreeNode>()
-                                              .AddRange(Arguments)
-                                              .AddRange(ExplicitTypeArguments);
-
-        }
+		public string Name { get; }
+		public bool IsPoly { get; }
+		public ImmutableArray<ITypeSyntax> ExplicitTypeArguments { get; }
+		public bool HasExplicitTypeArguments => ExplicitTypeArguments.Any();
+		public ImmutableArray<IExpressionSyntax> Arguments { get; }
 
 
-        public override string ToJs(Knowledge knowledge) {
+		public FunctionCallSyntax(ISyntaxNode parent, JurParser.FunctionCallContext context) : base(parent, context, context.ID()) {
 
-            var boundCallableInfo = knowledge.FunctionCallsBindings[this];
+			Name = context.ID().GetText();
+			Arguments = ToExpressions(context.expression());
+			ExplicitTypeArguments = ToTypes(context.type());
+			IsPoly = context.POLY() != null;
 
-            if (IsPoly) throw new NotImplementedException("poly methods are not supported yet");
+			ImmediateChildren = ImmutableArray.Create<ITreeNode>()
+			                                  .AddRange(Arguments)
+			                                  .AddRange(ExplicitTypeArguments);
 
-            //generate arguments with or without substitutions
-            var args = Arguments.Select(x => x.ToJs(knowledge)).ToList();
+		}
 
-            var isExternFunction = boundCallableInfo.Callable is FunctionSignature function && function.IsExtern;
-            if (boundCallableInfo.Substitutions.Any() && !isExternFunction) {
 
-                Func<string, string> withSubs = s => IsInGenericFunction() ? $"{s}._wst_(_s_)" : s;
-                Func<string, string> toTypeArgumentString = s => withSubs($"_t_[{s.AsString()}]");
+		public override string ToJs(Knowledge knowledge) {
 
-                var subs = boundCallableInfo.Substitutions
-                                            .Select(x => $"new Sub(_t_[{x.typeParameter.Name.AsString()}], {toTypeArgumentString(x.typeArgument.Name)})")
-                                            .AsArray();
-                args.Add(subs);
-            }
+			var functionCallInfo = knowledge.FunctionCallsBindings[this];
+			var boundCallable = functionCallInfo.Callable;
 
-            string getNewName() {
-                //if it is a function pointer then we have to use the new name of the variable in with it was declared
-                return boundCallableInfo.Callable is FunctionPointer pointer
-                           ? knowledge.GetNewNameFor(pointer.declaration!)
-                           : knowledge.GetNewNameFor(this);
-            }
+			if (IsPoly) throw new NotImplementedException("poly methods are not supported yet");
 
-            if (boundCallableInfo.Callable is FunctionSignature functionSignature) {
-                if (functionSignature.IsMember) return $"{args.First()}.{getNewName()}({args.Skip(1).Glue(", ")})";
-            }
+			var args = Arguments.Select(x => x.ToJs(knowledge)).ToList();
 
-            return $"{getNewName()}({args.Glue(", ")})";
-        }
+			//extern function calls are easy
+			if (boundCallable.IsExtern) {
+				if (boundCallable.IsStatic) {
+					return $"{boundCallable.StaticTypeName!}.{Name}({args.Glue(", ")})";
+				}
+				if (boundCallable.IsMember) {
+					return $"{args.First()}.{Name}({args.Skip(1).Glue(", ")})";
+				}
+			}
 
-    }
+			//non extern calls sometime need passing in substitution informations as argument
+			if (functionCallInfo.Substitutions.Any()) {
+
+				Func<string, string> withSubs = s => IsInGenericFunction() ? $"{s}._wst_(_s_)" : s;
+				Func<string, string> toTypeArgumentString = s => withSubs($"_t_[{s.AsString()}]");
+
+				var subs = functionCallInfo.Substitutions
+				                            .Select(x => $"new Sub(_t_[{x.typeParameter.Name.AsString()}], {toTypeArgumentString(x.typeArgument.Name)})")
+				                            .AsArray();
+				args.Add(subs);
+			}
+
+			var mangledName = knowledge.GetNewNameFor(this);
+
+			return $"{mangledName}({args.Glue(", ")})";
+		}
+
+	}
 
 }

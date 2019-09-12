@@ -139,14 +139,13 @@
               <e p="ICallable.cs" t="Include" />
               <e p="SubstitutedCallable.cs" t="Include" />
             </e>
-            <e p="IhaveType.cs" t="Include" />
+            <e p="IHaveType.cs" t="Include" />
             <e p="Substitution.cs" t="Include" />
             <e p="types" t="Include">
               <e p="AnyType.cs" t="Include" />
               <e p="ArrayType.cs" t="Include" />
               <e p="FunctionPointerType.cs" t="Include" />
               <e p="IType.cs" t="Include" />
-              <e p="NullType.cs" t="Include" />
               <e p="PrimitiveKind.cs" t="Include" />
               <e p="PrimitiveType.cs" t="Include" />
               <e p="StructType.cs" t="Include" />
@@ -185,6 +184,7 @@
               <e p="DefaultTypeValueSyntax.cs" t="Include" />
               <e p="FieldAccessSyntax.cs" t="Include" />
               <e p="FunctionCallSyntax.cs" t="Include" />
+              <e p="InitializerSyntax.cs" t="Include" />
               <e p="NegationExpressionSyntax.cs" t="Include" />
               <e p="OperationSyntax.cs" t="Include" />
               <e p="ParenthesisSyntax.cs" t="Include" />
@@ -251,8 +251,8 @@
         <e p="UtilityLibrary.csproj" t="IncludeRecursive" />
       </e>
     </e>
-    <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_JurTranspiler.-1669174612.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_JurTranspiler.1204100038.00" t="ExcludeRecursive" />
     <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
     <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
     <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />

@@ -17,7 +17,7 @@ namespace JurTranspiler.compilerSource.CodeGeneration {
 
 		public string GenerateTypesTable() {
 
-			var typesToGenerate = knowledge.AllTypes.Where(x => !(x is NullType));
+			var typesToGenerate = knowledge.AllTypes;
 
 			return "const _t_ = {" + typesToGenerate.Select(GenerateTypeTableEntry).Glue(",\n\n") + "};";
 		}

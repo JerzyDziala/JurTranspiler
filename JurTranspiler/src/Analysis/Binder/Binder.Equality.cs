@@ -35,12 +35,6 @@ namespace JurTranspiler.compilerSource.Analysis {
         }
 
 
-        private bool IsEqualToWithSubstitutionsCore(NullType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-            }
-            return true;
-        }
 
 
         private bool IsEqualToWithSubstitutionsCore(AnyType self, IType type, ICollection<Substitution> substitutions) {

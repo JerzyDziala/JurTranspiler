@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JurTranspiler.compilerSource.semantic_model;
@@ -5,143 +6,133 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.Analysis {
 
-    public partial class Binder {
+	public partial class Binder {
 
-        private bool IsAssignableToWithSubstitutions(IType self, IType type, ICollection<Substitution> substitutions) {
-            return IsAssignableToWithSubstitutionsCore((dynamic) self, (dynamic) type, substitutions);
-        }
-
-
-        private bool IsAssignableToWithSubstitutionsCore(ArrayType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            if (type is UndefinedType) return true;
-            if (type is ArrayType arrayType && IsAssignableToWithSubstitutions(self.ElementType, arrayType.ElementType, substitutions)) return true;
-            return false;
-        }
+		private bool IsAssignableToWithSubstitutions(IType self, IType type, ICollection<Substitution> substitutions) {
+			return IsAssignableToWithSubstitutionsCore((dynamic) self, (dynamic) type, substitutions);
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(FunctionPointerType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is TypeParameterType typeParameterType) {
-                substitutions.Add(new Substitution(typeParameterType, self));
-                return true;
-            }
-            if (type is UndefinedType) return true;
-            if (type is FunctionPointerType func) {
-
-                if (!IsAssignableToWithSubstitutions(self.ReturnType, func.ReturnType, substitutions)) return false;
-
-                if (self.Parameters.Length != func.Parameters.Length) return false;
-
-                return self.Parameters
-                           .Zip(func.Parameters, (sPar, tPar) => (sPar, tPar))
-                           .All(x => {
-                               if (x.tPar is TypeParameterType t) {
-                                   substitutions.Add(new Substitution(t, x.sPar));
-                                   return true;
-                               }
-                               return IsAssignableToWithSubstitutions(x.tPar, x.sPar, substitutions);
-                           });
-            }
-            return false;
-        }
+		private bool IsAssignableToWithSubstitutionsCore(ArrayType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			if (type is UndefinedType) return true;
+			if (type is ArrayType arrayType && IsAssignableToWithSubstitutions(self.ElementType, arrayType.ElementType, substitutions)) return true;
+			return false;
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(NullType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            return type is StructType || type is ArrayType || type is FunctionPointerType;
-        }
+		private bool IsAssignableToWithSubstitutionsCore(FunctionPointerType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (type is TypeParameterType typeParameterType) {
+				substitutions.Add(new Substitution(typeParameterType, self));
+				return true;
+			}
+			if (type is UndefinedType) return true;
+			if (type is FunctionPointerType func) {
+
+				if (!IsAssignableToWithSubstitutions(self.ReturnType, func.ReturnType, substitutions)) return false;
+
+				if (self.Parameters.Length != func.Parameters.Length) return false;
+
+				return self.Parameters
+				           .Zip(func.Parameters, (sPar, tPar) => (sPar, tPar))
+				           .All(x => {
+					           if (x.tPar is TypeParameterType t) {
+						           substitutions.Add(new Substitution(t, x.sPar));
+						           return true;
+					           }
+					           return IsAssignableToWithSubstitutions(x.tPar, x.sPar, substitutions);
+				           });
+			}
+			return false;
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(AnyType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            return type is AnyType;
-        }
+		private bool IsAssignableToWithSubstitutionsCore(AnyType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			return !(type is VoidType);
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(PrimitiveType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (IsAssignableTo(self, type)) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            return false;
-        }
+		private bool IsAssignableToWithSubstitutionsCore(PrimitiveType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (IsAssignableTo(self, type)) return true;
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			return false;
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(StructType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is UndefinedType) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            if (type is StructType target) {
-                var fieldsA = BindFields(self).ToList();
-                var fieldsB = BindFields(target).ToList();
-                var tmpSubs = new HashSet<Substitution>();
+		private bool IsAssignableToWithSubstitutionsCore(StructType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (type is UndefinedType) return true;
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			if (type is StructType target) {
+				var fieldsA = BindFields(self).ToList();
+				var fieldsB = BindFields(target).ToList();
+				var tmpSubs = new HashSet<Substitution>();
 
-                var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => IsEqualToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)
-                                                                            && fieldA.Name.Equals(fieldB.Name)));
+				var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => IsEqualToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)
+				                                                            && fieldA.Name.Equals(fieldB.Name)));
 
-                if (!isCompatible) return false;
-                else if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;
-                else {
-                    substitutions.AddRange(tmpSubs);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
-        private bool IsAssignableToWithSubstitutionsCore(TypeParameterType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is UndefinedType) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            return false;
-        }
+				if (!isCompatible) return false;
+				else if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;
+				else {
+					substitutions.AddRange(tmpSubs);
+					return true;
+				}
+			}
+			return false;
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(UndeclaredStructType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is UndeclaredStructType undeclaredType && undeclaredType.Name == self.Name) return true;
-            if (type is UndefinedType) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            return false;
-        }
+		private bool IsAssignableToWithSubstitutionsCore(TypeParameterType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (type is UndefinedType) return true;
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			return false;
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(UndefinedType self, IType type, ICollection<Substitution> substitutions) {
-            if (type is AnyType) return true;
-            if (type is TypeParameterType t) {
-                substitutions.Add(new Substitution(t, self));
-                return true;
-            }
-            return true;
-        }
+		private bool IsAssignableToWithSubstitutionsCore(UndeclaredStructType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (type is UndeclaredStructType undeclaredType && undeclaredType.Name == self.Name) return true;
+			if (type is UndefinedType) return true;
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			return false;
+		}
 
 
-        private bool IsAssignableToWithSubstitutionsCore(VoidType self, IType type, ICollection<Substitution> substitutions) => type is VoidType;
+		private bool IsAssignableToWithSubstitutionsCore(UndefinedType self, IType type, ICollection<Substitution> substitutions) {
+			if (type is AnyType) return true;
+			if (type is TypeParameterType t) {
+				substitutions.Add(new Substitution(t, self));
+				return true;
+			}
+			return true;
+		}
 
-    }
+
+		private bool IsAssignableToWithSubstitutionsCore(VoidType self, IType type, ICollection<Substitution> substitutions) => type is VoidType;
+
+	}
 
 }

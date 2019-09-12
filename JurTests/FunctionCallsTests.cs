@@ -5,12 +5,13 @@ using NUnit.Framework;
 
 namespace JurTranspilerTests {
 
-    [TestFixture]
-    public class FunctionCallsTests {
-        [Test]
-        [Parallelizable]
-        public void SimpleFunctionCall() {
-            var code = @"
+	[TestFixture]
+	public class FunctionCallsTests {
+
+		[Test]
+		[Parallelizable]
+		public void SimpleFunctionCall() {
+			var code = @"
         		abstraction 0 {
         		    num add(num a, num b){
                         result := a + b;
@@ -21,16 +22,16 @@ namespace JurTranspilerTests {
                     a := add(5, 3+4);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] { };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleGenericCall() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleGenericCall() {
+			var code = @"
         		abstraction 0 {
         		    T Get<T>(T a){
 						return a;
@@ -41,21 +42,21 @@ namespace JurTranspilerTests {
 					a = 'jur';
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new TypeMismatchInAssignmentError("__TEST__",
-                                                  9,
-                                                  "num",
-                                                  "string"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new TypeMismatchInAssignmentError("__TEST__",
+				                                  9,
+				                                  "num",
+				                                  "string"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleGenericCallWithExplicitTypeArgument() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleGenericCallWithExplicitTypeArgument() {
+			var code = @"
         		abstraction 0 {
         		    T Get<T>(){
 						return new T;
@@ -66,18 +67,21 @@ namespace JurTranspilerTests {
 					num n = Get<string>();
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new TypeMismatchInAssignmentError("__TEST__", 9, "num", "string")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new TypeMismatchInAssignmentError("__TEST__",
+				                                  9,
+				                                  "num",
+				                                  "string")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void GenericFunctionPointerParameterContravariantce() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void GenericFunctionPointerParameterContravariantce() {
+			var code = @"
         		abstraction 0 {
         		    T A<T>(void(T) fun) {
                         T x;
@@ -89,17 +93,17 @@ namespace JurTranspilerTests {
 					string[] x = A(f);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void NoTypeArgumentSpecified() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void NoTypeArgumentSpecified() {
+			var code = @"
         		abstraction 0 {
         		    void generic<T>(string s){}
         		}
@@ -107,18 +111,18 @@ namespace JurTranspilerTests {
         		    generic('string');
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new NoMatchingOverloadForCall("__TEST__", 6, "generic(string)"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new NoMatchingOverloadForCall("__TEST__", 6, "generic(string)"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void ExplicitTypeArguments() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void ExplicitTypeArguments() {
+			var code = @"
         		abstraction 0 {
                     bool gen<G,T>(G g, string b){
                         return b == 'aqq';
@@ -140,20 +144,20 @@ namespace JurTranspilerTests {
         		    num n1 = gen(7,5);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 18, "gen<bool,string>(bool,string)"),
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 20, "gen(num,num)"),
-                new NoMatchingOverloadForCall("__TEST__", 19, "gen<string,num>(num,num)"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new CouldNotResolveAmbiguousFunctionCall("__TEST__", 18, "gen<bool,string>(bool,string)"),
+				new CouldNotResolveAmbiguousFunctionCall("__TEST__", 20, "gen(num,num)"),
+				new NoMatchingOverloadForCall("__TEST__", 19, "gen<string,num>(num,num)"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleDuplicatesAndAmbiguityCall() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleDuplicatesAndAmbiguityCall() {
+			var code = @"
         		abstraction 0 {
 					T gen<T>(T a) {
                         return null;
@@ -174,29 +178,29 @@ namespace JurTranspilerTests {
                     num y = gen(5);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new MultipleDeclarationsOfFunction(new Location[] {
-                                                       new Location("__TEST__", 3),
-                                                       new Location("__TEST__", 7),
-                                                   },
-                                                   "gen"),
-                new MultipleDeclarationsOfFunction(new Location[] {
-                                                       new Location("__TEST__", 10),
-                                                       new Location("__TEST__", 13),
-                                                   },
-                                                   "gen"),
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 18, "gen(string)"),
-                new CouldNotResolveAmbiguousFunctionCall("__TEST__", 19, "gen(num)"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new MultipleDeclarationsOfFunction(new Location[] {
+					                                   new Location("__TEST__", 3),
+					                                   new Location("__TEST__", 7),
+				                                   },
+				                                   "gen"),
+				new MultipleDeclarationsOfFunction(new Location[] {
+					                                   new Location("__TEST__", 10),
+					                                   new Location("__TEST__", 13),
+				                                   },
+				                                   "gen"),
+				new CouldNotResolveAmbiguousFunctionCall("__TEST__", 18, "gen(string)"),
+				new CouldNotResolveAmbiguousFunctionCall("__TEST__", 19, "gen(num)"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleConstraints() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleConstraints() {
+			var code = @"
         		abstraction 0 {
         		    void fun<T,T1>(T a, T1 b) where T1 is T {
 
@@ -213,16 +217,16 @@ namespace JurTranspilerTests {
         		    fun(new Entity, new Person);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] { };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SimpleResolution() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SimpleResolution() {
+			var code = @"
         		abstraction 0 {
 
                     bool Fun(string a, num b){
@@ -254,16 +258,16 @@ namespace JurTranspilerTests {
                     Dog[] dogs = Fun(new Dog,new BigDog);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] { };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void SubstitutionsAndInheritance() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void SubstitutionsAndInheritance() {
+			var code = @"
         		abstraction 0 {
         		    void add<T>(T[] list, T item){
 
@@ -281,18 +285,18 @@ namespace JurTranspilerTests {
                     new Entity<num>[].add(new Dog);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new NoMatchingOverloadForCall("__TEST__", 16, "add(Entity<num>[],Dog)"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new NoMatchingOverloadForCall("__TEST__", 16, "add(Entity<num>[],Dog)"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void ValidSubstitutionsAndInheritance() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void ValidSubstitutionsAndInheritance() {
+			var code = @"
         		abstraction 0 {
         		    void add<T,I>(T[] list, I item) where I is T {
                         T a = item;
@@ -310,16 +314,16 @@ namespace JurTranspilerTests {
                     new Entity<num>[].add(new Dog);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] { };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void LambdaReturningUndeclaredStructTypeAsFunctionArgumentCompilerCrash() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void LambdaReturningUndeclaredStructTypeAsFunctionArgumentCompilerCrash() {
+			var code = @"
         		abstraction 0 {
                     num fun(num(num) arg ){
                         return arg(5);
@@ -329,19 +333,19 @@ namespace JurTranspilerTests {
                     fun( (num x) -> new Undeclared );
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new UseOfUndeclaredType("__TEST__", 8, "Undeclared"),
-                new NoMatchingOverloadForCall("__TEST__", 8, "fun(Undeclared(num))")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new UseOfUndeclaredType("__TEST__", 8, "Undeclared"),
+				new NoMatchingOverloadForCall("__TEST__", 8, "fun(Undeclared(num))")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 
-        [Test]
-        [Parallelizable]
-        public void MultilineLambdaReturningUndeclaredStructTypeAsFunctionArgument() {
-            var code = @"
+		[Test]
+		[Parallelizable]
+		public void MultilineLambdaReturningUndeclaredStructTypeAsFunctionArgument() {
+			var code = @"
         		abstraction 0 {
                     num fun(num(num) arg ){
                         return arg(5);
@@ -353,13 +357,14 @@ namespace JurTranspilerTests {
                     });
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new UseOfUndeclaredType("__TEST__", 9, "Undeclared"),
-                new NoMatchingOverloadForCall("__TEST__", 8, "fun(Undeclared(num))")
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
-    }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new UseOfUndeclaredType("__TEST__", 9, "Undeclared"),
+				new NoMatchingOverloadForCall("__TEST__", 8, "fun(Undeclared(num))")
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
+	}
 
 }
