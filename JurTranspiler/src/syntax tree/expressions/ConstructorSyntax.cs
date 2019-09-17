@@ -24,7 +24,7 @@ namespace JurTranspiler.compilerSource.nodes {
 			Initializers = context.ID()
 			                      .Select((node, i) => new InitializerSyntax(this, node.GetText().ToString(), context.expression(i)))
 			                      .ToImmutableArray();
-			ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ConstructedType);
+			ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ConstructedType).AddRange(Initializers);
 
 		}
 
@@ -39,7 +39,7 @@ namespace JurTranspiler.compilerSource.nodes {
 			var withoutInitializer = type + ".createInstance()";
 
 			if (HasInitializers) {
-				var initializers = Initializers.Select(x => $"{x.FieldName} = {x.Expression.ToJs(knowledge)}").Glue(",").AsObject();
+				var initializers = Initializers.Select(x => $"{x.FieldName}: {x.Expression.ToJs(knowledge)}").Glue(",").AsObject();
 				return $"_wi_({withoutInitializer}, {initializers})";
 			}
 			return withoutInitializer;

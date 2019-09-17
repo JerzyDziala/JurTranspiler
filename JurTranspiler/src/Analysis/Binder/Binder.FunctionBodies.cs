@@ -22,8 +22,6 @@ namespace JurTranspiler.compilerSource.Analysis {
 			var lambdas = symbols.Tree.AllLambdas;
 			var mains = symbols.Tree.AllMains;
 
-			CheckForInvalidAssignments();
-			CheckForInvalidInitializers();
 
 			foreach (var function in functions) {
 
@@ -45,40 +43,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 		}
 
 
-		private void CheckForInvalidInitializers() {
 
-			var constructors = symbols.Tree.AllConstructors;
-
-			foreach (var constructor in constructors) {
-
-				var initializedType = BindType(constructor.ConstructedType) as StructType;
-
-				if (initializedType is null)
-					continue;
-
-				foreach (var initializer in constructor.Initializers) {
-					CheckInitializerValidity(initializer, initializedType);
-				}
-			}
-
-		}
-
-
-		private void CheckInitializerValidity(InitializerSyntax initializerSyntax, StructType type) {
-			var assignedField = BindFields(type).FirstOrDefault(x => x.Name == initializerSyntax.FieldName);
-			if (assignedField == null) {
-				errors.Add(new NoMatchingFieldFound(initializerSyntax.Location,
-				                                    initializerSyntax.FieldName,
-				                                    type.Name));
-				return;
-			}
-			var initializerExpressionType = BindExpression(initializerSyntax.Expression);
-			if (!IsAssignableTo(initializerExpressionType, assignedField.Type)) {
-				errors.Add(new TypeMismatchInAssignmentError(initializerSyntax.Location,
-				                                             assignedField.Type.Name,
-				                                             initializerExpressionType.Name));
-			}
-		}
 
 
 		private void CheckForDuplicateVariables(ITreeNode scope) {
@@ -141,20 +106,6 @@ namespace JurTranspiler.compilerSource.Analysis {
 			});
 		}
 
-
-		private void CheckForInvalidAssignments() {
-			var assignments = symbols.Tree.AllAssignments;
-			foreach (var assignment in assignments) {
-				var (leftType, rightType) = BindAssignment(assignment);
-
-				if (!IsAssignableTo(rightType, leftType)) {
-					errors.Add(new TypeMismatchInAssignmentError(file: assignment.File,
-					                                             line: assignment.Line,
-					                                             leftName: leftType.Name,
-					                                             rightName: rightType.Name));
-				}
-			}
-		}
 
 
 		private void CheckForReturnTypeMismatch(FunctionDefinitionSyntax function) {

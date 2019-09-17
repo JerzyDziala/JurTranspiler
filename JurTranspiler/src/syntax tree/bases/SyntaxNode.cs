@@ -72,7 +72,7 @@ namespace JurTranspiler.syntax_tree.bases {
 
 
 		protected SyntaxNode(ISyntaxNode parent,
-		                     ITerminalNode? token) {
+		                     ITerminalNode token) {
 			Parent = parent;
 			Root = Parent.Root;
 			AllParents = GetAllParents();

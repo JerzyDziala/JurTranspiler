@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.semantic_model.functions {
 		public override bool IsStatic => OriginalDefinition.IsStatic;
 		public override bool IsExtern => OriginalDefinition.IsExtern;
 		public override bool IsMember => OriginalDefinition.IsMember;
-		public override string StaticTypeName => OriginalDefinition.StaticTypeName;
+		public override string? StaticTypeName => OriginalDefinition.StaticTypeName;
 
 
 		public FunctionSignature(FunctionDefinitionSyntax originalDefinitionSyntax,

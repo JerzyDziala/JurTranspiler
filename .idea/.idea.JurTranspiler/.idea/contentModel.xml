@@ -12,6 +12,7 @@
         <e p="ForLoopTests.cs" t="Include" />
         <e p="FunctionCallsTests.cs" t="Include" />
         <e p="FunctionDeclarationsTests.cs" t="Include" />
+        <e p="InitializersTests.cs" t="Include" />
         <e p="JurTests.csproj" t="IncludeRecursive" />
         <e p="LambdasTests.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
@@ -51,6 +52,7 @@
               <e p="Binder.Fields.cs" t="Include" />
               <e p="Binder.FunctionBodies.cs" t="Include" />
               <e p="Binder.NameMangler.cs" t="Include" />
+              <e p="Binder.OtherAnalyzers.cs" t="Include" />
               <e p="Binder.OverloadResolution.cs" t="Include" />
               <e p="Binder.Substitutions.cs" t="Include" />
               <e p="Binder.Types.cs" t="Include" />
@@ -71,6 +73,7 @@
               <e p="IndexAccessOnNonArray.cs" t="Include" />
               <e p="InliningOfNonStructType.cs" t="Include" />
               <e p="InliningResultsInMultipleFieldsWithTheSameName.cs" t="Include" />
+              <e p="InvalidUseOfNew.cs" t="Include" />
               <e p="MissingReturnStatement.cs" t="Include" />
               <e p="MultipleDeclarationsOfFunction.cs" t="Include" />
               <e p="MultipleDeclarationsOfStruct.cs" t="Include" />

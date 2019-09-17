@@ -59,7 +59,7 @@ namespace JurTranspilerTests {
 			var code = @"
         		abstraction 0 {
         		    T Get<T>(){
-						return new T;
+						return T.default;
 					}
         		}
         		main {

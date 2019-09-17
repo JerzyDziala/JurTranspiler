@@ -54,7 +54,7 @@ namespace JurTranspiler.compilerSource.nodes {
 			Name = context.ID(0).GetText();
 			StaticTypeName = IsStatic ? context.ID(0).GetText() : null;
 
-			var typeParametersIds = IsStatic ? context.ID().Skip(1) : context.ID().Skip(2);
+			var typeParametersIds = IsStatic ? context.ID().Skip(2) : context.ID().Skip(1);
 			TypeParameters = typeParametersIds.Select(x => new TypeParameterSyntax(parent: this,
 			                                                                       idNode: x,
 			                                                                       originalDeclarer: this))

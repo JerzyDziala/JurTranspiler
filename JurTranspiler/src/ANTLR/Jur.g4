@@ -212,12 +212,13 @@ block: '{' statement* '}'
 expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE | UNDEFINED_VALUE) #primitiveValue
            | uninitializedVarDeclaration? ARROW (block | expression)  #anonymusFunction
            | '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' ARROW (block | expression)  #anonymusFunction
+           | (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* ) ARROW (block | expression)  #anonymusFunction
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | type '.' DEFAULT_VALUE #defaultValue
 		   | type '.' TYPE #typeExpression
 		   | expression '.' ID #fieldAccess
-		   | NEW type '{' (ID '=' expression) (',' ID '=' expression)* '}' #constructor
+		   | NEW type ('{' (ID '=' expression) (',' ID '=' expression)* '}')* #constructor
 		   | ID #variableAccess
 		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess
 		   | LEFT_PARENT expression RIGHT_PARENT #parExpression
