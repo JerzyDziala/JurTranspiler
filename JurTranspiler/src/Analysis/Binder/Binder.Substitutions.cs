@@ -84,8 +84,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 				var fieldsB = BindFields(target).ToList();
 				var tmpSubs = new HashSet<Substitution>();
 
-				var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => IsEqualToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)
-				                                                            && fieldA.Name.Equals(fieldB.Name)));
+				var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => fieldA.Name.Equals(fieldB.Name) && IsEqualToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)));
 
 				if (!isCompatible) return false;
 				else if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;

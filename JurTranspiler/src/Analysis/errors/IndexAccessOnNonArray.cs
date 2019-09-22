@@ -4,11 +4,15 @@ namespace JurTranspiler.Analysis.errors {
 
 	public class IndexAccessOnNonArray : SingleLocationError {
 
-		public IndexAccessOnNonArray(string file, int line) : base(file, line) {
+		private string TypeName { get; }
+
+
+		public IndexAccessOnNonArray(string file, int line, string typeName) : base(file, line) {
+			TypeName = typeName;
 		}
 
 
-		protected override string MessageBody => "";
+		protected override string MessageBody => "type: " + TypeName;
 
 	}
 

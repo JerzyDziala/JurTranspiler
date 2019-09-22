@@ -45,7 +45,9 @@ namespace JurTranspiler.compilerSource.Analysis {
 			var ownerType = BindExpression(syntax.Array);
 			if (ownerType is ArrayType arrayType) return arrayType.ElementType;
 
-			errors.Add(new IndexAccessOnNonArray(syntax.File, syntax.Line));
+			if (ownerType.IsNot<UndefinedType>())
+				errors.Add(new IndexAccessOnNonArray(syntax.File, syntax.Line, ownerType.Name));
+
 			return new UndefinedType();
 		}
 
