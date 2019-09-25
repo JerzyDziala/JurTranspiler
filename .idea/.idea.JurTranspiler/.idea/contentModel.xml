@@ -74,6 +74,7 @@
               <e p="InliningOfNonStructType.cs" t="Include" />
               <e p="InliningResultsInMultipleFieldsWithTheSameName.cs" t="Include" />
               <e p="InvalidUseOfNew.cs" t="Include" />
+              <e p="InvalidUseOfOperator.cs" t="Include" />
               <e p="MissingReturnStatement.cs" t="Include" />
               <e p="MultipleDeclarationsOfFunction.cs" t="Include" />
               <e p="MultipleDeclarationsOfStruct.cs" t="Include" />
@@ -182,12 +183,13 @@
             </e>
             <e p="expressions" t="Include">
               <e p="AnonymousFunctionSyntax.cs" t="Include" />
+              <e p="ArithmeticNegationExpressionSyntax.cs" t="Include" />
               <e p="ArrayIndexAccessSyntax.cs" t="Include" />
               <e p="ConstructorSyntax.cs" t="Include" />
               <e p="DefaultTypeValueSyntax.cs" t="Include" />
               <e p="FieldAccessSyntax.cs" t="Include" />
               <e p="FunctionCallSyntax.cs" t="Include" />
-              <e p="InitializerSyntax.cs" t="Include" />
+              <e p="IncrementationOrDecrementationExpressionSyntax.cs" t="Include" />
               <e p="NegationExpressionSyntax.cs" t="Include" />
               <e p="OperationSyntax.cs" t="Include" />
               <e p="ParenthesisSyntax.cs" t="Include" />
@@ -201,6 +203,7 @@
               <e p="StatementSyntaxFactory.cs" t="Include" />
               <e p="TypeSyntaxFactory.cs" t="Include" />
             </e>
+            <e p="InitializerSyntax.cs" t="Include" />
             <e p="Interfaces" t="Include">
               <e p="IAssignment.cs" t="Include" />
               <e p="IControlFlowStatement.cs" t="Include" />

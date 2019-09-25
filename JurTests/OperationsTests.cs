@@ -10,12 +10,13 @@ using NUnit.Framework;
 
 namespace JurTranspilerTests {
 
-    [TestFixture]
-    public class OperationsTests {
-        [Test]
-        [Parallelizable]
-        public void ValidOperations() {
-            var code = @"
+	[TestFixture]
+	public class OperationsTests {
+
+		[Test]
+		[Parallelizable]
+		public void ValidOperations() {
+			var code = @"
         		abstraction 0 {
         		    struct A {
                         num i;
@@ -56,13 +57,110 @@ namespace JurTranspilerTests {
                     bool xxxxxx = !!'aqq' && !!(!!true || !!false);
         		}
         ";
-            var (errors, _) = Compiler.Compile(code);
-            var expectedErrors = new Error[] {
-                new NegationOperatorUsedWithNonBooleanType("__TEST__", 39, "string"),
-            };
-            CollectionAssert.AreEquivalent(expectedErrors, errors);
-        }
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new NegationOperatorUsedWithNonBooleanType("__TEST__", 39, "string"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
-    }
+
+		[Test]
+		[Parallelizable]
+		public void ValidIncrementsAndDecrements() {
+			var code = @"
+        		abstraction 0 {
+
+        		}
+        		main {
+					i := 4;
+					i++;
+					a := i++;
+        		}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
+
+		[Test]
+		[Parallelizable]
+		public void InvalidTypesInIncrementsAndDecrements() {
+			var code = @"
+        		abstraction 0 {
+
+        		}
+        		main {
+					string s = 'aqq';
+					s++;
+					x := s--;
+					x++;
+        		}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new TypeMismatchInUseOfOperator("__TEST__",
+				                                7,
+				                                "++",
+				                                "string"),
+				new TypeMismatchInUseOfOperator("__TEST__",
+				                                8,
+				                                "--",
+				                                "string"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
+
+		[Test]
+		[Parallelizable]
+		public void InvalidExpressionTypesInIncrementsAndDecrements() {
+			var code = @"
+        		abstraction 0 {
+					struct X {
+						num x;
+					}
+        		}
+        		main {
+					x := new X { x = 5 };
+					x.x--;
+					y := new num[];
+					y[3]++;
+        		}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new InvalidUseOfOperator(new Location("__TEST__", 9), "--"),
+				new InvalidUseOfOperator(new Location("__TEST__", 11), "++"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
+
+		[Test]
+		[Parallelizable]
+		public void InvalidNegation() {
+			var code = @"
+        		abstraction 0 {
+
+        		}
+        		main {
+					num x = -5;
+					num y = -'aqq';
+					num z = -(-(-x) - 4);
+        		}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new TypeMismatchInUseOfOperator("__TEST__",
+				                                7,
+				                                "-",
+				                                "string"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
+	}
 
 }

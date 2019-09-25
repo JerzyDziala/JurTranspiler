@@ -61,8 +61,8 @@ namespace JurTranspiler.compilerSource.nodes {
 				Func<string, string> toTypeArgumentString = s => withSubs($"_t_[{s.AsString()}]");
 
 				var subs = functionCallInfo.Substitutions
-				                            .Select(x => $"new Sub(_t_[{x.typeParameter.Name.AsString()}], {toTypeArgumentString(x.typeArgument.Name)})")
-				                            .AsArray();
+				                           .Select(x => $"new Sub(_t_[{x.typeParameter.Name.AsString()}], {toTypeArgumentString(x.typeArgument.Name)})")
+				                           .AsArray();
 				args.Add(subs);
 			}
 

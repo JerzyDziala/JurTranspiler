@@ -41,6 +41,20 @@ namespace JurTranspiler.compilerSource.Analysis {
 		}
 
 
+		private IType BindExpressionCore(ArithmeticNegationExpressionSyntax syntax) {
+			var expressionType = BindExpression(syntax.Expression);
+
+			if (!expressionType.IsNum()) {
+				errors.Add(new TypeMismatchInUseOfOperator(syntax.File,
+				                                           syntax.Line,
+				                                           "-",
+				                                           expressionType.Name));
+			}
+
+			return new PrimitiveType(PrimitiveKind.NUM);
+		}
+
+
 		private IType BindExpressionCore(ArrayIndexAccessSyntax syntax) {
 			var ownerType = BindExpression(syntax.Array);
 			if (ownerType is ArrayType arrayType) return arrayType.ElementType;
@@ -49,6 +63,26 @@ namespace JurTranspiler.compilerSource.Analysis {
 				errors.Add(new IndexAccessOnNonArray(syntax.File, syntax.Line, ownerType.Name));
 
 			return new UndefinedType();
+		}
+
+
+		private IType BindExpressionCore(IncrementationOrDecrementationExpression syntax) {
+			if (syntax.Expression.IsNot<VariableAccessSyntax>()) {
+				errors.Add(new InvalidUseOfOperator(syntax.Location, syntax.Operator));
+				return new UndefinedType();
+			}
+
+			var type = BindExpression(syntax.Expression);
+
+			switch (type) {
+				case UndefinedType _:
+					return type;
+				case PrimitiveType primitiveType when primitiveType.PrimitiveKind == PrimitiveKind.NUM:
+					return new PrimitiveType(PrimitiveKind.NUM);
+				default:
+					errors.Add(new TypeMismatchInUseOfOperator(syntax.Location, syntax.Operator, type.Name));
+					return new UndefinedType();
+			}
 		}
 
 

@@ -5,38 +5,39 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class VariableAccessSyntax : SyntaxNode, IExpressionSyntax {
+	public class VariableAccessSyntax : SyntaxNode, IExpressionSyntax {
 
-        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-        public string Name { get; }
-
-
-        public VariableAccessSyntax(ISyntaxNode parent, JurParser.VariableAccessContext context) : base(parent, context) {
-            Name = context.ID().GetText();
-
-            ImmediateChildren = ImmutableArray.Create<ITreeNode>();
-
-        }
+		public string Name { get; }
 
 
-        public override string ToJs(Knowledge knowledge) {
-            return knowledge.GetNewNameFor(this);
-        }
+		public VariableAccessSyntax(ISyntaxNode parent, JurParser.VariableAccessContext context) : base(parent, context) {
+			Name = context.ID().GetText();
+
+			ImmediateChildren = ImmutableArray.Create<ITreeNode>();
+
+		}
 
 
-        private ImmutableArray<IVariableDeclarationSyntax> GetVisibleDeclarations() {
-            return GetVisibleVariablesInScope().Where(x => x.Name == this.Name).ToImmutableArray();
-        }
+		public override string ToJs(Knowledge knowledge) {
+			return knowledge.GetNewNameFor(this);
+		}
 
 
-        public IVariableDeclarationSyntax? GetVisibleDeclarationOrNull() {
-            var declarations = GetVisibleDeclarations();
-            return declarations.Any()
-                       ? declarations.First()
-                       : null;
+		private ImmutableArray<IVariableDeclarationSyntax> GetVisibleDeclarations() {
+			return GetVisibleVariablesInScope().Where(x => x.Name == this.Name).ToImmutableArray();
+		}
 
-        }
-    }
+
+		public IVariableDeclarationSyntax? GetVisibleDeclarationOrNull() {
+			var declarations = GetVisibleDeclarations();
+			return declarations.Any()
+				       ? declarations.First()
+				       : null;
+
+		}
+
+	}
 
 }

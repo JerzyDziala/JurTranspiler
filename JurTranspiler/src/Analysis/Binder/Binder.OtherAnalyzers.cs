@@ -79,6 +79,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 			}
 		}
 
+
+
 	}
 
 }

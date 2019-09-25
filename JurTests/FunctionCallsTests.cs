@@ -365,6 +365,35 @@ namespace JurTranspilerTests {
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
 
+
+		[Test]
+		[Parallelizable]
+		public void IgnoreConstraintViolationIfArgIsUndefined() {
+			var code = @"
+        		abstraction 0 {
+					T g<T, T2>(T[] arg1, T2 arg2) where T2 is T {
+						return T.default;
+					}
+					struct A {
+						num a;
+					}
+        		}
+        		main {
+					undef := 1 * 'aqq';
+					A x = g(new A[], undef );
+        		}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] {
+				new TypeMismatchInUseOfOperator("__TEST__",
+				                                11,
+				                                "*",
+				                                "num",
+				                                "string"),
+			};
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+
 	}
 
 }

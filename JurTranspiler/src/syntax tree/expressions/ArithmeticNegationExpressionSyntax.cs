@@ -4,14 +4,14 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class NegationExpressionSyntax : SyntaxNode, IExpressionSyntax {
+	public class ArithmeticNegationExpressionSyntax : SyntaxNode, IExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 		public IExpressionSyntax Expression { get; }
 
 
-		public NegationExpressionSyntax(ISyntaxNode parent, JurParser.NegationContext context) : base(parent, context) {
+		public ArithmeticNegationExpressionSyntax(ISyntaxNode parent, JurParser.ArithmeticNegationContext context) : base(parent, context) {
 
 			Expression = ToExpression(context.expression());
 
@@ -20,7 +20,7 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public override string ToJs(Knowledge knowledge) => "!" + Expression.ToJs(knowledge);
+		public override string ToJs(Knowledge knowledge) => "-" + Expression.ToJs(knowledge);
 
 	}
 

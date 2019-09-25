@@ -566,7 +566,7 @@ namespace JurTranspilerTests {
                             }
                             struct A<T2> {}
 						}
-                        abstraction -15 {
+                        abstraction 15 {
                             struct A<T> {}
                         }
 ";

@@ -34,6 +34,8 @@ NOT_EQUAL: '!=';
 NOT: '!';
 LOGICAL_AND: '&&';
 OR: '||';
+DECREMENT: '--';
+INCREMENT: '++';
 
 STRING_VALUE: '\'' SingleStringCharacter* '\'';
 
@@ -87,7 +89,7 @@ fragment HexDigit
 
 //------
 
-NUMBER_VALUE: [-]?[0-9]+ ([.] [0-9]+)?;
+NUMBER_VALUE: [0-9]+ ([.] [0-9]+)?;
 BOOL_VALUE: 'true' | 'false';
 NULL_VALUE: 'null';
 
@@ -222,6 +224,8 @@ expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE | UNDE
 		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess
 		   | LEFT_PARENT expression RIGHT_PARENT #parExpression
            | NOT expression #negation
+           | SUBTRACT expression #arithmeticNegation
+           | expression operator=(INCREMENT | DECREMENT) #incrementOrDecrement
            | expression operator=( TIMES | DIVIDE ) expression #operation
            | expression operator=( ADD | SUBTRACT ) expression #operation
            | expression operator=( LESS | GREATER | LEQUAL | GREQUAL ) expression #operation

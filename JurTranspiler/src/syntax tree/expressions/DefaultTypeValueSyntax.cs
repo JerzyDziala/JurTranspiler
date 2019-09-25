@@ -9,8 +9,6 @@ namespace JurTranspiler.compilerSource.nodes {
     public class DefaultTypeValueSyntax : SyntaxNode, IExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-
-
         public ITypeSyntax Type { get; }
 
 

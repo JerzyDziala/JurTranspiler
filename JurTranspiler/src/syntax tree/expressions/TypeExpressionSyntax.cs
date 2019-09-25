@@ -6,28 +6,27 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class TypeExpressionSyntax : SyntaxNode, IExpressionSyntax {
+	public class TypeExpressionSyntax : SyntaxNode, IExpressionSyntax {
 
-        public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-
-
-        public ITypeSyntax Type { get; }
+		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
+		public ITypeSyntax Type { get; }
 
 
-        public TypeExpressionSyntax(ISyntaxNode parent, JurParser.TypeExpressionContext context) : base(parent, context, context.TYPE()) {
+		public TypeExpressionSyntax(ISyntaxNode parent, JurParser.TypeExpressionContext context) : base(parent, context, context.TYPE()) {
 
-            Type = ToType(context.type());
+			Type = ToType(context.type());
 
-            ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Type);
+			ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Type);
 
-        }
+		}
 
 
-        public override string ToJs(Knowledge knowledge) {
-            return AllParents.Any(x => x is FunctionDefinitionSyntax function && function.IsGeneric)
-                       ? $"_t_['{Type.FullName}']._wst_(_s_)"
-                       : $"_t_['{Type.FullName}']";
-        }
-    }
+		public override string ToJs(Knowledge knowledge) {
+			return AllParents.Any(x => x is FunctionDefinitionSyntax function && function.IsGeneric)
+				       ? $"_t_['{Type.FullName}']._wst_(_s_)"
+				       : $"_t_['{Type.FullName}']";
+		}
+
+	}
 
 }
