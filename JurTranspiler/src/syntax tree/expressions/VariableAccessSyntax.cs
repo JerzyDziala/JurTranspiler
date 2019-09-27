@@ -5,10 +5,10 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class VariableAccessSyntax : SyntaxNode, IExpressionSyntax {
+	public class VariableAccessSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-
+		public override bool CanBeAssignedTo => true;
 		public string Name { get; }
 
 

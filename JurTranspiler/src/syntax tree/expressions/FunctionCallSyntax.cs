@@ -10,7 +10,7 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class FunctionCallSyntax : SyntaxNode, IExpressionSyntax {
+	public class FunctionCallSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 

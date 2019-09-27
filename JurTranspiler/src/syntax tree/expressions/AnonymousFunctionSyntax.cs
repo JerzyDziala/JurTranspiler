@@ -8,7 +8,7 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class AnonymousFunctionSyntax : SyntaxNode, IExpressionSyntax, IFunctionDefinitionOrLambdaSyntax {
+	public class AnonymousFunctionSyntax : ExpressionSyntax , IFunctionDefinitionOrLambdaSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 

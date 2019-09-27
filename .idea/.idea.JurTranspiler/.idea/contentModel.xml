@@ -58,6 +58,7 @@
               <e p="Binder.Types.cs" t="Include" />
               <e p="Binder.Utils.cs" t="Include" />
               <e p="Binder.Variables.cs" t="Include" />
+              <e p="InvalidAssignment.cs" t="Include" />
             </e>
             <e p="errors" t="Include">
               <e p="AmbiguousFieldReference.cs" t="Include" />
@@ -84,6 +85,7 @@
               <e p="NegationOperatorUsedWithNonBooleanType.cs" t="Include" />
               <e p="NoMatchingFieldFound.cs" t="Include" />
               <e p="NoMatchingOverloadForCall.cs" t="Include" />
+              <e p="NonExhaustingGuard.cs" t="Include" />
               <e p="NotAllCodePathReturnValue.cs" t="Include" />
               <e p="StructDeclarationContainsInheritanceCycles.cs" t="Include" />
               <e p="SyntaxError.cs" t="Include" />
@@ -163,6 +165,7 @@
           </e>
           <e p="syntax tree" t="Include">
             <e p="bases" t="Include">
+              <e p="ExpressionSyntax.cs" t="Include" />
               <e p="SyntaxNode.Creation.cs" t="Include" />
               <e p="SyntaxNode.cs" t="Include" />
               <e p="TreeNode.cs" t="Include" />
@@ -189,6 +192,7 @@
               <e p="DefaultTypeValueSyntax.cs" t="Include" />
               <e p="FieldAccessSyntax.cs" t="Include" />
               <e p="FunctionCallSyntax.cs" t="Include" />
+              <e p="GuardExpressionSyntax.cs" t="Include" />
               <e p="IncrementationOrDecrementationExpressionSyntax.cs" t="Include" />
               <e p="NegationExpressionSyntax.cs" t="Include" />
               <e p="OperationSyntax.cs" t="Include" />
@@ -203,6 +207,7 @@
               <e p="StatementSyntaxFactory.cs" t="Include" />
               <e p="TypeSyntaxFactory.cs" t="Include" />
             </e>
+            <e p="GuardSyntax.cs" t="Include" />
             <e p="InitializerSyntax.cs" t="Include" />
             <e p="Interfaces" t="Include">
               <e p="IAssignment.cs" t="Include" />

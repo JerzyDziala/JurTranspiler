@@ -111,6 +111,7 @@ AND: 'and';
 DEFAULT_VALUE: 'default';
 TYPE: 'typeof';
 ELSE: 'else';
+OTHERWISE: 'otherwise';
 FOR: 'for' ;
 EXTERN: 'extern';
 POLY: 'poly';
@@ -211,11 +212,15 @@ statement : '{' statement* '}' #blockStatement
 block: '{' statement* '}'
 			   ;
 
+
+singleGuard: (expression | OTHERWISE) ARROW expression;
+
 expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE | UNDEFINED_VALUE) #primitiveValue
            | uninitializedVarDeclaration? ARROW (block | expression)  #anonymusFunction
            | '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' ARROW (block | expression)  #anonymusFunction
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
+		   | ('|' singleGuard )+ #guard
 		   | type '.' DEFAULT_VALUE #defaultValue
 		   | type '.' TYPE #typeExpression
 		   | expression '.' ID #fieldAccess

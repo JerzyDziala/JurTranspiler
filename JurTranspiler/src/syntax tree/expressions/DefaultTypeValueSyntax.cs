@@ -6,7 +6,7 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-    public class DefaultTypeValueSyntax : SyntaxNode, IExpressionSyntax {
+    public class DefaultTypeValueSyntax : ExpressionSyntax {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
         public ITypeSyntax Type { get; }

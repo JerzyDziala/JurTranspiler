@@ -4,13 +4,14 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class ArrayIndexAccessSyntax : SyntaxNode, IExpressionSyntax {
+	public class ArrayIndexAccessSyntax : ExpressionSyntax {
 
 		//INode
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 		public IExpressionSyntax Array { get; }
 		public IExpressionSyntax Index { get; }
+		public override bool CanBeAssignedTo => true;
 
 
 		public ArrayIndexAccessSyntax(ISyntaxNode parent, JurParser.ArrayIndexAccessContext context) : base(parent, context) {

@@ -66,6 +66,27 @@ namespace JurTranspiler.compilerSource.Analysis {
 		}
 
 
+		private IType BindExpressionCore(GuardExpressionSyntax syntax) {
+
+			var alwaysReturns = syntax.Guards.Any(x => x.IsOtherwisePattern);
+			var onlyOneOtherwise = syntax.Guards.One(x => x.IsOtherwisePattern);
+
+			if (!alwaysReturns)
+				errors.Add(new NonExhaustingGuard(syntax.Location));
+
+//			if(!onlyOneOtherwise)
+			//TODO: warning - reduntant guard
+
+			var types = syntax.Guards.Select(x => x.Expression).Select(BindExpression).ToImmutableArray();
+			if (types.AllAreSame()) {
+				return types.First();
+			}
+			return types.FirstOrDefault(type => types.All(x => IsAssignableTo(x, type))) ?? new AnyType();
+
+			return new UndefinedType();
+		}
+
+
 		private IType BindExpressionCore(IncrementationOrDecrementationExpression syntax) {
 			if (syntax.Expression.IsNot<VariableAccessSyntax>()) {
 				errors.Add(new InvalidUseOfOperator(syntax.Location, syntax.Operator));

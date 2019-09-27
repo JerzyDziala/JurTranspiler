@@ -4,7 +4,7 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class PrimitiveValueSyntax : SyntaxNode, IExpressionSyntax {
+	public class PrimitiveValueSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 

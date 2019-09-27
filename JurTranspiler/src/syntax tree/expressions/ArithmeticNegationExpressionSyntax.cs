@@ -1,10 +1,9 @@
 using System.Collections.Immutable;
 using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class ArithmeticNegationExpressionSyntax : SyntaxNode, IExpressionSyntax {
+	public class ArithmeticNegationExpressionSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 

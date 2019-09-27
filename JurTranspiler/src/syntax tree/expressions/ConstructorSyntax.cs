@@ -9,7 +9,7 @@ using UtilityLibrary;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class ConstructorSyntax : SyntaxNode, IExpressionSyntax {
+	public class ConstructorSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 

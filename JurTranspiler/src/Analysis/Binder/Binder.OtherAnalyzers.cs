@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.compilerSource.nodes;
@@ -18,6 +19,10 @@ namespace JurTranspiler.compilerSource.Analysis {
 		private void CheckForInvalidAssignments() {
 			var assignments = symbols.Tree.AllAssignments;
 			foreach (var assignment in assignments) {
+
+				if (assignment is AssignmentStatementSyntax syntax && !syntax.Left.CanBeAssignedTo)
+					errors.Add(new InvalidAssignment(assignment.Location));
+
 				var (leftType, rightType) = BindAssignment(assignment);
 
 				if (!IsAssignableTo(rightType, leftType)) {
@@ -78,8 +83,6 @@ namespace JurTranspiler.compilerSource.Analysis {
 				}
 			}
 		}
-
-
 
 	}
 

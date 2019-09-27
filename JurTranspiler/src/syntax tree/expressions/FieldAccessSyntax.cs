@@ -4,12 +4,13 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class FieldAccessSyntax : SyntaxNode, IExpressionSyntax {
+	public class FieldAccessSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 		public IExpressionSyntax Owner { get; }
 		public string Name { get; }
+		public override bool CanBeAssignedTo => true;
 
 
 		public FieldAccessSyntax(ISyntaxNode parent, JurParser.FieldAccessContext context) : base(parent, context) {

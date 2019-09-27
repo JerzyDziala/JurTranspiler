@@ -4,7 +4,7 @@ using JurTranspiler.syntax_tree.bases;
 
 namespace JurTranspiler.compilerSource.nodes {
 
-	public class NegationExpressionSyntax : SyntaxNode, IExpressionSyntax {
+	public class NegationExpressionSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
