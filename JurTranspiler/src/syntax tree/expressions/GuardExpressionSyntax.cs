@@ -38,7 +38,6 @@ namespace JurTranspiler.compilerSource.nodes {
 		}
 
 
-		public bool CanBeAssignedTo { get; }
 
 	}
 

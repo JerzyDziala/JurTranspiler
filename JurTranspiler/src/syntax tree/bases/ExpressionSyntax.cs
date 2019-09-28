@@ -11,7 +11,7 @@ namespace JurTranspiler.compilerSource.nodes {
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 
-		protected ExpressionSyntax(ISyntaxNode parent, ParserRuleContext context, ITerminalNode lineToken = null) : base(parent, context, lineToken) {
+		protected ExpressionSyntax(ISyntaxNode parent, ParserRuleContext context, ITerminalNode? lineToken = null) : base(parent, context, lineToken) {
 		}
 
 	}

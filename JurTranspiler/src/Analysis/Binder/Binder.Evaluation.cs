@@ -83,7 +83,6 @@ namespace JurTranspiler.compilerSource.Analysis {
 			}
 			return types.FirstOrDefault(type => types.All(x => IsAssignableTo(x, type))) ?? new AnyType();
 
-			return new UndefinedType();
 		}
 
 

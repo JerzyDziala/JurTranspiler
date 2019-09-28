@@ -8,7 +8,7 @@ namespace JurTranspiler {
 
 	static class Program {
 
-		static void Main(string[] args) {
+		static int Main(string[] args) {
 			var projectDirectory = Environment.CurrentDirectory + "/" + args[0];
 			var outputDirectory = Environment.CurrentDirectory + "/" + args[1];
 
@@ -26,7 +26,12 @@ namespace JurTranspiler {
 			           .ForEach(Console.Write);
 			Console.ForegroundColor = ConsoleColor.White;
 
+			if (diagnostics.Any())
+				return -1;
+
 			File.WriteAllText(outputDirectory + "/output.js", js + "\n" + jsCode);
+
+			return 0;
 		}
 
 	}

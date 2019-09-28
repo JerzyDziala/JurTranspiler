@@ -22,7 +22,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 		public bool Equals(Location other) => File == other.File && Line == other.Line;
 
-		public override bool Equals(object obj) => obj is Location other && Equals(other);
+		public override bool Equals(object? obj) => obj is Location other && Equals(other);
 
 
 		public override int GetHashCode() {
