@@ -141,6 +141,7 @@
               <e p="Dispatcher.cs" t="Include" />
               <e p="ErrorSignature.cs" t="Include" />
               <e p="FunctionPointer.cs" t="Include" />
+              <e p="FunctionPointerField.cs" t="Include" />
               <e p="FunctionSignature.cs" t="Include" />
               <e p="ICallable.cs" t="Include" />
               <e p="SubstitutedCallable.cs" t="Include" />

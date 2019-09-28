@@ -44,14 +44,11 @@ namespace JurTranspiler.compilerSource.nodes {
 
 			var args = Arguments.Select(x => x.ToJs(knowledge)).ToList();
 
-			//extern function calls are easy
-			if (boundCallable.IsExtern) {
-				if (boundCallable.IsStatic) {
-					return $"{boundCallable.StaticTypeName!}.{Name}({args.Glue(", ")})";
-				}
-				if (boundCallable.IsMember) {
-					return $"{args.First()}.{Name}({args.Skip(1).Glue(", ")})";
-				}
+			if (boundCallable.IsStatic) {
+				return $"{boundCallable.StaticTypeName!}.{Name}({args.Glue(", ")})";
+			}
+			if (boundCallable.IsMember) {
+				return $"{args.First()}.{Name}({args.Skip(1).Glue(", ")})";
 			}
 
 			//non extern calls sometime need passing in substitution informations as argument
