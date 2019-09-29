@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.bases {
 
 	public class ExpressionSyntax : SyntaxNode, IExpressionSyntax {
 

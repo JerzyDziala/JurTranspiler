@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using JurTranspiler.Analysis.errors.bases;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.errors {
 
 	public class InliningResultsInMultipleFieldsWithTheSameName : SingleLocationError {
 

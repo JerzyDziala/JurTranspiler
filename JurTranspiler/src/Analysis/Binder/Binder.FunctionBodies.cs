@@ -1,18 +1,18 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Antlr4.Runtime.Atn;
 using JurTranspiler.Analysis.errors;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.semantic_model.functions;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.Analysis.errors.bases;
+using JurTranspiler.semantic_model;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.Interfaces;
+using JurTranspiler.syntax_tree.statements;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
 	public partial class Binder {
 

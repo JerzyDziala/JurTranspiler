@@ -1,10 +1,10 @@
 using System.Collections.Immutable;
 using Antlr4.Runtime;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.declarations {
 
 	public class UninitializedVariableDeclarationSyntax : SyntaxNode, IStatementSyntax, IVariableDeclarationSyntax {
 

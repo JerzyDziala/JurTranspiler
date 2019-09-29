@@ -1,8 +1,7 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.semantic_model.types;
 
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+namespace JurTranspiler.semantic_model.functions {
 
 	public class FunctionPointerField : Callable {
 

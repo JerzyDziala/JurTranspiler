@@ -1,4 +1,4 @@
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.errors.bases {
 
     public class CallLocation : Location {
         public string CallString { get; }

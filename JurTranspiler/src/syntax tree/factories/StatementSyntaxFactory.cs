@@ -1,6 +1,9 @@
 using System;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.Interfaces;
+using JurTranspiler.syntax_tree.statements;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.factories {
 
 	public static class StatementSyntaxFactory {
 

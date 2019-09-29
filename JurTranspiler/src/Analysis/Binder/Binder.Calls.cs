@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.semantic_model.functions;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.Analysis.errors.bases;
+using JurTranspiler.semantic_model;
+using JurTranspiler.semantic_model.functions;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.types;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
 	public partial class Binder {
-
-		public FunctionSignature BindFunctionDefinition(FunctionDefinitionSyntax syntax) {
+		
+		private FunctionSignature BindFunctionDefinition(FunctionDefinitionSyntax syntax) {
 			return symbols.AlreadyBound(syntax)
 				       ? symbols.GetBindingFor(syntax)
 				       : symbols.MakeBindingFor(syntax, BindFunctionDefinitionCore(syntax));
@@ -45,14 +47,14 @@ namespace JurTranspiler.compilerSource.Analysis {
 		}
 
 
-		public FunctionCallInfo BindFunctionCall(FunctionCallSyntax call) {
+		private FunctionCallInfo BindFunctionCall(FunctionCallSyntax call) {
 			return symbols.AlreadyBound(call)
 				       ? symbols.GetBindingFor(call)
 				       : symbols.MakeBindingFor(call, BindFunctionCallCore(call));
 		}
 
 
-		public FunctionCallInfo BindFunctionCallCore(FunctionCallSyntax call) {
+		private FunctionCallInfo BindFunctionCallCore(FunctionCallSyntax call) {
 
 			var argumentsTypes = call.Arguments.Select(BindExpression).ToList();
 			var explicitTypeArgumentsTypes = call.ExplicitTypeArguments.Select(BindType).ToList();
@@ -79,16 +81,16 @@ namespace JurTranspiler.compilerSource.Analysis {
 			                            argumentsTypes: argumentsTypes,
 			                            explicitTypeArguments: explicitTypeArgumentsTypes,
 			                            isPoly: call.IsPoly,
-			                            location: new CallLocation(call.File, call.Line, GetCallString()));
+			                            location: new CallLocation(call.File, call.Line, getCallString()));
 
-			string GetCallString() {
+			string getCallString() {
 				var explicitList = call.HasExplicitTypeArguments ? $"<{string.Join(",", call.ExplicitTypeArguments.Select(x => x.FullName))}>" : "";
 				return $"{call.Name}{explicitList}({string.Join(",", argumentsTypes.Select(x => x.Name))})";
 			}
 		}
 
 
-		public FunctionCallInfo BindFunctionCallCore(IReadOnlyList<Callable> overloads,
+		private FunctionCallInfo BindFunctionCallCore(IReadOnlyList<Callable> overloads,
 		                                             IReadOnlyList<IType> argumentsTypes,
 		                                             IReadOnlyList<IType> explicitTypeArguments,
 		                                             bool isPoly,

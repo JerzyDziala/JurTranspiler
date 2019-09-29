@@ -1,7 +1,8 @@
 using System.Collections.Immutable;
 using System.Linq;
+using JurTranspiler.semantic_model.types;
 
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+namespace JurTranspiler.semantic_model.functions {
 
 	public class Dispatcher : ICallable {
 

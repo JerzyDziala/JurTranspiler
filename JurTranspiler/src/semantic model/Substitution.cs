@@ -1,6 +1,7 @@
 using System;
+using JurTranspiler.semantic_model.types;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model {
 
     public class Substitution : IEquatable<Substitution> {
 

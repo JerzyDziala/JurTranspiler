@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.CodeGeneration {
+namespace JurTranspiler.CodeGeneration {
 
     public static class GenerationUtils {
         public static string AsString(this string text) {

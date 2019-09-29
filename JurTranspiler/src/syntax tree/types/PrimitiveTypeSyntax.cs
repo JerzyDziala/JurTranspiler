@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.parsing.Implementations {
+namespace JurTranspiler.syntax_tree.types {
 
     public class PrimitiveTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<PrimitiveTypeSyntax> {
 

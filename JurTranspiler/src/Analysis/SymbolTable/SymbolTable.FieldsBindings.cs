@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.semantic_model;
+using JurTranspiler.semantic_model.types;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.SymbolTable {
 
     public partial class SymbolTable {
         public Dictionary<StructType, ImmutableArray<Field>> FieldsBindings { get; } = new Dictionary<StructType, ImmutableArray<Field>>();

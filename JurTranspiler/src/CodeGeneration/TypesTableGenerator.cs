@@ -1,9 +1,9 @@
 using System.Linq;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.Analysis;
+using JurTranspiler.semantic_model.types;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.CodeGeneration {
+namespace JurTranspiler.CodeGeneration {
 
 	public class TypesTableGenerator {
 

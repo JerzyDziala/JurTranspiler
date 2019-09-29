@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model {
 
     [DebuggerDisplay("Name = {" + nameof(Name) + "}, Type = {Type.Name}")]
     public class Field : IEquatable<Field>, ITreeNode, IHaveType {

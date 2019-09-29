@@ -1,8 +1,9 @@
-using System;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.Analysis.errors;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
     public partial class Binder {
 

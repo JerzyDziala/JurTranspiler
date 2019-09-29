@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model.types {
 
     public interface IType : ITreeNode {
         IType WithSubstitutedTypes(ISet<Substitution> typeMap);

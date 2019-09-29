@@ -1,6 +1,6 @@
 using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.errors.bases {
 
     public abstract class SingleLocationError : Error, IHaveLocation {
 

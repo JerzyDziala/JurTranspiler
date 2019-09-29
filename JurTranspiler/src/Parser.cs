@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.Analysis.errors.bases;
+using JurTranspiler.ANTLR;
+using JurTranspiler.syntax_tree.declarations;
 
-namespace JurTranspiler.compilerSource {
+namespace JurTranspiler {
 
     public static class Parser {
 

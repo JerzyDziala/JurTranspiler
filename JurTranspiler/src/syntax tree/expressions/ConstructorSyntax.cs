@@ -1,13 +1,13 @@
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.CodeGeneration;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.Analysis;
+using JurTranspiler.CodeGeneration;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
+using JurTranspiler.syntax_tree.types;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.expressions {
 
 	public class ConstructorSyntax : ExpressionSyntax {
 

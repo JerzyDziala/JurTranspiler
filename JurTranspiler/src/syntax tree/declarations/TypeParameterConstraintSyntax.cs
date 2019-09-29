@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.declarations {
 
     public class TypeParameterConstraintSyntax : SyntaxNode {
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }

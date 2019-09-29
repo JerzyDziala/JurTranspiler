@@ -1,4 +1,4 @@
-namespace JurTranspiler.compilerSource.CodeGeneration {
+namespace JurTranspiler.CodeGeneration {
 
     public static class JsStrings {
 

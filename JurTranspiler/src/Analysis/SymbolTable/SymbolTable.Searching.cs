@@ -1,10 +1,10 @@
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.types;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.SymbolTable {
 
     public partial class SymbolTable {
 

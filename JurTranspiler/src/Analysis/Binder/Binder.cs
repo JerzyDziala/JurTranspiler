@@ -2,16 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.semantic_model.functions;
+using JurTranspiler.Analysis.errors;
+using JurTranspiler.Analysis.errors.bases;
+using JurTranspiler.semantic_model.functions;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
 	public partial class Binder {
 
-		private readonly SymbolTable symbols;
+		private readonly SymbolTable.SymbolTable symbols;
 		private readonly HashSet<Error> errors;
 
 		public Knowledge Knowledge {
@@ -53,7 +55,7 @@ namespace JurTranspiler.compilerSource.Analysis {
 
 		public Binder(SyntaxTree tree, HashSet<Error> errors) {
 			this.errors = errors;
-			symbols = new SymbolTable(tree);
+			symbols = new SymbolTable.SymbolTable(tree);
 			BindAllTheThings();
 			PerformOtherChecks();
 		}

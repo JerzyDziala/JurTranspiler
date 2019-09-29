@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.semantic_model.functions;
+using JurTranspiler.semantic_model.functions;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model {
 
     public class FunctionCallInfo {
         public ICallable Callable { get; }

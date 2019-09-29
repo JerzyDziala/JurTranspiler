@@ -1,6 +1,6 @@
-using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.Analysis.errors.bases;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.Analysis.errors {
 
     public class InliningOfNonStructType : SingleLocationError {
 

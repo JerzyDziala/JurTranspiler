@@ -1,7 +1,7 @@
 using System;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.errors.bases {
 
 	public class Location : IEquatable<Location> {
 

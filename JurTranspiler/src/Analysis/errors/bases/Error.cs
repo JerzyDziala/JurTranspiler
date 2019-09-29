@@ -1,6 +1,6 @@
 using System;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.errors.bases {
 
 	public abstract class Error : IEquatable<Error> {
 

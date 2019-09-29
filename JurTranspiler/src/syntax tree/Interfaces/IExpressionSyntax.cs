@@ -1,4 +1,4 @@
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.Interfaces {
 
     public interface IExpressionSyntax : ISyntaxNode{
 

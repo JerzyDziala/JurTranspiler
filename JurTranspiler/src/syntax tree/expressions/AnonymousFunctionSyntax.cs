@@ -1,12 +1,15 @@
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.CodeGeneration;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.Analysis;
+using JurTranspiler.CodeGeneration;
+using JurTranspiler.semantic_model.types;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.Interfaces;
+using JurTranspiler.syntax_tree.statements;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.expressions {
 
 	public class AnonymousFunctionSyntax : ExpressionSyntax , IFunctionDefinitionOrLambdaSyntax {
 

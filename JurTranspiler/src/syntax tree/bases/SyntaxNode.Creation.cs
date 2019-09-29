@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.factories;
+using JurTranspiler.syntax_tree.Interfaces;
 
 namespace JurTranspiler.syntax_tree.bases {
 

@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using JurTranspiler.compilerSource.nodes;
-using Type = JurTranspiler.syntax_tree.bases.Type;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model.types {
 
     [DebuggerDisplay("{" + nameof(Name) + "}")]
     public class ArrayType : Type, IEquatable<ArrayType> {

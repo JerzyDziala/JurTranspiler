@@ -1,6 +1,4 @@
-using JurTranspiler.compilerSource.nodes;
-
-namespace JurTranspiler.compilerSource.parsing.Implementations {
+namespace JurTranspiler.syntax_tree.Interfaces {
 
     public interface ITypeSyntax : ISyntaxNode {
         string Name { get; }

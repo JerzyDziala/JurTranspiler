@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.Interfaces;
 using JurTranspiler.syntax_tree.types;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.factories {
 
     public static class TypeSyntaxFactory {
 

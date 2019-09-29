@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
 
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+namespace JurTranspiler.semantic_model.functions {
 
 	public class FunctionSignature : Callable {
 

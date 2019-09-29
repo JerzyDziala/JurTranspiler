@@ -1,4 +1,6 @@
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+using JurTranspiler.semantic_model.types;
+
+namespace JurTranspiler.semantic_model.functions {
 
 	public interface ICallable {
 

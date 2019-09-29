@@ -4,9 +4,10 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Dfa;
 using Antlr4.Runtime.Sharpen;
-using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.Analysis.errors;
+using JurTranspiler.Analysis.errors.bases;
 
-namespace JurTranspiler.compilerSource.parsing.Implementations {
+namespace JurTranspiler.ANTLR {
 
     public class ParserErrorListener : BaseErrorListener {
 

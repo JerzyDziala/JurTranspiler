@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.CodeGeneration;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model.functions;
+using JurTranspiler.Analysis;
+using JurTranspiler.CodeGeneration;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.expressions {
 
 	public class FunctionCallSyntax : ExpressionSyntax {
 

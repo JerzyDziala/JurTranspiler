@@ -1,7 +1,7 @@
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.Analysis;
+using JurTranspiler.syntax_tree.declarations;
 
-namespace JurTranspiler.compilerSource.CodeGeneration {
+namespace JurTranspiler.CodeGeneration {
 
     public class Generator {
 

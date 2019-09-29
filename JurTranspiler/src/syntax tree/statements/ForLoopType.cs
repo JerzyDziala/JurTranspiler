@@ -1,4 +1,4 @@
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.statements {
 
     public enum ForLoopType {
 

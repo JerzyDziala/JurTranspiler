@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.SymbolTable {
 
     public partial class SymbolTable {
 

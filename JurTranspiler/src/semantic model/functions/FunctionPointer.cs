@@ -1,7 +1,8 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+namespace JurTranspiler.semantic_model.functions {
 
     public class FunctionPointer : Callable {
 

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using JurTranspiler.semantic_model.types;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+namespace JurTranspiler.semantic_model.functions {
 
 	public abstract class Callable : ICallable {
 

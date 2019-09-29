@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using JurTranspiler.semantic_model.types;
 
-namespace JurTranspiler.compilerSource.semantic_model.functions {
+namespace JurTranspiler.semantic_model.functions {
 
     public class OverloadCompatibility {
 

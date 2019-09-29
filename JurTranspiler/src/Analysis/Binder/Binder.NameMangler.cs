@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
     public partial class Binder {
 
@@ -21,6 +21,8 @@ namespace JurTranspiler.compilerSource.Analysis {
 
         private void GenerateNewCallableNames() {
             //TODO: check for mistakes
+            
+            
             symbols.FunctionSignaturesBindings.Values.ToImmutableArray()
                    .Where(x => !x.IsExtern)
                    .GroupBy(x => x.Name)

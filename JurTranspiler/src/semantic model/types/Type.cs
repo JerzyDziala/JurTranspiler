@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.syntax_tree.Interfaces;
 using UtilityLibrary;
 
-namespace JurTranspiler.syntax_tree.bases {
+namespace JurTranspiler.semantic_model.types {
 
 	public abstract class Type : IType {
 

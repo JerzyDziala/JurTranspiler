@@ -1,4 +1,4 @@
-using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.Analysis.errors.bases;
 using JurTranspiler.syntax_tree.Interfaces;
 
 namespace JurTranspiler.Analysis.errors {

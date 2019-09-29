@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.src.syntax_tree.types {
+namespace JurTranspiler.syntax_tree.types {
 
     public class FunctionPointerTypeSyntax : SyntaxNode, ITypeSyntax, IEquatable<FunctionPointerTypeSyntax> {
 

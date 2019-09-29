@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.SymbolTable {
 
     public partial class SymbolTable {
         public Dictionary<ITypeSyntax, IType> TypesBindings { get; } = new Dictionary<ITypeSyntax, IType>();

@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.expressions {
 
 	public class OperationSyntax : ExpressionSyntax {
 

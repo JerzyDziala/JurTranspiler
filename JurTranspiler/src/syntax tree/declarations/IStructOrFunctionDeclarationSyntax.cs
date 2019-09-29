@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.syntax_tree.types;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.declarations {
 
     public interface IStructOrFunctionDeclarationSyntax {
         bool IsGeneric { get; }

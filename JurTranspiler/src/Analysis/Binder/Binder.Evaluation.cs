@@ -2,11 +2,14 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.semantic_model;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.Interfaces;
 using UtilityLibrary;
+using Type = System.Type;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
 	public partial class Binder {
 

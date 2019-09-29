@@ -1,4 +1,6 @@
-namespace JurTranspiler.compilerSource.Analysis {
+using JurTranspiler.Analysis.errors.bases;
+
+namespace JurTranspiler.Analysis.Binder {
 
 	public class InvalidAssignment : SingleLocationError {
 

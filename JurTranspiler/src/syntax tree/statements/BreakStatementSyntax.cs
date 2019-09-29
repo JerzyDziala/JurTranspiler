@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.Analysis;
-
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
-namespace JurTranspiler.compilerSource.nodes {
+using JurTranspiler.syntax_tree.Interfaces;
+
+namespace JurTranspiler.syntax_tree.statements {
 
     public class BreakStatementSyntax : SyntaxNode, IStatementSyntax {
 

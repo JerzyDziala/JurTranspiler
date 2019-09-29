@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.statements;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.Interfaces {
 
     public interface IFunctionDefinitionOrLambdaSyntax : ISyntaxNode{
         bool IsArrow { get; }

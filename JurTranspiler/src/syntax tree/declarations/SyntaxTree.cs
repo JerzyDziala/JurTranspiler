@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.parsing.Implementations;
+using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.Interfaces;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.declarations {
 
 	public sealed class SyntaxTree : SyntaxNode {
 

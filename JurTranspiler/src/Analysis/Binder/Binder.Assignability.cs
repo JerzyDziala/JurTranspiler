@@ -1,8 +1,8 @@
 using System.Linq;
-using JurTranspiler.compilerSource.semantic_model;
+using JurTranspiler.semantic_model.types;
 using UtilityLibrary;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis.Binder {
 
     public partial class Binder {
 

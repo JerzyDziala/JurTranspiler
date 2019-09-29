@@ -1,8 +1,7 @@
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.syntax_tree.Interfaces;
+using JurTranspiler.Analysis;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.Interfaces {
 
     public interface ISyntaxNode : ITreeNode, IHaveLocation {
 

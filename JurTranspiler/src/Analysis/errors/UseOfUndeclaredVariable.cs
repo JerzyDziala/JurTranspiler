@@ -1,4 +1,6 @@
-namespace JurTranspiler.compilerSource.Analysis {
+using JurTranspiler.Analysis.errors.bases;
+
+namespace JurTranspiler.Analysis.errors {
 
 	public class UseOfUndeclaredVariable : SingleLocationError {
 

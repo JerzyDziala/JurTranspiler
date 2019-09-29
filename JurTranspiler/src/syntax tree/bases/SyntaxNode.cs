@@ -5,8 +5,10 @@ using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.Analysis;
+using JurTranspiler.Analysis.errors.bases;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.Interfaces;
 using UtilityLibrary;
 
 namespace JurTranspiler.syntax_tree.bases {

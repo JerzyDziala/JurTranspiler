@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.Interfaces {
 
     public interface ITreeNode {
         ImmutableArray<ITreeNode> ImmediateChildren { get; }

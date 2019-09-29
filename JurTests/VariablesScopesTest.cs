@@ -1,8 +1,9 @@
-using JurTranspiler.compilerSource;
-using JurTranspiler.compilerSource.Analysis;
+using JurTranspiler;
+using JurTranspiler.Analysis.errors;
+using JurTranspiler.Analysis.errors.bases;
 using NUnit.Framework;
 
-namespace JurTranspilerTests {
+namespace JurTests {
 
 	[TestFixture]
 	public class VariablesScopesTest {

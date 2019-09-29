@@ -1,8 +1,8 @@
-using JurTranspiler.compilerSource.Analysis;
-using JurTranspiler.compilerSource.nodes;
+using JurTranspiler.Analysis.errors.bases;
+using JurTranspiler.semantic_model.types;
 using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model {
 
     public class FunctionReturn : IHaveLocation, IHaveType {
         public Location Location { get; }

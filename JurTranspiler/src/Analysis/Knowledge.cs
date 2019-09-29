@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using JurTranspiler.compilerSource.nodes;
-using JurTranspiler.compilerSource.parsing.Implementations;
-using JurTranspiler.compilerSource.semantic_model;
-using JurTranspiler.compilerSource.semantic_model.functions;
+using JurTranspiler.semantic_model;
+using JurTranspiler.semantic_model.functions;
+using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.declarations;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.Interfaces;
 
-namespace JurTranspiler.compilerSource.Analysis {
+namespace JurTranspiler.Analysis {
 
 	public class Knowledge {
 

@@ -1,6 +1,4 @@
-using JurTranspiler.compilerSource.parsing.Implementations;
-
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.Interfaces {
 
     public interface IVariableDeclarationSyntax : ISyntaxNode {
 

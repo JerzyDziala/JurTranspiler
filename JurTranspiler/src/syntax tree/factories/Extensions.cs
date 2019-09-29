@@ -1,8 +1,9 @@
 using System;
 using Antlr4.Runtime.Tree;
-using JurTranspiler.src.syntax_tree.types;
+using JurTranspiler.syntax_tree.Interfaces;
+using JurTranspiler.syntax_tree.types;
 
-namespace JurTranspiler.compilerSource.nodes {
+namespace JurTranspiler.syntax_tree.factories {
 
     public static class Extensions {
         public static VoidTypeSyntax ToVoidType(this ITerminalNode voidNode, ISyntaxNode parent) {

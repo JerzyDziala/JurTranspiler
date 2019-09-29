@@ -1,4 +1,4 @@
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model.types {
 
     public enum PrimitiveKind {
 

@@ -1,7 +1,6 @@
-using System;
-using System.Reflection.Metadata.Ecma335;
+using JurTranspiler.semantic_model.types;
 
-namespace JurTranspiler.compilerSource.semantic_model {
+namespace JurTranspiler.semantic_model {
 
 	public static class TypesExtensions {
 
