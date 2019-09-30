@@ -17,7 +17,7 @@ namespace JurTranspiler {
 			var jsCode = projectJsFiles.Select(File.ReadAllText).Glue("\n\n");
 			var jurCode = projectJurFiles.Select(x => (File.ReadAllText(x), x));
 
-			var (diagnostics, js) = Compiler.Compile(jurCode);
+			var (diagnostics, compiledJur) = Compiler.Compile(jurCode);
 
 			Console.ForegroundColor = ConsoleColor.Red;
 			diagnostics.Select(x => x.ToString())
@@ -28,7 +28,7 @@ namespace JurTranspiler {
 			if (diagnostics.Any())
 				return -1;
 
-			File.WriteAllText(outputDirectory + "/output.js", js + "\n" + jsCode);
+			File.WriteAllText(outputDirectory + "/output.js", jsCode + "\n" + compiledJur );
 
 			return 0;
 		}

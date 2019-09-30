@@ -76,6 +76,7 @@
               <e p="InliningResultsInMultipleFieldsWithTheSameName.cs" t="Include" />
               <e p="InvalidUseOfNew.cs" t="Include" />
               <e p="InvalidUseOfOperator.cs" t="Include" />
+              <e p="MemberFunctionWithoutArguments.cs" t="Include" />
               <e p="MissingReturnStatement.cs" t="Include" />
               <e p="MultipleDeclarationsOfFunction.cs" t="Include" />
               <e p="MultipleDeclarationsOfStruct.cs" t="Include" />

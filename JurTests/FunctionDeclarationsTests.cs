@@ -286,6 +286,23 @@ namespace JurTests {
             var expectedErrors = new Error[] { };
             CollectionAssert.AreEquivalent(expectedErrors, errors);
         }
+        
+        [Test]
+        [Parallelizable]
+        public void MemberFunctionWithoutArguments() {
+            var code = @"
+        		abstraction 0 {
+                    extern member void aqq()
+                    extern member void aqq(string a)
+        		}
+        		main { }
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new MemberFunctionWithoutArguments("__TEST__",3,"aqq"), 
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
     }
 

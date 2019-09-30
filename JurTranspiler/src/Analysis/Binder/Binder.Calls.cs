@@ -38,6 +38,12 @@ namespace JurTranspiler.Analysis.Binder {
 				                                                 line: invalid.Line,
 				                                                 name: invalid.FullName));
 			}
+			
+			//check for 0 arguments member functions
+			if (syntax.IsMember && syntax.Arity == 0) {
+				errors.Add(new MemberFunctionWithoutArguments(syntax.Location, syntax.Name));
+			}
+				
 
 			var returnType = BindType(syntax.ReturnType);
 			return new FunctionSignature(originalDefinitionSyntax: syntax,

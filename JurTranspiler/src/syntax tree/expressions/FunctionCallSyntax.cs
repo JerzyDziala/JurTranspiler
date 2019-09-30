@@ -50,7 +50,7 @@ namespace JurTranspiler.syntax_tree.expressions {
 				return $"{args.First()}.{Name}({args.Skip(1).Glue(", ")})";
 			}
 
-			//non extern calls sometime need passing in substitution informations as argument
+			//non extern calls sometime need passing in substitution information as argument
 			if (functionCallInfo.Substitutions.Any()) {
 
 				Func<string, string> withSubs = s => IsInGenericFunction() ? $"{s}._wst_(_s_)" : s;

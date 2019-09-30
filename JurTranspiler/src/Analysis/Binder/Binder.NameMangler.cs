@@ -32,8 +32,8 @@ namespace JurTranspiler.Analysis.Binder {
         }
 
 
-        private void GenerateNewVariableNames() {
-
+        private void GenerateNewVariableNames()
+        {
             symbols.Tree.VariableDeclarations
                    .ForEach(declaration => symbols.NewVariableNames[declaration] = declaration.Name + "$" + GetUniqueId().ToString());
         }
