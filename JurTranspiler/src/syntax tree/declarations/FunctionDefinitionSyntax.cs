@@ -53,7 +53,7 @@ namespace JurTranspiler.syntax_tree.declarations {
 			IsPrivate = context.PRIVATE() != null;
 			IsStatic = context.STATIC() != null;
 
-			Name = context.ID(0).GetText();
+			Name = IsStatic ? context.ID(1).GetText() : context.ID(0).GetText();
 			StaticTypeName = IsStatic ? context.ID(0).GetText() : null;
 
 			var typeParametersIds = IsStatic ? context.ID().Skip(2) : context.ID().Skip(1);

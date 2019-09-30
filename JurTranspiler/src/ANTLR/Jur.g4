@@ -160,7 +160,7 @@ inlinedType : IS type ';'
 functionDeclaration : (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? block)
 					| (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? ARROW expression ';')
 					| (PRIVATE? EXTERN MEMBER? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
-					| (PRIVATE? STATIC EXTERN MEMBER? (type | VOID) ID '.' ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
+					| (PRIVATE? STATIC EXTERN (type | VOID) ID '.' ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
                     ;
 
 constraints : WHERE constrain (AND constrain)*
