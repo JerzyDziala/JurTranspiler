@@ -38,7 +38,7 @@ namespace JurTests {
 					}
         		}
         		main {
-					a := Get(5);
+					mutable a := Get(5);
 					a = 'jur';
         		}
         ";

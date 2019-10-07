@@ -66,7 +66,7 @@ namespace JurTranspiler.Analysis {
 
 
 		public string GetNewNameFor(VariableAccessSyntax access) {
-			return GetNewNameFor(access.GetVisibleDeclarationOrNull()!);
+			return GetNewNameFor(access.GetVisibleDefinitionOrNull()!);
 		}
 
 

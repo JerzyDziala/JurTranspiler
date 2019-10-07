@@ -1,6 +1,8 @@
 using System.Linq;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.semantic_model.types;
+using JurTranspiler.syntax_tree.expressions;
+using JurTranspiler.syntax_tree.Interfaces;
 using JurTranspiler.syntax_tree.statements;
 using UtilityLibrary;
 
@@ -16,14 +18,34 @@ namespace JurTranspiler.Analysis.Binder {
 
 
 		private void CheckForInvalidAssignments() {
+			
 			var assignments = symbols.Tree.AllAssignments;
+
 			foreach (var assignment in assignments) {
 
-				if (assignment is AssignmentStatementSyntax syntax && !syntax.Left.CanBeAssignedTo)
-					errors.Add(new InvalidAssignment(assignment.Location));
+				if (assignment is AssignmentStatementSyntax syntax) {
+
+					//syntactically incorrect assignments
+					if (!syntax.Left.CanSyntacticallyBeAssignedTo) {
+						errors.Add(new InvalidAssignment(assignment.Location));
+						continue;
+					}
+
+					//assigning to immutable variables
+					if (syntax.Left is VariableAccessSyntax variableAccess
+					    && variableAccess.GetVisibleDefinitionOrNull() is { } existingDeclaration
+					    && !existingDeclaration.IsMutable
+					    ||
+					    syntax.Left is FieldAccessSyntax fieldAccess
+					    && GetVisibleDefinitionOrNull(fieldAccess) is {} existingDefinition
+					    && !existingDefinition.IsMutable) {
+
+						errors.Add(new AssigningToImmutableValue(syntax.Location));
+					}
+				}
 
 				var (leftType, rightType) = BindAssignment(assignment);
-
+				
 				if (!IsAssignableTo(rightType, leftType)) {
 					errors.Add(new TypeMismatchInAssignmentError(file: assignment.File,
 					                                             line: assignment.Line,

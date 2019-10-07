@@ -78,7 +78,7 @@ namespace JurTranspiler.Analysis.Binder {
 				errors.Add(new NonExhaustingGuard(syntax.Location));
 
 //			if(!onlyOneOtherwise)
-			//TODO: warning - reduntant guard
+			//TODO: warning - redundant guard
 
 			var types = syntax.Guards.Select(x => x.Expression).Select(BindExpression).ToImmutableArray();
 			if (types.AllAreSame()) {
@@ -276,7 +276,7 @@ namespace JurTranspiler.Analysis.Binder {
 
 
 		private IType BindExpressionCore(VariableAccessSyntax syntax) {
-			var declaration = syntax.GetVisibleDeclarationOrNull();
+			var declaration = syntax.GetVisibleDefinitionOrNull();
 
 			if (declaration == null) {
 				//error: use of undeclared variable

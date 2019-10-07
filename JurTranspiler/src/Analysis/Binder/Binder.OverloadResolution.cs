@@ -52,8 +52,7 @@ namespace JurTranspiler.Analysis.Binder {
         private OverloadCompatibility GetOverloadCompatibility(IEnumerable<IType> explicitTypeArguments,
                                                                IReadOnlyList<IType> argumentsTypes,
                                                                bool isPoly,
-                                                               Func<IType, IType, HashSet<Substitution>, bool> checkParamArgCompileTimeCompatibilityAndSubstitute,
-                                                               Func<IType, IType, bool> checkParamArgRuntimeCompatibility,
+                                                               Func<IType, IType, HashSet<Substitution>, bool> checkParamArgCompileTimeCompatibilityAndSubstitute, Func<IType, IType, bool> checkParamArgRuntimeCompatibility,
                                                                Callable overload) {
 
             var substitutions = new HashSet<Substitution>(GetSubstitutionsFromExplicitTypeArguments(explicitTypeArguments, overload));
@@ -86,8 +85,7 @@ namespace JurTranspiler.Analysis.Binder {
 
 
         private List<Callable> GetOverloadsFor(FunctionCallSyntax syntax) {
-            var potentialFunctions = symbols.GetVisibleDefinitionsFor(syntax)
-                                            .Select(BindFunctionDefinition);
+            var potentialFunctions = GetVisibleDefinitionsFor(syntax).Select(BindFunctionDefinition);
 
             var potentialFunctionPointers = syntax.GetVisibleVariablesInScope()
                                                   .Where(variable => BindVariableType(variable) is FunctionPointerType pointerType

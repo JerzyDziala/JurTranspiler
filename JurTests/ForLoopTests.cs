@@ -12,7 +12,7 @@ namespace JurTests {
             var code = @"
         		main {
 
-                    i := 0;
+                    mutable i := 0;
 
                     for i < 10 {
                         x := i * i;
@@ -32,7 +32,7 @@ namespace JurTests {
             var code = @"
         		main {
 
-                    i := 0;
+                    mutable i := 0;
 
                     for i < 10
                         i = i + 1;
@@ -50,7 +50,7 @@ namespace JurTests {
         public void InitializedWhileLoop() {
             var code = @"
         		main {
-                    for num i = 0; i < 10 {
+                    for mutable num i = 0; i < 10 {
                         x := i * i;
                         i = i + 1;
                     }
@@ -67,7 +67,7 @@ namespace JurTests {
         public void InferredInitializedWhileLoop() {
             var code = @"
         		main {
-                    for i := 0; i < 10 {
+                    for mutable i := 0; i < 10 {
                         x := i * i;
                         i = i + 1;
                     }
@@ -84,7 +84,7 @@ namespace JurTests {
         public void ForWithNoParents() {
             var code = @"
         		main {
-                    for i := 0; i < 10
+                    for mutable i := 0; i < 10
                         i = i + 1;
         		}
         ";
@@ -99,8 +99,8 @@ namespace JurTests {
         public void NestedFor() {
             var code = @"
         		main {
-                    for i := 0; i < 10 {
-                        for y := 0; y < 10 {
+                    for mutable i := 0; i < 10 {
+                        for mutable y := 0; y < 10 {
                             y = y + 1;
                         }
                         i = i + 1;

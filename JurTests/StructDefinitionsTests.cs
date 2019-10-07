@@ -671,7 +671,7 @@ namespace JurTests {
                     }
 
                     struct TrainingData<I,O> {
-                        List<Pair<I,O>> data;
+                        mutable List<Pair<I,O>> data;
                     }
 
                     struct List<T> {
@@ -718,7 +718,7 @@ namespace JurTests {
                     }
 
                     num calculateError(TrainingData<List<num>,List<num>> trainingData) {
-                        List<Pair<List<num>, List<num>>> x;
+                        mutable List<Pair<List<num>, List<num>>> x;
                         x = trainingData.data;
 
                         TrainingData<List<num>,List<num>> otherData;

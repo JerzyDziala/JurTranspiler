@@ -48,10 +48,6 @@ namespace JurTranspiler.Analysis.Binder {
 		}
 
 
-		public static ImmutableArray<IType> GetTypes(this IEnumerable<IHaveType> things) {
-			return things.Select(x => x.Type).ToImmutableArray();
-		}
-
 
 		public static ImmutableList<IStatementSyntax> FlattenBlockStatements(this IEnumerable<IStatementSyntax> statements) {
 			return statements.Aggregate(ImmutableList<IStatementSyntax>.Empty,

@@ -54,14 +54,15 @@
               <e p="Binder.NameMangler.cs" t="Include" />
               <e p="Binder.OtherAnalyzers.cs" t="Include" />
               <e p="Binder.OverloadResolution.cs" t="Include" />
+              <e p="Binder.Searching.cs" t="Include" />
               <e p="Binder.Substitutions.cs" t="Include" />
               <e p="Binder.Types.cs" t="Include" />
               <e p="Binder.Utils.cs" t="Include" />
               <e p="Binder.Variables.cs" t="Include" />
-              <e p="InvalidAssignment.cs" t="Include" />
             </e>
             <e p="errors" t="Include">
               <e p="AmbiguousFieldReference.cs" t="Include" />
+              <e p="AssigningToImmutableValue.cs" t="Include" />
               <e p="bases" t="Include">
                 <e p="CallLocation.cs" t="Include" />
                 <e p="CallLocationBase.cs" t="Include" />
@@ -74,6 +75,7 @@
               <e p="IndexAccessOnNonArray.cs" t="Include" />
               <e p="InliningOfNonStructType.cs" t="Include" />
               <e p="InliningResultsInMultipleFieldsWithTheSameName.cs" t="Include" />
+              <e p="InvalidAssignment.cs" t="Include" />
               <e p="InvalidUseOfNew.cs" t="Include" />
               <e p="InvalidUseOfOperator.cs" t="Include" />
               <e p="MemberFunctionWithoutArguments.cs" t="Include" />

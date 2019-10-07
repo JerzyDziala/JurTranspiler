@@ -125,7 +125,7 @@ namespace JurTests {
         public void ValidIfReturn() {
             var code = @"
         		abstraction 0 {
-        		    num add(num a, num b) {
+        		    num add(mutable num a, num b) {
                         if a > b {
                             return a + b;
                         }

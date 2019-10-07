@@ -33,7 +33,7 @@ namespace JurTests {
 		public void AssigningNumToStringAndBoolToStringError() {
 			var code = @"
                         main {
-                            string a = 5;
+                            mutable string a = 5;
                             a = true;
                         }
 ";
@@ -178,7 +178,7 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
         		    struct A {
-                        string a;
+                        mutable string a;
                     }
         		}
         		main {
@@ -222,8 +222,8 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
         		    struct A {
-                        string a;
-                        A a;
+                        mutable string a;
+                        mutable A a;
                     }
         		}
         		main {
@@ -250,16 +250,16 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
         		    struct A {
-                        A a;
-                        A a;
+                        mutable A a;
+                        mutable A a;
                         is B;
                     }
                     struct B {
-                        A a;
+                        mutable A a;
                         is C<A>;
                     }
                     struct C<T>{
-                        T a;
+                        mutable T a;
                     }
         		}
         		main {
@@ -279,8 +279,8 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
         		    struct A<T,G> {
-                        T g;
-                        G g2;
+                        mutable T g;
+                        mutable G g2;
                     }
         		}
         		main {
@@ -301,8 +301,8 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
         		    struct A<T,G> {
-                        T g;
-                        G g2;
+                        mutable T g;
+                        mutable G g2;
                     }
         		}
         		main {
@@ -372,7 +372,7 @@ namespace JurTests {
                 abstraction 0 {
 
                     struct A<T1> {
-                        B<A<string>> a;
+                        mutable B<A<string>> a;
                     }
 
                     struct B<T2> {
@@ -435,7 +435,7 @@ namespace JurTests {
                     }
 
                     struct Dog<T> {
-                        Cat<T, Dog<string>> d;
+                        mutable Cat<T, Dog<string>> d;
                     }
 
                     struct Cat<T,R> {
@@ -456,7 +456,7 @@ namespace JurTests {
 
         		}
         		main {
-                    x := null;
+                    mutable x := null;
                     x = 'aqq';
         		}
         ";
@@ -474,7 +474,7 @@ namespace JurTests {
 
         		}
         		main {
-                    x := undefined;
+                    mutable x := undefined;
                     x = 'aqq';
         		}
         ";

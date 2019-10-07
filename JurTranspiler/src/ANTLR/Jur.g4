@@ -106,6 +106,7 @@ IF: 'if';
 ABSTRACTION : 'abstraction';
 MAIN: 'main';
 NEW: 'new';
+MUTABLE: 'mutable';
 IS: 'is';
 AND: 'and';
 DEFAULT_VALUE: 'default';
@@ -172,13 +173,13 @@ constrain : type IS type
 
 //variables
 
-uninitializedVarDeclaration : type ID
+uninitializedVarDeclaration : MUTABLE? type ID
                             ;
 
-initializedVariableDeclaration : type ID '=' expression
+initializedVariableDeclaration : MUTABLE? type ID '=' expression
                                ;
 
-inferedVariableDeclaration : ID ':=' expression
+inferedVariableDeclaration : MUTABLE? ID ':=' expression
 						   ;
 
 //types

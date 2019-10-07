@@ -12,7 +12,7 @@ namespace JurTranspiler.syntax_tree.expressions {
 
 		public IExpressionSyntax Owner { get; }
 		public string Name { get; }
-		public override bool CanBeAssignedTo => true;
+		public override bool CanSyntacticallyBeAssignedTo => true;
 
 
 		public FieldAccessSyntax(ISyntaxNode parent, JurParser.FieldAccessContext context) : base(parent, context) {

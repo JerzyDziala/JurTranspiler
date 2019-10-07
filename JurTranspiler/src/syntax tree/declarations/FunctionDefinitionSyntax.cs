@@ -17,12 +17,12 @@ namespace JurTranspiler.syntax_tree.declarations {
 
 		public string Name { get; }
 
-		private string parametersListString => string.Join(",", Parameters.Select(x => x.Type!.FullName));
-		private string typeParametersListString => string.Join(",", TypeParameters.Select(x => x.FullName));
+		private string ParametersListString => string.Join(",", Parameters.Select(x => x.Type!.FullName));
+		private string TypeParametersListString => string.Join(",", TypeParameters.Select(x => x.FullName));
 
 		public string FullName => !IsGeneric
-			                          ? $"{ReturnType.FullName} {Name}({parametersListString})"
-			                          : $"{ReturnType.FullName} {(IsStatic ? StaticTypeName + "." : "")}{Name}<{typeParametersListString}>({parametersListString})";
+			                          ? $"{ReturnType.FullName} {Name}({ParametersListString})"
+			                          : $"{ReturnType.FullName} {(IsStatic ? StaticTypeName + "." : "")}{Name}<{TypeParametersListString}>({ParametersListString})";
 
 		public bool IsGeneric => GenericArity > 0;
 		public int GenericArity => TypeParameters.Length;
@@ -67,7 +67,7 @@ namespace JurTranspiler.syntax_tree.declarations {
 			                     .ToImmutableArray() ?? ImmutableArray<(ITypeSyntax constrained, ITypeSyntax constrain)>.Empty;
 
 			ReturnType = context.VOID()?.ToVoidType(this) ?? ToType(context.type());
-			Parameters = ToUninitializedVariablesDefinitions(context.uninitializedVarDeclaration(), true);
+			Parameters = ToUninitializedVariablesDefinitions(context.uninitializedVarDeclaration(), UninitializedVariableType.Parameter);
 
 			if (!IsExtern) {
 				Body = context.ARROW() == null
@@ -95,7 +95,7 @@ namespace JurTranspiler.syntax_tree.declarations {
 				parameters += "_s_";
 			}
 
-			return Body is ExpressionStatementSyntax statementSyntax
+			return Body is ExpressionStatementSyntax 
 				       ? ReturnType is VoidTypeSyntax
 					         ? $@"function {name}({parameters}) {{{Body?.ToJs(knowledge) ?? ""}}}"
 					         : $@"function {name}({parameters}) {{return {Body?.ToJs(knowledge) ?? ""}}}"

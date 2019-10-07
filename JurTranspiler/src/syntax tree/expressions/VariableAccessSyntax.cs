@@ -9,7 +9,7 @@ namespace JurTranspiler.syntax_tree.expressions {
 	public class VariableAccessSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
-		public override bool CanBeAssignedTo => true;
+		public override bool CanSyntacticallyBeAssignedTo => true;
 		public string Name { get; }
 
 
@@ -26,17 +26,15 @@ namespace JurTranspiler.syntax_tree.expressions {
 		}
 
 
-		private ImmutableArray<IVariableDeclarationSyntax> GetVisibleDeclarations() {
+		public ImmutableArray<IVariableDeclarationSyntax> GetVisibleDefinitionsFor() {
 			return GetVisibleVariablesInScope().Where(x => x.Name == this.Name).ToImmutableArray();
 		}
 
-
-		public IVariableDeclarationSyntax? GetVisibleDeclarationOrNull() {
-			var declarations = GetVisibleDeclarations();
+		public IVariableDeclarationSyntax? GetVisibleDefinitionOrNull() {
+			var declarations = GetVisibleDefinitionsFor();
 			return declarations.Any()
 				       ? declarations.First()
 				       : null;
-
 		}
 
 	}

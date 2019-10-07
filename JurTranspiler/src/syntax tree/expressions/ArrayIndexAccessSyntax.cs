@@ -12,7 +12,7 @@ namespace JurTranspiler.syntax_tree.expressions {
 
 		public IExpressionSyntax Array { get; }
 		public IExpressionSyntax Index { get; }
-		public override bool CanBeAssignedTo => true;
+		public override bool CanSyntacticallyBeAssignedTo => true;
 
 
 		public ArrayIndexAccessSyntax(ISyntaxNode parent, JurParser.ArrayIndexAccessContext context) : base(parent, context) {

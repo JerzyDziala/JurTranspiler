@@ -28,7 +28,7 @@ namespace JurTranspiler.syntax_tree.expressions {
 
 		public AnonymousFunctionSyntax(ISyntaxNode parent, JurParser.AnonymusFunctionContext context) : base(parent, context) {
 
-			Parameters = context.uninitializedVarDeclaration().Select(x => new UninitializedVariableDeclarationSyntax(this, x, true)).ToImmutableArray();
+			Parameters = context.uninitializedVarDeclaration().Select(x => new UninitializedVariableDeclarationSyntax(this, x, UninitializedVariableType.Parameter)).ToImmutableArray();
 
 			Body = context.expression() != null
 				       ? new ExpressionStatementSyntax(this, context.expression())

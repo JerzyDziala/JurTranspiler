@@ -12,12 +12,14 @@ namespace JurTranspiler.syntax_tree.declarations {
 
 		public string Name { get; }
 		public ITypeSyntax? Type { get; }
+		public bool IsMutable { get; }
 
 
 		public FieldDeclarationSyntax(StructDefinitionSyntax parent, JurParser.UninitializedVarDeclarationContext context) : base(parent, context) {
 
 			Name = context.ID().GetText();
 			Type = ToType(context.type());
+			IsMutable = context.MUTABLE() != null;
 
 			ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Type);
 		}

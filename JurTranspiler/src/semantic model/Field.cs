@@ -18,6 +18,7 @@ namespace JurTranspiler.semantic_model {
         public string Name { get; }
         public FieldDeclarationSyntax OriginalSyntax { get; }
         public IType Type { get; }
+        public bool IsMutable => OriginalSyntax.IsMutable;
         public StructDefinitionSyntax OriginalOwnerSyntax { get; }
 
 
@@ -36,7 +37,7 @@ namespace JurTranspiler.semantic_model {
         public bool Equals(Field other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Name, other.Name) && Equals(Type, other.Type);
+            return string.Equals(Name, other.Name) && Equals(Type, other.Type) && Equals(IsMutable, other.IsMutable);
         }
 
 

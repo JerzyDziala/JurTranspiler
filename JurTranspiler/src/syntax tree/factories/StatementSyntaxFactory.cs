@@ -16,7 +16,7 @@ namespace JurTranspiler.syntax_tree.factories {
 			if(context is JurParser.ContinueStatementContext continueContext) return new ContinueStatementSyntax(parent, continueContext);
 			if(context is JurParser.InferedVariableDeclarationStatementContext inferredContext) return new InferredVariableDeclarationSyntax(parent,inferredContext.inferedVariableDeclaration());
 			if(context is JurParser.InitializedVariableDeclarationStatementContext initializedContext) return new InitializedVariableDeclarationSyntax(parent,initializedContext.initializedVariableDeclaration());
-			if(context is JurParser.UninitializedVarDeclarationStatementContext uninitializedContext) return new UninitializedVariableDeclarationSyntax(parent,uninitializedContext.uninitializedVarDeclaration(),false);
+			if(context is JurParser.UninitializedVarDeclarationStatementContext uninitializedContext) return new UninitializedVariableDeclarationSyntax(parent,uninitializedContext.uninitializedVarDeclaration(),UninitializedVariableType.Local);
 			if(context is JurParser.AssignmentStatementContext assignmentContext) return new AssignmentStatementSyntax(parent,assignmentContext);
 			if (context is JurParser.ExpressionStatementContext expressionContext) return new ExpressionStatementSyntax(parent, expressionContext);
 

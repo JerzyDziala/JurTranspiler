@@ -44,8 +44,8 @@ namespace JurTranspiler.syntax_tree.bases {
 		}
 
 
-		protected ImmutableArray<UninitializedVariableDeclarationSyntax> ToUninitializedVariablesDefinitions(IEnumerable<JurParser.UninitializedVarDeclarationContext> contexts, bool areParameters) {
-			return contexts.Select(x => new UninitializedVariableDeclarationSyntax(this, x, areParameters)).ToImmutableArray();
+		protected ImmutableArray<UninitializedVariableDeclarationSyntax> ToUninitializedVariablesDefinitions(IEnumerable<JurParser.UninitializedVarDeclarationContext> contexts, UninitializedVariableType uninitializedVariableType) {
+			return contexts.Select(x => new UninitializedVariableDeclarationSyntax(this, x, uninitializedVariableType)).ToImmutableArray();
 		}
 
 

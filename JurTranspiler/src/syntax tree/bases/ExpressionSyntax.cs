@@ -7,7 +7,7 @@ namespace JurTranspiler.syntax_tree.bases {
 
 	public class ExpressionSyntax : SyntaxNode, IExpressionSyntax {
 
-		public virtual bool CanBeAssignedTo => false;
+		public virtual bool CanSyntacticallyBeAssignedTo => false;
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 

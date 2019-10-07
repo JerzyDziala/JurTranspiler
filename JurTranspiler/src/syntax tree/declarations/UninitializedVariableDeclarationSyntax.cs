@@ -1,40 +1,34 @@
+using System;
 using System.Collections.Immutable;
-using Antlr4.Runtime;
 using JurTranspiler.Analysis;
 using JurTranspiler.syntax_tree.bases;
 using JurTranspiler.syntax_tree.Interfaces;
 
 namespace JurTranspiler.syntax_tree.declarations {
+	
+	public enum UninitializedVariableType {
+		Local,
+		Parameter,
+		Field
+	}
 
 	public class UninitializedVariableDeclarationSyntax : SyntaxNode, IStatementSyntax, IVariableDeclarationSyntax {
 
+		
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 		public string Name { get; }
 		public ITypeSyntax? Type { get; }
-		public bool IsParameter { get; }
+		public UninitializedVariableType UninitializedVariableType { get; }
+		public bool IsMutable { get; }
 
 
-		public UninitializedVariableDeclarationSyntax(ISyntaxNode parent, JurParser.UninitializedVarDeclarationContext context, bool isParameter) : base(parent, context) {
+		public UninitializedVariableDeclarationSyntax(ISyntaxNode parent, JurParser.UninitializedVarDeclarationContext context, UninitializedVariableType uninitializedVariableType) : base(parent, context) {
 
 			Name = context.ID().GetText();
-			IsParameter = isParameter;
+			UninitializedVariableType = uninitializedVariableType;
 			Type = ToType(context.type());
-
-			ImmediateChildren = ImmutableArray.Create<ITreeNode>()
-			                                  .Add(Type);
-
-		}
-
-
-		public UninitializedVariableDeclarationSyntax(ISyntaxNode parent,
-		                                              ITypeSyntax type,
-		                                              string name,
-		                                              ParserRuleContext context) : base(parent, context) {
-
-			Name = name;
-			IsParameter = false;
-			Type = type;
+			IsMutable = context.MUTABLE() != null;
 
 			ImmediateChildren = ImmutableArray.Create<ITreeNode>()
 			                                  .Add(Type);
@@ -43,7 +37,13 @@ namespace JurTranspiler.syntax_tree.declarations {
 
 
 		public override string ToJs(Knowledge knowledge) {
-			return $"let {knowledge.GetNewNameFor(this)};\n";
+			var keyword = UninitializedVariableType switch {
+				UninitializedVariableType.Field => throw new InvalidOperationException("Fields are translated to js in different way"),
+				UninitializedVariableType.Local when IsMutable => "let",
+				UninitializedVariableType.Local when !IsMutable => "const",
+				UninitializedVariableType.Parameter => "",
+			};
+			return $"{keyword} {knowledge.GetNewNameFor(this)};\n";
 		}
 
 	}

@@ -129,7 +129,7 @@ namespace JurTests {
                     T[] createArrayOf<T>(num count){
                         T t;
                         T g = t;
-                        c := count;
+                        mutable c := count;
                         c = 5;
                         return new T[];
                     }
@@ -148,7 +148,7 @@ namespace JurTests {
         public void SimpleConstraintNoError() {
             var code = @"
         		abstraction 0 {
-                    void F<T,G>(T vague, G specific) where G is T{
+                    void F<T,G>(mutable T vague, G specific) where G is T{
                         vague = specific;
                     }
         		}
@@ -167,7 +167,7 @@ namespace JurTests {
         public void UndeclaredTypeInConstraint() {
             var code = @"
         		abstraction 0 {
-                    void F<T,G>(T vague, G specific) where G is H
+                    void F<T,G>(mutable T vague, G specific) where G is H
                                                        and G is T
                                                        and V is List<T> {
                         vague = specific;
@@ -259,16 +259,16 @@ namespace JurTests {
         public void ValidAssignmentsOfTypeParameters() {
             var code = @"
         		abstraction 0 {
-                    T Func<T>(T a, T b) {
+                    T Func<T>(mutable T a, mutable T b) {
                         a = b;
                         b = a;
                         return a;
                     }
-                    T Func<T,T1>(T a, T1 b) where T1 is T {
+                    T Func<T,T1>(mutable T a, T1 b) where T1 is T {
                         a = b;
                         return b;
                     }
-                    T Func<T,T1,T2>(T a, T1 b, T2 c) where T2 is T1
+                    T Func<T,T1,T2>(mutable T a, mutable T1 b, mutable T2 c) where T2 is T1
                                                        and T1 is T {
                         a = c;
                         b = c;

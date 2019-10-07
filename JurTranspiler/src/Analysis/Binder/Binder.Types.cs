@@ -129,7 +129,7 @@ namespace JurTranspiler.Analysis.Binder {
             if (syntax is TypeParameterSyntax typeParameter) {
 
                 //check for undeclared type parameters
-                var parentDeclaration = symbols.GetParentDeclarationFor(typeParameter);
+                var parentDeclaration = GetParentDeclarationFor(typeParameter);
 
                 if (parentDeclaration?.IsGeneric == true) {
                     var isDeclared = parentDeclaration.TypeParameters.Any(x => x.Name == typeParameter.Name);
@@ -165,7 +165,7 @@ namespace JurTranspiler.Analysis.Binder {
 
             foreach (var inlinedType in definition.InlinedTypes) {
                 if (inlinedType is StructTypeSyntax inlinedStructType) {
-                    var inlinedDefinition = symbols.GetVisibleDefinitionOrNull(inlinedStructType);
+                    var inlinedDefinition = GetVisibleDefinitionOrNull(inlinedStructType);
                     if (inlinedDefinition == null) continue;
                     if (IsAcyclic(inlinedDefinition, visitedDefinitions)) {
                         visitedDefinitions.Remove(inlinedDefinition);
