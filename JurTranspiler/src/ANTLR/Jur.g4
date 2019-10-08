@@ -149,17 +149,17 @@ abstraction : ABSTRACTION NUMBER_VALUE '{' (functionDeclaration | structDeclarat
 
 //structs and constrains
 
-structDeclaration : STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((uninitializedVarDeclaration ';') | inlinedType)* '}'
+structDeclaration : STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((uninitializedVarDeclaration ';'?) | inlinedType)* '}'
                  ;
 
 
-inlinedType : IS type ';'
+inlinedType : IS type ';'?
 			;
 
 //functions
 
 functionDeclaration : (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? block)
-					| (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? ARROW expression ';')
+					| (PRIVATE? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? ARROW expression ';'?)
 					| (PRIVATE? EXTERN MEMBER? (type | VOID) ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
 					| (PRIVATE? STATIC EXTERN (type | VOID) ID '.' ID ('<' ID (',' ID)* '>')? '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' constraints? )
                     ;
@@ -196,18 +196,17 @@ type : ANY #anyType
 //statements and expressions
 
 
-//TODO: add ';' to exit statement
 statement : '{' statement* '}' #blockStatement
 		  | IF expression statement (ELSE statement)? #ifStatement
 		  | FOR ((initializedVariableDeclaration | inferedVariableDeclaration) ';')? expression (';' expression)? statement #forStatement
-		  | RETURN expression? ';' #returnStatement
-		  | BREAK ';' #breakStatement
-		  | CONTINUE ';' #continueStatement
-		  | inferedVariableDeclaration ';' #inferedVariableDeclarationStatement
-		  | initializedVariableDeclaration ';' #initializedVariableDeclarationStatement
-		  | uninitializedVarDeclaration ';' #uninitializedVarDeclarationStatement
-		  | expression ASSIGN expression ';' #assignmentStatement
-		  | expression ';' #expressionStatement
+		  | RETURN expression? ';'? #returnStatement
+		  | BREAK ';'? #breakStatement
+		  | CONTINUE ';'? #continueStatement
+		  | inferedVariableDeclaration ';'? #inferedVariableDeclarationStatement
+		  | initializedVariableDeclaration ';'? #initializedVariableDeclarationStatement
+		  | uninitializedVarDeclaration ';'? #uninitializedVarDeclarationStatement
+		  | expression ASSIGN expression ';'? #assignmentStatement
+		  | expression ';'? #expressionStatement
 		  ;
 
 block: '{' statement* '}'
