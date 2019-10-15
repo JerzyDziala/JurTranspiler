@@ -92,6 +92,7 @@
               <e p="NotAllCodePathReturnValue.cs" t="Include" />
               <e p="StructDeclarationContainsInheritanceCycles.cs" t="Include" />
               <e p="SyntaxError.cs" t="Include" />
+              <e p="TriedToAccessAPrivateField.cs" t="Include" />
               <e p="TriedToAccessFieldOnNonStruct.cs" t="Include" />
               <e p="TypeMismatchInAssignmentError.cs" t="Include" />
               <e p="TypeMismatchInReturnStatement.cs" t="Include" />
@@ -128,7 +129,6 @@
             <e p="ParserErrorListener.cs" t="Include" />
           </e>
           <e p="CodeGeneration" t="Include">
-            <e p="GenerationUtils.cs" t="Include" />
             <e p="Generator.cs" t="Include" />
             <e p="JsStrings.cs" t="Include" />
             <e p="TypesTableGenerator.cs" t="Include" />
@@ -266,7 +266,10 @@
         <e p="UtilityLibrary.csproj" t="IncludeRecursive" />
       </e>
     </e>
-    <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_JurTranspiler.1204100038.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.1/resharper-host/local/Transient/ReSharperHost/v191/SolutionCaches/_JurTranspiler.1204100038.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
   </component>
 </project>

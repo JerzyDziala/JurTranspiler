@@ -8,6 +8,14 @@ namespace JurTranspiler.Analysis.errors {
 		private string typeName { get; }
 
 
+		public AmbiguousFieldReference(Location location,
+		                               string fieldName,
+		                               string typeName) : base(location) {
+			this.fieldName = fieldName;
+			this.typeName = typeName;
+		}
+
+
 		public AmbiguousFieldReference(string file,
 		                               int line,
 		                               string fieldName,

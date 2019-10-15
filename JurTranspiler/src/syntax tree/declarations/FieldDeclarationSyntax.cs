@@ -13,13 +13,15 @@ namespace JurTranspiler.syntax_tree.declarations {
 		public string Name { get; }
 		public ITypeSyntax? Type { get; }
 		public bool IsMutable { get; }
+		public bool IsPrivate { get; }
 
 
-		public FieldDeclarationSyntax(StructDefinitionSyntax parent, JurParser.UninitializedVarDeclarationContext context) : base(parent, context) {
+		public FieldDeclarationSyntax(StructDefinitionSyntax parent, JurParser.UninitializedVarDeclarationContext context,bool isPrivate = false) : base(parent, context) {
 
 			Name = context.ID().GetText();
 			Type = ToType(context.type());
 			IsMutable = context.MUTABLE() != null;
+			IsPrivate = isPrivate;
 
 			ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Type);
 		}

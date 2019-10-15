@@ -41,22 +41,5 @@ namespace JurTranspiler.Analysis.Binder {
 	}
 
 
-	public static class BindingExtensions {
-
-		public static ImmutableArray<Location> GetLocations(this IEnumerable<IHaveLocation> things) {
-			return things.Select(x => x.Location).ToImmutableArray();
-		}
-
-
-
-		public static ImmutableList<IStatementSyntax> FlattenBlockStatements(this IEnumerable<IStatementSyntax> statements) {
-			return statements.Aggregate(ImmutableList<IStatementSyntax>.Empty,
-			                            (list, syntax) => syntax is BlockStatement block
-				                                              ? list.AddRange(block.Body)
-				                                              : list.Add(syntax));
-
-		}
-
-	}
 
 }

@@ -8,6 +8,13 @@ namespace JurTranspiler.Analysis.errors {
         private readonly string typeName;
 
 
+        public TriedToAccessFieldOnNonStruct(Location location,
+                                             string fieldName,
+                                             string typeName) : base(location) {
+            this.fieldName = fieldName;
+            this.typeName = typeName;
+        }
+
         public TriedToAccessFieldOnNonStruct(string file,
                                              int line,
                                              string fieldName,

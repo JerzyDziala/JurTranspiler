@@ -19,6 +19,7 @@ namespace JurTranspiler.semantic_model {
         public FieldDeclarationSyntax OriginalSyntax { get; }
         public IType Type { get; }
         public bool IsMutable => OriginalSyntax.IsMutable;
+        public bool IsPrivate => OriginalSyntax.IsPrivate;
         public StructDefinitionSyntax OriginalOwnerSyntax { get; }
 
 
