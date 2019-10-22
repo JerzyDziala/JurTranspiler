@@ -68,7 +68,7 @@ namespace JurTests {
 
         		}
         		main {
-					i := 4;
+					mutable i := 4;
 					i++;
 					a := i++;
         		}
@@ -87,9 +87,9 @@ namespace JurTests {
 
         		}
         		main {
-					string s = 'aqq';
+					mutable string s = 'aqq';
 					s++;
-					x := s--;
+					mutable x := s--;
 					x++;
         		}
         ";

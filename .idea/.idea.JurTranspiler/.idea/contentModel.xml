@@ -47,7 +47,6 @@
               <e p="Binder.Assignments.cs" t="Include" />
               <e p="Binder.Calls.cs" t="Include" />
               <e p="Binder.cs" t="Include" />
-              <e p="Binder.Equality.cs" t="Include" />
               <e p="Binder.Evaluation.cs" t="Include" />
               <e p="Binder.Fields.cs" t="Include" />
               <e p="Binder.FunctionBodies.cs" t="Include" />

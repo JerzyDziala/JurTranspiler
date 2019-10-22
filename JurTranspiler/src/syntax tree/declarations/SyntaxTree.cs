@@ -26,6 +26,7 @@ namespace JurTranspiler.syntax_tree.declarations {
 		public ImmutableArray<IVariableDeclarationSyntax> VariableDeclarations { get; }
 		public ImmutableArray<AnonymousFunctionSyntax> AllLambdas { get; }
 		public ImmutableArray<InitializerSyntax> AllInitializers { get; }
+		public ImmutableArray<IncrementationOrDecrementationExpressionSyntax> AllIncrementsAndDecrements  { get; }
 
 
 		public SyntaxTree(IEnumerable<(JurParser.ProgramContext context, string fileName)> files) : base() {
@@ -48,6 +49,7 @@ namespace JurTranspiler.syntax_tree.declarations {
 			VariableUsages = AllChildren.OfType<VariableAccessSyntax>().ToImmutableArray();
 			AllLambdas = AllChildren.OfType<AnonymousFunctionSyntax>().ToImmutableArray();
 			AllInitializers = AllChildren.OfType<InitializerSyntax>().ToImmutableArray();
+			AllIncrementsAndDecrements = AllChildren.OfType<IncrementationOrDecrementationExpressionSyntax>().ToImmutableArray();
 		}
 
 
@@ -73,6 +75,7 @@ namespace JurTranspiler.syntax_tree.declarations {
 			VariableUsages = AllChildren.OfType<VariableAccessSyntax>().ToImmutableArray();
 			AllLambdas = AllChildren.OfType<AnonymousFunctionSyntax>().ToImmutableArray();
 			AllInitializers = AllChildren.OfType<InitializerSyntax>().ToImmutableArray();
+			AllIncrementsAndDecrements = AllChildren.OfType<IncrementationOrDecrementationExpressionSyntax>().ToImmutableArray();
 		}
 
 

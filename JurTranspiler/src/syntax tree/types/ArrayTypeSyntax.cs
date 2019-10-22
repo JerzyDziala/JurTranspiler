@@ -10,16 +10,14 @@ namespace JurTranspiler.syntax_tree.types {
 
         public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
-
         public ITypeSyntax ElementType { get; }
-        public string Name => ElementType.Name + "[]";
+        public string Name => ElementType.FullName + "[]";
         public string FullName => Name;
 
 
         public ArrayTypeSyntax(ISyntaxNode parent, JurParser.ArrayTypeContext context) : base(parent, context) {
             ElementType = ToType(context.type());
             ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(ElementType);
-
         }
 
 

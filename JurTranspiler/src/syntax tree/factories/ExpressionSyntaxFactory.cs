@@ -23,7 +23,7 @@ namespace JurTranspiler.syntax_tree.factories {
 				   DefaultValueContext defaultContext => new DefaultTypeValueSyntax(parent, defaultContext),
 				   TypeExpressionContext typeExpressionContext => new TypeExpressionSyntax(parent, typeExpressionContext),
 				   NegationContext negationContext => new NegationExpressionSyntax(parent, negationContext),
-				   IncrementOrDecrementContext incrementOrDecrementContext => new IncrementationOrDecrementationExpression(parent, incrementOrDecrementContext),
+				   IncrementOrDecrementContext incrementOrDecrementContext => new IncrementationOrDecrementationExpressionSyntax(parent, incrementOrDecrementContext),
 				   ArithmeticNegationContext arithmeticNegationContext => new ArithmeticNegationExpressionSyntax(parent, arithmeticNegationContext),
 				   GuardContext guardContext => new GuardExpressionSyntax(parent, guardContext),
 				   _ => throw new Exception("You forgot to add new expression here")

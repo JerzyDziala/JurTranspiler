@@ -89,7 +89,7 @@ namespace JurTranspiler.Analysis.Binder {
 		}
 
 
-		private IType BindExpressionCore(IncrementationOrDecrementationExpression syntax) {
+		private IType BindExpressionCore(IncrementationOrDecrementationExpressionSyntax syntax) {
 			if (syntax.Expression.IsNot<VariableAccessSyntax>()) {
 				errors.Add(new InvalidUseOfOperator(syntax.Location, syntax.Operator));
 				return new UndefinedType();

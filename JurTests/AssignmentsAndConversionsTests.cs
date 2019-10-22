@@ -144,10 +144,6 @@ namespace JurTests {
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
 				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 17,
-				                                  leftName: "Entity<Entity<string>>",
-				                                  rightName: "Entity<Person>"),
-				new TypeMismatchInAssignmentError(file: "__TEST__",
 				                                  line: 18,
 				                                  leftName: "Entity<Any>",
 				                                  rightName: "Person"),

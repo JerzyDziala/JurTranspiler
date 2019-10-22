@@ -14,6 +14,7 @@ namespace JurTranspiler.Analysis.Binder {
 			CheckForInvalidAssignments();
 			CheckForInvalidInitializers();
 			CheckForInvalidUseOfNew();
+			CheckForIncrementsAndDecrementsOfImmutableVariables();
 		}
 
 
@@ -55,6 +56,22 @@ namespace JurTranspiler.Analysis.Binder {
 			}
 		}
 
+		private void CheckForIncrementsAndDecrementsOfImmutableVariables() {
+			
+			var incrementsAndDecrements = symbols.Tree.AllIncrementsAndDecrements;
+
+			foreach (var syntax in incrementsAndDecrements) {
+				
+				var access = syntax.Expression as VariableAccessSyntax;
+
+				var declaration = access?.GetVisibleDefinitionOrNull();
+
+				if (declaration != null && !declaration.IsMutable) {
+					errors.Add(new InvalidUseOfOperator(syntax.Location, syntax.Operator));
+				} 
+			}
+			
+		}
 
 		private void CheckForInvalidInitializers() {
 

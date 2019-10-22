@@ -12,7 +12,7 @@ namespace JurTranspiler.Analysis.errors {
 		}
 
 
-		protected override string MessageBody => $"cannot use '{Op}'. this operator can only be used on variables";
+		protected override string MessageBody => $"cannot use '{Op}'. this operator can only be used on (mutable) variables";
 
 	}
 

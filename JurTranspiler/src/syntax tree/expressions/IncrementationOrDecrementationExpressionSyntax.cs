@@ -5,7 +5,7 @@ using JurTranspiler.syntax_tree.Interfaces;
 
 namespace JurTranspiler.syntax_tree.expressions {
 
-	public class IncrementationOrDecrementationExpression : ExpressionSyntax {
+	public class IncrementationOrDecrementationExpressionSyntax : ExpressionSyntax {
 
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
@@ -13,7 +13,7 @@ namespace JurTranspiler.syntax_tree.expressions {
 		public IExpressionSyntax Expression { get; }
 
 
-		public IncrementationOrDecrementationExpression(ISyntaxNode parent, JurParser.IncrementOrDecrementContext context) : base(parent, context) {
+		public IncrementationOrDecrementationExpressionSyntax(ISyntaxNode parent, JurParser.IncrementOrDecrementContext context) : base(parent, context) {
 			Operator = context.@operator.Text;
 			Expression = ToExpression(context.expression());
 			ImmediateChildren = ImmutableArray.Create<ITreeNode>().Add(Expression);
