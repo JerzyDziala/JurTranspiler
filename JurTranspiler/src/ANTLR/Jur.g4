@@ -149,7 +149,7 @@ abstraction : ABSTRACTION NUMBER_VALUE '{' (functionDeclaration | structDeclarat
 
 //structs and constrains
 
-structDeclaration : STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((uninitializedVarDeclaration ';'?) | inlinedType)* '}'
+structDeclaration : STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((PRIVATE? uninitializedVarDeclaration ';'?) | inlinedType)* '}'
                  ;
 
 

@@ -22,7 +22,6 @@ namespace JurTranspiler.Analysis.Binder {
 			var lambdas = symbols.Tree.AllLambdas;
 			var mains = symbols.Tree.AllMains;
 
-
 			foreach (var function in functions) {
 
 				if (!function.IsExtern) {
@@ -41,9 +40,6 @@ namespace JurTranspiler.Analysis.Binder {
 				CheckForDuplicateVariables(main);
 			}
 		}
-
-
-
 
 
 		private void CheckForDuplicateVariables(ITreeNode scope) {
@@ -88,9 +84,10 @@ namespace JurTranspiler.Analysis.Binder {
 
 			if (nodes.None()) return false;
 
-			var onlyControlFlow = nodes.FlattenBlockStatements()
-			                           .Where(x => x is IfStatementSyntax || x is ReturnStatementSyntax)
-			                           .ToImmutableArray();
+
+			var onlyControlFlow = flattenBlockStatements(nodes)
+			                      .Where(x => x is IfStatementSyntax || x is ReturnStatementSyntax)
+			                      .ToImmutableArray();
 
 			if (onlyControlFlow.Any(x => x is ReturnStatementSyntax)) return true;
 
@@ -104,8 +101,14 @@ namespace JurTranspiler.Analysis.Binder {
 
 				return ifBodyReturns && elseBodyReturns;
 			});
-		}
 
+			static ImmutableList<IStatementSyntax> flattenBlockStatements(IEnumerable<IStatementSyntax> statements) {
+				return statements.Aggregate(ImmutableList<IStatementSyntax>.Empty,
+											(list, syntax) => syntax is BlockStatement block
+																  ? list.AddRange(block.Body)
+																  : list.Add(syntax));
+			}
+		}
 
 
 		private void CheckForReturnTypeMismatch(FunctionDefinitionSyntax function) {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using JurTranspiler.Analysis.errors;
+using JurTranspiler.Analysis.errors.bases;
 using JurTranspiler.semantic_model;
 using JurTranspiler.semantic_model.types;
 using JurTranspiler.syntax_tree.expressions;
@@ -27,7 +28,7 @@ namespace JurTranspiler.Analysis.Binder {
 			return returns switch {
 				       var x when x.None() => CreateFunctionPointer(syntax, new VoidType()),
 				       var x when x.AllHaveSame(y => y.Type) => CreateFunctionPointer(syntax, x[0].Type),
-				       _ => AddErrorAndReturn(new UnableToInferReturnType(returns.GetLocations()), CreateFunctionPointer(syntax, new UndefinedType()))
+				       _ => AddErrorAndReturn(new UnableToInferReturnType(returns.Select<IHaveLocation, Location>(x => x.Location).ToImmutableArray()), CreateFunctionPointer(syntax, new UndefinedType()))
 				       };
 
 		}
@@ -113,34 +114,38 @@ namespace JurTranspiler.Analysis.Binder {
 
 
 		private IType BindExpressionCore(FieldAccessSyntax syntax) {
+
 			var ownerType = BindExpression(syntax.Owner);
+
 			if (ownerType is StructType structType) {
+
 				var fields = BindFields(structType);
 				var matchingFields = fields.Where(field => field.Name == syntax.Name).ToList();
-				if (matchingFields.None()) {
-					//error: no matching field
-					errors.Add(new NoMatchingFieldFound(file: syntax.File,
-					                                    line: syntax.Line,
-					                                    fieldName: syntax.Name,
-					                                    typeName: ownerType.Name));
-					return new UndefinedType();
+
+				Func<Field, bool> canBeAccessed = field => !field.IsPrivate || field.OriginalFile == syntax.File;
+				var accessibleFields = matchingFields.Where(canBeAccessed).ToImmutableArray();
+
+				if (accessibleFields.None()) {
+
+					var error = matchingFields.None()
+						? new NoMatchingFieldFound(syntax.Location, syntax.Name, ownerType.Name) as SingleLocationError
+						: new TriedToAccessAPrivateField(syntax.Location, matchingFields.First().Name, ownerType.Name);
+
+					return AddErrorAndReturn(error, new UndefinedType());
 				}
-				if (matchingFields.Count > 1) {
-					//error: ambiguous field reference
-					errors.Add(new AmbiguousFieldReference(file: syntax.File,
-					                                       line: syntax.Line,
-					                                       fieldName: syntax.Name,
-					                                       typeName: ownerType.Name));
-					return new UndefinedType();
+
+				if (accessibleFields.MoreThenOne()) {
+					var error = new AmbiguousFieldReference(syntax.Location, syntax.Name, ownerType.Name);
+					return AddErrorAndReturn(error, new UndefinedType());
 				}
-				return matchingFields.First().Type;
+
+				return accessibleFields.First().Type;
 			}
+
 			if (!(ownerType is UndefinedType)) {
-				errors.Add(new TriedToAccessFieldOnNonStruct(syntax.File,
-				                                             syntax.Line,
-				                                             syntax.Name,
-				                                             ownerType.Name));
+				errors.Add(new TriedToAccessFieldOnNonStruct(syntax.Location, syntax.Name, ownerType.Name));
 			}
+
 			return new UndefinedType();
 		}
 

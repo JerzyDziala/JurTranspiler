@@ -21,6 +21,8 @@ namespace JurTranspiler.Analysis.errors.bases {
             this.line = location.Line;
         }
 
+
+
     }
 
 }

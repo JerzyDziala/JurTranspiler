@@ -91,6 +91,7 @@
               <e p="NotAllCodePathReturnValue.cs" t="Include" />
               <e p="StructDeclarationContainsInheritanceCycles.cs" t="Include" />
               <e p="SyntaxError.cs" t="Include" />
+              <e p="TriedToAccessAPrivateField.cs" t="Include" />
               <e p="TriedToAccessFieldOnNonStruct.cs" t="Include" />
               <e p="TypeMismatchInAssignmentError.cs" t="Include" />
               <e p="TypeMismatchInReturnStatement.cs" t="Include" />
@@ -127,7 +128,6 @@
             <e p="ParserErrorListener.cs" t="Include" />
           </e>
           <e p="CodeGeneration" t="Include">
-            <e p="GenerationUtils.cs" t="Include" />
             <e p="Generator.cs" t="Include" />
             <e p="JsStrings.cs" t="Include" />
             <e p="TypesTableGenerator.cs" t="Include" />
