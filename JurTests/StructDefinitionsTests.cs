@@ -733,6 +733,45 @@ namespace JurTests {
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
 
+		[Test]
+		[Parallelizable]
+		public void SimpleNominallyTypedAssignment() {
+			var code = @"
+        		abstraction 0 {
+					nominal struct A { }
+					struct B {
+						is A
+						string a	
+					}
+        		}
+        		main {
+					A a = new B	
+					A aa = new A
+				}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
+		
+		[Test]
+		[Parallelizable]
+		public void SimpleNominallyTypedAssignmentError() {
+			var code = @"
+        		abstraction 0 {
+					nominal struct A { }
+					struct B {
+						string a	
+					}
+        		}
+        		main {
+					A a = new B	
+				}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { new TypeMismatchInAssignmentError("__TEST__", 9, "A", "B") };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 	}
 
 }

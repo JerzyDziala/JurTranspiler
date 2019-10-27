@@ -62,6 +62,11 @@ namespace JurTranspiler.Analysis.Binder {
         private bool IsAssignableToCore(StructType self, IType type) {
             if (type is StructType target) {
                 if (self.Name == type.Name) return true;
+
+                if (target.IsNominal) {
+                    return self.InheritsFrom(target);
+                }
+                
                 var fieldsA = BindFields(self);
                 var fieldsB = BindFields(target);
                 return fieldsB.All(fieldB => fieldsA.Any(fieldA => fieldA.Name == fieldB.Name && IsAssignableTo(fieldA.Type,fieldB.Type)));
