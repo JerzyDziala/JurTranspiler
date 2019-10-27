@@ -9,7 +9,7 @@ namespace JurTranspiler.Analysis.Binder {
 	public partial class Binder {
 
 		private bool IsAssignableToWithSubstitutions(IType self, IType type, ICollection<Substitution> substitutions) {
-
+			
 			if (type is TypeParameterType t) {
 				substitutions.Add(new Substitution(t, self));
 				return true;
@@ -27,17 +27,15 @@ namespace JurTranspiler.Analysis.Binder {
 		}
 
 
-		private bool IsAssignableToWithSubstitutionsCore(ArrayType self, IType type,
-			ICollection<Substitution> substitutions) {
-
+		private bool IsAssignableToWithSubstitutionsCore(ArrayType self, IType type, ICollection<Substitution> substitutions) {
+			
 			return type is ArrayType arrayType &&
 			       IsAssignableToWithSubstitutions(self.ElementType, arrayType.ElementType, substitutions);
 		}
 
 
-		private bool IsAssignableToWithSubstitutionsCore(FunctionPointerType self, IType type,
-			ICollection<Substitution> substitutions) {
-
+		private bool IsAssignableToWithSubstitutionsCore(FunctionPointerType self, IType type, ICollection<Substitution> substitutions) {
+			
 			if (type is FunctionPointerType func) {
 
 				//covariant
@@ -46,64 +44,51 @@ namespace JurTranspiler.Analysis.Binder {
 				if (self.Parameters.Length != func.Parameters.Length) return false;
 
 				return self.Parameters
-					.Zip(func.Parameters, (sPar, tPar) => (sPar, tPar))
-					.All(x => {
-						if (x.tPar is TypeParameterType t) {
-							substitutions.Add(new Substitution(t, x.sPar));
-							return true;
-						}
-
-						//contravariant
-						return IsAssignableToWithSubstitutions(x.tPar, x.sPar, substitutions);
-					});
+				           .Zip(func.Parameters, (sPar, tPar) => (sPar, tPar))
+				           .All(x => {
+					           if (x.tPar is TypeParameterType t) {
+						           substitutions.Add(new Substitution(t, x.sPar));
+						           return true;
+					           }
+					           //contravariant
+					           return IsAssignableToWithSubstitutions(x.tPar, x.sPar, substitutions);
+				           });
 			}
-
 			return false;
 		}
 
 
-		private bool IsAssignableToWithSubstitutionsCore(AnyType self, IType type,
-			ICollection<Substitution> substitutions) {
+		private bool IsAssignableToWithSubstitutionsCore(AnyType self, IType type, ICollection<Substitution> substitutions) {
 			return !(type is VoidType);
 		}
 
 
-		private bool IsAssignableToWithSubstitutionsCore(PrimitiveType self, IType type,
-			ICollection<Substitution> substitutions) {
+		private bool IsAssignableToWithSubstitutionsCore(PrimitiveType self, IType type, ICollection<Substitution> substitutions) {
 			return self.Name == type.Name;
 		}
 
 
-		private bool IsAssignableToWithSubstitutionsCore(StructType self, IType type,
-			ICollection<Substitution> substitutions) {
+		private bool IsAssignableToWithSubstitutionsCore(StructType self, IType type, ICollection<Substitution> substitutions) {
 			
 			if (type is StructType target) {
 				
 				var fieldsA = BindFields(self).ToList();
 				var fieldsB = BindFields(target).ToList();
-
+				
 				var tmpSubs = new HashSet<Substitution>();
 
 				var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => fieldA.Name == fieldB.Name && IsAssignableToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)));
-				var hasAtMostOneSubstitutionForEachTypeParameter = tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne());
 
-				if (!isCompatible || !hasAtMostOneSubstitutionForEachTypeParameter) return false;
-
-				if (target.IsNominal) {
-					if (self.InheritsFrom(target)) {
-						substitutions.AddRange(tmpSubs);
-						return true;
-					}
-
-					return false;
-				}
-
+				if (!isCompatible) return false;
+				if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;
+				
 				substitutions.AddRange(tmpSubs);
 				return true;
 			}
-
+			
 			return false;
 		}
+
 
 		private bool IsAssignableToWithSubstitutionsCore(TypeParameterType self, IType type, ICollection<Substitution> substitutions) {
 			return false;
