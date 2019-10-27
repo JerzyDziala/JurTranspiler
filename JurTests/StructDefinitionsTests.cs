@@ -772,6 +772,31 @@ namespace JurTests {
 			var expectedErrors = new Error[] { new TypeMismatchInAssignmentError("__TEST__", 9, "A", "B") };
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
+		
+		[Test]
+		[Parallelizable]
+		public void SimpleNominallyTypedFunctionArguments() {
+			var code = @"
+        		abstraction 0 {
+
+					nominal struct A { }
+
+					struct B {
+						string a	
+					}
+				
+					void f(A arg) { }
+					
+        		}
+        		main {
+					b := new B { a = 'xxx' }	
+					f(b)
+				}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { new NoMatchingOverloadForCall("__TEST__", 15, "f(B)") };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 	}
 
 }
