@@ -19,7 +19,7 @@ namespace JurTranspiler.semantic_model.types {
 
         public StructDefinitionSyntax OriginalDefinitionSyntax { get; }
         public string NonGenericName => OriginalDefinitionSyntax.Name;
-        public bool IsNominal => OriginalDefinitionSyntax.IsNominal;
+        public bool IsNominal => OriginalDefinitionSyntax.IsNominal || InlinedTypes.OfType<Lazy<StructType>>().Any(x=>x.Value.IsNominal);
         public int Arity => TypeArguments.Length;
         public bool IsGeneric => Arity > 0;
         public int Abstraction => OriginalDefinitionSyntax.Abstraction;
@@ -47,6 +47,9 @@ namespace JurTranspiler.semantic_model.types {
 
         }
 
+        public bool InheritsFrom(StructType type) {
+            return this.Equals(type) || InlinedTypes.Any(x => x.Value is StructType parentType && parentType.InheritsFrom(type));
+        }
 
         public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) {
 
