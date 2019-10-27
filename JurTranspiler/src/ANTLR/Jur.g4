@@ -96,6 +96,7 @@ NULL_VALUE: 'null';
 VALUE: STRING_VALUE | NUMBER_VALUE | BOOL_VALUE | NULL_VALUE;
 
 //keywords
+NOMINAL: 'nominal';
 STRUCT : 'struct';
 VOID: 'void';
 ANY: 'any';
@@ -149,7 +150,7 @@ abstraction : ABSTRACTION NUMBER_VALUE '{' (functionDeclaration | structDeclarat
 
 //structs and constrains
 
-structDeclaration : STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((PRIVATE? uninitializedVarDeclaration ';'?) | inlinedType)* '}'
+structDeclaration : NOMINAL? STRUCT ID ( '<' ID (',' ID)* '>' )? '{' ((PRIVATE? uninitializedVarDeclaration ';'?) | inlinedType)* '}'
                  ;
 
 
