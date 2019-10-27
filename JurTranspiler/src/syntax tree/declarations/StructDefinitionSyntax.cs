@@ -16,6 +16,7 @@ namespace JurTranspiler.syntax_tree.declarations {
         public string FullName { get; }
         public bool IsGeneric => GenericArity > 0;
         public bool IsPrivate => false;
+        public bool IsNominal { get; }
         public int GenericArity => TypeParameters.Length;
         public ImmutableArray<TypeParameterSyntax> TypeParameters { get; }
         public ImmutableArray<ITypeSyntax> InlinedTypes { get; }
@@ -25,6 +26,7 @@ namespace JurTranspiler.syntax_tree.declarations {
         public StructDefinitionSyntax(ISyntaxNode parent, JurParser.StructDeclarationContext context) : base(parent, context) {
 
             Name = context.ID(0).GetText();
+            IsNominal = context.NOMINAL() != null;
             TypeParameters = context.ID().Skip(1).Select(x => new TypeParameterSyntax(this, x.GetText(), Line, this)).ToImmutableArray();
             InlinedTypes = ToTypes(context.inlinedType().Select(x => x.type()).ToArray());
             Fields = ToFields(context.uninitializedVarDeclaration());

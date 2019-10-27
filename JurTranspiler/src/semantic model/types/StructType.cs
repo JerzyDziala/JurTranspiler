@@ -19,6 +19,7 @@ namespace JurTranspiler.semantic_model.types {
 
         public StructDefinitionSyntax OriginalDefinitionSyntax { get; }
         public string NonGenericName => OriginalDefinitionSyntax.Name;
+        public bool IsNominal => OriginalDefinitionSyntax.IsNominal;
         public int Arity => TypeArguments.Length;
         public bool IsGeneric => Arity > 0;
         public int Abstraction => OriginalDefinitionSyntax.Abstraction;
