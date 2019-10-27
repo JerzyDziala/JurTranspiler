@@ -393,6 +393,35 @@ namespace JurTests {
 			};
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
+		
+		
+		[Test]
+		[Parallelizable]
+		public void TrivialGenericNominallyTypedFunctionParameterSubstitution() {
+			var code = @"
+        		abstraction 0 {
+
+					nominal struct A<T> { 
+						T genericField
+					}
+
+					struct B {
+						is A<string>
+						string a	
+					}
+				
+					void f<T>(A<T> arg) { }
+					
+        		}
+        		main {
+					b := new B { a = 'xxx' }	
+					f(b)
+				}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { new NoMatchingOverloadForCall("__TEST__", 15, "f(B)") };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 
 	}
 
