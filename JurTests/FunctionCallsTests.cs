@@ -409,20 +409,73 @@ namespace JurTests {
 						is A<string>
 						string a	
 					}
+
+					struct C {
+						string genericField
+						string a	
+					}
+
+					struct D {
+						is A<B>
+						string a	
+					}
 				
-					void f<T>(A<T> arg) { }
+					T f<T>(A<T> arg) -> T.default
 					
         		}
         		main {
-					b := new B { a = 'xxx' }	
-					f(b)
+					string s = f(new B)
+					string s1 = f(new C)
+					B b = f(new D)
 				}
         ";
 			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { new NoMatchingOverloadForCall("__TEST__", 15, "f(B)") };
+			var expectedErrors = new Error[] { new NoMatchingOverloadForCall("__TEST__", 28, "f(C)") };
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
 
+		[Test]
+		[Parallelizable]
+		public void GenericSubstitutionWithNominalTypesInContravariantSituation() {
+			var code = @"
+        		abstraction 0 {
+
+					nominal struct A<T> { 
+						T genericField
+					}
+
+					struct B {
+						is A<string>
+						string a	
+					}
+
+					struct C {
+						string genericField
+						string a	
+					}
+
+				
+					T f<T>(void(B, T) arg) -> T.default
+					
+        		}
+        		main {
+					void(A<string>, B) validArg1
+					void(B, B) validArg2
+					void(any, B) validArg3
+					void(A<any>, B) validArg4
+					void(C, C) validArg5
+
+					A<any> s1 = f(validArg1)
+					A<string> s2 = f(validArg2)
+					B s3 = f(validArg3)
+					any s4 = f(validArg4)
+					B s5 = f(validArg5)
+				}
+        ";
+			var (errors, _) = Compiler.Compile(code);
+			var expectedErrors = new Error[] { };
+			CollectionAssert.AreEquivalent(expectedErrors, errors);
+		}
 	}
 
 }

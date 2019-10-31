@@ -64,7 +64,7 @@ namespace JurTranspiler.Analysis.Binder {
                 if (self.Name == type.Name) return true;
 
                 if (target.IsNominal) {
-                    return self.InheritsFrom(target);
+                    return InheritsFrom(self, target);
                 }
                 
                 var fieldsA = BindFields(self);

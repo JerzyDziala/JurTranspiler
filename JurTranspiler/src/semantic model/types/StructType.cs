@@ -47,10 +47,6 @@ namespace JurTranspiler.semantic_model.types {
 
         }
 
-        public bool InheritsFrom(StructType type) {
-            return this.Equals(type) || InlinedTypes.Any(x => x.Value is StructType parentType && parentType.InheritsFrom(type));
-        }
-
         public override IType WithSubstitutedTypes(ISet<Substitution> typeMap) {
 
             var typeArguments = TypeArguments.Select(x => new Lazy<IType>(() => x.Value.WithSubstitutedTypes(typeMap))).ToImmutableArray();

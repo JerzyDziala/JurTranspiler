@@ -71,19 +71,33 @@ namespace JurTranspiler.Analysis.Binder {
 		private bool IsAssignableToWithSubstitutionsCore(StructType self, IType type, ICollection<Substitution> substitutions) {
 			
 			if (type is StructType target) {
-				
-				var fieldsA = BindFields(self).ToList();
-				var fieldsB = BindFields(target).ToList();
-				
+
 				var tmpSubs = new HashSet<Substitution>();
+					
+				if (target.IsNominal) {
+					var isCompatible = InheritsFromWithSubstitutions(self, target, tmpSubs);
+					if (!isCompatible) return false;
+					if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;
+					
+					substitutions.AddRange(tmpSubs);
+					return true;
+				}
+				else {
 
-				var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA => fieldA.Name == fieldB.Name && IsAssignableToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)));
+					var fieldsA = BindFields(self).ToList();
+					var fieldsB = BindFields(target).ToList();
 
-				if (!isCompatible) return false;
-				if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;
-				
-				substitutions.AddRange(tmpSubs);
-				return true;
+
+					var isCompatible = fieldsB.All(fieldB => fieldsA.Any(fieldA =>
+						fieldA.Name == fieldB.Name &&
+						IsAssignableToWithSubstitutions(fieldA.Type, fieldB.Type, tmpSubs)));
+
+					if (!isCompatible) return false;
+					if (tmpSubs.GroupBy(x => x.typeParameter).Any(g => g.MoreThenOne())) return false;
+
+					substitutions.AddRange(tmpSubs);
+					return true;
+				}
 			}
 			
 			return false;
