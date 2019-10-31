@@ -198,6 +198,7 @@ UpgradeLog*.htm
 
  # Rider
  .idea/
+ .idea/*
 
  # Visual Studio Code
  .vscode/
