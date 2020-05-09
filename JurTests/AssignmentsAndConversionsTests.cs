@@ -443,43 +443,6 @@ namespace JurTests {
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}
 
-
-		[Test]
-		[Parallelizable]
-		public void NullTest() {
-			var code = @"
-        		abstraction 0 {
-
-        		}
-        		main {
-                    mutable x := null;
-                    x = 'aqq';
-        		}
-        ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
-
-
-		[Test]
-		[Parallelizable]
-		public void UndefinedTest() {
-			var code = @"
-        		abstraction 0 {
-
-        		}
-        		main {
-                    mutable x := undefined;
-                    x = 'aqq';
-        		}
-        ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
-
-
 	}
 
 }

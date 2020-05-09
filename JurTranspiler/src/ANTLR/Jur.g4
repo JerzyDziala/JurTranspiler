@@ -91,9 +91,8 @@ fragment HexDigit
 
 NUMBER_VALUE: [0-9]+ ([.] [0-9]+)?;
 BOOL_VALUE: 'true' | 'false';
-NULL_VALUE: 'null';
 
-VALUE: STRING_VALUE | NUMBER_VALUE | BOOL_VALUE | NULL_VALUE;
+VALUE: STRING_VALUE | NUMBER_VALUE | BOOL_VALUE;
 
 //keywords
 NOMINAL: 'nominal';
@@ -101,8 +100,6 @@ STRUCT : 'struct';
 VOID: 'void';
 ANY: 'any';
 RETURN: 'return';
-BREAK: 'break';
-CONTINUE: 'continue';
 IF: 'if';
 ABSTRACTION : 'abstraction';
 MAIN: 'main';
@@ -113,7 +110,6 @@ AND: 'and';
 DEFAULT_VALUE: 'default';
 TYPE: 'typeof';
 ELSE: 'else';
-OTHERWISE: 'otherwise';
 FOR: 'for' ;
 EXTERN: 'extern';
 POLY: 'poly';
@@ -122,7 +118,6 @@ MEMBER: 'member';
 STATIC: 'static';
 PRIVATE: 'private';
 PRIMITIVE: 'num' | 'string' | 'bool' ;
-UNDEFINED_VALUE: 'undefined';
 
 
 fragment DIGIT  : '0'..'9' ;
@@ -201,8 +196,6 @@ statement : '{' statement* '}' #blockStatement
 		  | IF expression statement (ELSE statement)? #ifStatement
 		  | FOR ((initializedVariableDeclaration | inferedVariableDeclaration) ';')? expression (';' expression)? statement #forStatement
 		  | RETURN expression? ';'? #returnStatement
-		  | BREAK ';'? #breakStatement
-		  | CONTINUE ';'? #continueStatement
 		  | inferedVariableDeclaration ';'? #inferedVariableDeclarationStatement
 		  | initializedVariableDeclaration ';'? #initializedVariableDeclarationStatement
 		  | uninitializedVarDeclaration ';'? #uninitializedVarDeclarationStatement
@@ -214,24 +207,19 @@ block: '{' statement* '}'
 			   ;
 
 
-singleGuard: (expression | OTHERWISE) ARROW expression;
-
-expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | NULL_VALUE | UNDEFINED_VALUE) #primitiveValue
+expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE) #primitiveValue
            | uninitializedVarDeclaration? ARROW (block | expression)  #anonymusFunction
            | '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' ARROW (block | expression)  #anonymusFunction
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
 		   | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
-		   | ('|' singleGuard )+ #guard
 		   | type '.' DEFAULT_VALUE #defaultValue
 		   | type '.' TYPE #typeExpression
 		   | expression '.' ID #fieldAccess
 		   | NEW type ('{' (ID '=' expression) (',' ID '=' expression)* '}')* #constructor
 		   | ID #variableAccess
-		   | expression LEFT_SQUARE_PARENT expression RIGHT_SQUARE_PARENT #arrayIndexAccess
 		   | LEFT_PARENT expression RIGHT_PARENT #parExpression
            | NOT expression #negation
            | SUBTRACT expression #arithmeticNegation
-           | expression operator=(INCREMENT | DECREMENT) #incrementOrDecrement
            | expression operator=( TIMES | DIVIDE ) expression #operation
            | expression operator=( ADD | SUBTRACT ) expression #operation
            | expression operator=( LESS | GREATER | LEQUAL | GREQUAL ) expression #operation

@@ -10,8 +10,6 @@ namespace JurTranspiler.syntax_tree.expressions {
 		public override ImmutableArray<ITreeNode> ImmediateChildren { get; }
 
 		public string Value { get; }
-		public bool IsNull => Value == "null";
-		public bool IsUndefined => Value == "undefined";
 
 
 		public PrimitiveValueSyntax(ISyntaxNode parent, JurParser.PrimitiveValueContext context) : base(parent, context) {

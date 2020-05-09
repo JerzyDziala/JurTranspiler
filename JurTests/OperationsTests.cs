@@ -41,9 +41,9 @@ namespace JurTests {
                     bool i8 = e || f && a / b < b;
                     bool i9 = g != h;
                     bool i10 = e != f;
-                    bool i11 = h == null;
+                    bool i11 = h == h;
                     bool i13 = c != d;
-                    bool i14 = i != null || a <= b && a >= b;
+                    bool i14 = i != a || a <= b && a >= b;
 
                     bool xxx = !true;
 
@@ -55,79 +55,6 @@ namespace JurTests {
 			var (errors, _) = Compiler.Compile(code);
 			var expectedErrors = new Error[] {
 				new NegationOperatorUsedWithNonBooleanType("__TEST__", 39, "string"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
-
-
-		[Test]
-		[Parallelizable]
-		public void ValidIncrementsAndDecrements() {
-			var code = @"
-        		abstraction 0 {
-
-        		}
-        		main {
-					mutable i := 4;
-					i++;
-					a := i++;
-        		}
-        ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
-
-
-		[Test]
-		[Parallelizable]
-		public void InvalidTypesInIncrementsAndDecrements() {
-			var code = @"
-        		abstraction 0 {
-
-        		}
-        		main {
-					mutable string s = 'aqq';
-					s++;
-					mutable x := s--;
-					x++;
-        		}
-        ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new TypeMismatchInUseOfOperator("__TEST__",
-				                                7,
-				                                "++",
-				                                "string"),
-				new TypeMismatchInUseOfOperator("__TEST__",
-				                                8,
-				                                "--",
-				                                "string"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
-
-
-		[Test]
-		[Parallelizable]
-		public void InvalidExpressionTypesInIncrementsAndDecrements() {
-			var code = @"
-        		abstraction 0 {
-					struct X {
-						num x;
-					}
-        		}
-        		main {
-					x := new X { x = 5 };
-					x.x--;
-					y := new num[];
-					y[3]++;
-        		}
-        ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new InvalidUseOfOperator(new Location("__TEST__", 9), "--"),
-				new InvalidUseOfOperator(new Location("__TEST__", 11), "++"),
 			};
 			CollectionAssert.AreEquivalent(expectedErrors, errors);
 		}

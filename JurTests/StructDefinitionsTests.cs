@@ -680,7 +680,7 @@ namespace JurTests {
                     }
 
                     List<R> toList<R>(num integer, R() generator) {
-                        return null;
+                        return new List<R>;
                     }
 
                     TrainingData<I,O> createTrainingData<I,O>(Pair<I,O>() exampleGenerator, num size) {
@@ -723,7 +723,7 @@ namespace JurTests {
 
                         TrainingData<List<num>,List<num>> otherData;
                         y := otherData;
-                        return x.data[0].a.length;
+                        return x.length
                     }
         		}
         		main { }

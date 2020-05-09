@@ -59,57 +59,6 @@ namespace JurTranspiler.Analysis.Binder {
 		}
 
 
-		private IType BindExpressionCore(ArrayIndexAccessSyntax syntax) {
-			var ownerType = BindExpression(syntax.Array);
-			if (ownerType is ArrayType arrayType) return arrayType.ElementType;
-
-			if (ownerType.IsNot<UndefinedType>())
-				errors.Add(new IndexAccessOnNonArray(syntax.File, syntax.Line, ownerType.Name));
-
-			return new UndefinedType();
-		}
-
-
-		private IType BindExpressionCore(GuardExpressionSyntax syntax) {
-
-			var alwaysReturns = syntax.Guards.Any(x => x.IsOtherwisePattern);
-			var onlyOneOtherwise = syntax.Guards.One(x => x.IsOtherwisePattern);
-
-			if (!alwaysReturns)
-				errors.Add(new NonExhaustingGuard(syntax.Location));
-
-//			if(!onlyOneOtherwise)
-			//TODO: warning - redundant guard
-
-			var types = syntax.Guards.Select(x => x.Expression).Select(BindExpression).ToImmutableArray();
-			if (types.AllAreSame()) {
-				return types.First();
-			}
-			return types.FirstOrDefault(type => types.All(x => IsAssignableTo(x, type))) ?? new AnyType();
-
-		}
-
-
-		private IType BindExpressionCore(IncrementationOrDecrementationExpressionSyntax syntax) {
-			if (syntax.Expression.IsNot<VariableAccessSyntax>()) {
-				errors.Add(new InvalidUseOfOperator(syntax.Location, syntax.Operator));
-				return new UndefinedType();
-			}
-
-			var type = BindExpression(syntax.Expression);
-
-			switch (type) {
-				case UndefinedType _:
-					return type;
-				case PrimitiveType primitiveType when primitiveType.PrimitiveKind == PrimitiveKind.NUM:
-					return new PrimitiveType(PrimitiveKind.NUM);
-				default:
-					errors.Add(new TypeMismatchInUseOfOperator(syntax.Location, syntax.Operator, type.Name));
-					return new UndefinedType();
-			}
-		}
-
-
 		private IType BindExpressionCore(ConstructorSyntax syntax) => BindType(syntax.ConstructedType);
 
 
@@ -270,8 +219,6 @@ namespace JurTranspiler.Analysis.Binder {
 
 		private IType BindExpressionCore(PrimitiveValueSyntax syntax) {
 			return syntax switch {
-				       _ when syntax.IsNull => (IType) new AnyType(),
-				       _ when syntax.IsUndefined => (IType) new AnyType(),
 				       _ when syntax.Value.StartsWith("'") && syntax.Value.EndsWith("'") && syntax.Value.Length > 1 => new PrimitiveType(PrimitiveKind.STRING),
 				       _ when double.TryParse(syntax.Value, out var _) => new PrimitiveType(PrimitiveKind.NUM),
 				       _ when syntax.Value == "true" || syntax.Value == "false" => new PrimitiveType(PrimitiveKind.BOOL),

@@ -160,7 +160,7 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
 					T gen<T>(T a) {
-                        return null;
+                        return a;
 					}
 
                     G gen<G>(G b) {
