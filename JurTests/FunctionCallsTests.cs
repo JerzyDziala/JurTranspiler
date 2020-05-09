@@ -39,7 +39,7 @@ namespace JurTests {
         		}
         		main {
 					mutable a := Get(5);
-					a = 'jur';
+					a = ""jur"";
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);
@@ -108,7 +108,7 @@ namespace JurTests {
         		    void generic<T>(string s){}
         		}
         		main {
-        		    generic('string');
+        		    generic(""string"");
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);
@@ -125,7 +125,7 @@ namespace JurTests {
 			var code = @"
         		abstraction 0 {
                     bool gen<G,T>(G g, string b){
-                        return b == 'aqq';
+                        return b == ""aqq"";
                     }
                     T gen<R,T>(R g, T b){
                         return b;
@@ -139,7 +139,7 @@ namespace JurTests {
                     }
         		}
         		main {
-        		    bool b = gen<bool,string>(true,'aqq');
+        		    bool b = gen<bool,string>(true,""aqq"");
         		    num n = gen<string,num>(5,5);
         		    num n1 = gen(7,5);
         		}
@@ -174,7 +174,7 @@ namespace JurTests {
                     }
         		}
         		main {
-                    num x = gen('str');
+                    num x = gen(""str"");
                     num y = gen(5);
         		}
         ";
@@ -251,9 +251,9 @@ namespace JurTests {
 
                     Dog(string,string) Fun;
 
-        		    bool b = Fun('aqq',5);
-                    Dog d = Fun('kluska','kluska');
-                    num n = Fun(new bool[], 'array');
+        		    bool b = Fun(""aqq"",5);
+                    Dog d = Fun(""kluska"",""kluska"");
+                    num n = Fun(new bool[], ""array"");
 
                     Dog[] dogs = Fun(new Dog,new BigDog);
         		}
@@ -379,7 +379,7 @@ namespace JurTests {
 					}
         		}
         		main {
-					undef := 1 * 'aqq';
+					undef := 1 * ""aqq"";
 					A x = g(new A[], undef );
         		}
         ";

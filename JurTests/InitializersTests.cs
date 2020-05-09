@@ -22,8 +22,8 @@ namespace JurTests {
         		}
         		main {
                     x := new A<string> {
-						a = 'aqq',
-						b = new A<string> { a = 'asd', b = new A<string> { a = 'aqq' }},
+						a = ""aqq"",
+						b = new A<string> { a = ""asd"", b = new A<string> { a = ""aqq"" }},
 						c = 5,
 						d = new A<num> { a = 5 }
 					};
@@ -48,7 +48,7 @@ namespace JurTests {
 					}
         		}
         		main {
-					x := new A<string> { x = 'aqq' };
+					x := new A<string> { x = ""aqq"" };
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);

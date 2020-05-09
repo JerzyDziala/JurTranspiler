@@ -23,8 +23,8 @@ namespace JurTests {
         		main {
         		    a := 0;
                     b := 0;
-                    c := '';
-                    d := '';
+                    c := """";
+                    d := """";
                     e := true;
                     f := false;
                     g := new A;
@@ -49,7 +49,7 @@ namespace JurTests {
 
                     bool xxxx = !!true;
                     bool xxxxx = !!!false && !!(!!true || !!true);
-                    bool xxxxxx = !!'aqq' && !!(!!true || !!false);
+                    bool xxxxxx = !!""aqq"" && !!(!!true || !!false);
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);
@@ -69,7 +69,7 @@ namespace JurTests {
         		}
         		main {
 					num x = -5;
-					num y = -'aqq';
+					num y = -""aqq"";
 					num z = -(-(-x) - 4);
         		}
         ";

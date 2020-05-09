@@ -789,7 +789,7 @@ namespace JurTests {
 					
         		}
         		main {
-					b := new B { a = 'xxx' }	
+					b := new B { a = ""xxx"" }	
 					f(b)
 				}
         ";

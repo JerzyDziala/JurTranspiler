@@ -18,7 +18,7 @@ namespace JurTests {
                     }
 
                     string Func1(){
-                        return 'jur';
+                        return ""jur"";
                     }
 
                     void(num) Func2(){

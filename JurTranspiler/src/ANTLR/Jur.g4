@@ -37,7 +37,8 @@ OR: '||';
 DECREMENT: '--';
 INCREMENT: '++';
 
-STRING_VALUE: '\'' SingleStringCharacter* '\'';
+STRING_VALUE: '"' SingleStringCharacter*? '"';
+CHAR_VALUE: '\'' SingleStringCharacter '\'';
 
 //string
 
@@ -92,7 +93,7 @@ fragment HexDigit
 NUMBER_VALUE: [0-9]+ ([.] [0-9]+)?;
 BOOL_VALUE: 'true' | 'false';
 
-VALUE: STRING_VALUE | NUMBER_VALUE | BOOL_VALUE;
+VALUE: STRING_VALUE | NUMBER_VALUE | BOOL_VALUE | CHAR_VALUE;
 
 //keywords
 NOMINAL: 'nominal';
@@ -207,17 +208,17 @@ block: '{' statement* '}'
 			   ;
 
 
-expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE) #primitiveValue
+expression : value=(NUMBER_VALUE | STRING_VALUE | BOOL_VALUE | CHAR_VALUE) #primitiveValue
            | uninitializedVarDeclaration? ARROW (block | expression)  #anonymusFunction
            | '(' (uninitializedVarDeclaration(',' uninitializedVarDeclaration)* )? ')' ARROW (block | expression)  #anonymusFunction
            | ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
-		   | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
-		   | type '.' DEFAULT_VALUE #defaultValue
-		   | type '.' TYPE #typeExpression
-		   | expression '.' ID #fieldAccess
-		   | NEW type ('{' (ID '=' expression) (',' ID '=' expression)* '}')* #constructor
-		   | ID #variableAccess
-		   | LEFT_PARENT expression RIGHT_PARENT #parExpression
+           | expression '.' ID ('<'POLY'>')? ('<' type (',' type)* '>')? '(' (expression (',' expression)* )? ')' #functionCall
+           | type '.' DEFAULT_VALUE #defaultValue
+           | type '.' TYPE #typeExpression
+           | expression '.' ID #fieldAccess
+           | NEW type ('{' (ID '=' expression) (',' ID '=' expression)* '}')* #constructor
+           | ID #variableAccess
+           | LEFT_PARENT expression RIGHT_PARENT #parExpression
            | NOT expression #negation
            | SUBTRACT expression #arithmeticNegation
            | expression operator=( TIMES | DIVIDE ) expression #operation

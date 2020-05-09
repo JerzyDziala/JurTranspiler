@@ -13,7 +13,7 @@ namespace JurTests {
 		public void SimpleLambda() {
 			var code = @"
        		main {
-               string(num, num) asText = (num a, num b) -> a + ' ' + b;
+               string(num, num) asText = (num a, num b) -> a + "" "" + b;
        		}
        ";
 			var (errors, _) = Compiler.Compile(code);
@@ -82,7 +82,7 @@ namespace JurTests {
         		main {
         		    add := (num a, num b) -> {
                         if a > b return a;
-                        else return 'error';
+                        else return ""error"";
                     };
                     inferred := add(5, 3);
                     num explicit = add(5, 3);

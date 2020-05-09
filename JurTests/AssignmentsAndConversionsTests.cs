@@ -179,7 +179,7 @@ namespace JurTests {
         		}
         		main {
         		    A x = new A;
-                    x.a = 'jur';
+                    x.a = ""jur"";
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);
@@ -198,7 +198,7 @@ namespace JurTests {
         		}
         		main {
         		    A x = new A;
-                    x.a = 'jur';
+                    x.a = ""jur"";
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);
@@ -224,7 +224,7 @@ namespace JurTests {
         		}
         		main {
         		    A x = new A;
-                    x.a = 'jur';
+                    x.a = ""jur"";
         		}
         ";
 			var (errors, _) = Compiler.Compile(code);
@@ -281,7 +281,7 @@ namespace JurTests {
         		}
         		main {
         		    A<string,bool> a = new A<string,bool>;
-                    a.g = 'jur';
+                    a.g = ""jur"";
                     a.g2 = true;
         		}
         ";
@@ -303,7 +303,7 @@ namespace JurTests {
         		}
         		main {
         		    A<string,bool> a = new A<string,bool>;
-                    a.g = 'aqq';
+                    a.g = ""aqq"";
                     a.g2 = new A<void(num),string[]>;
         		}
         ";
@@ -340,7 +340,7 @@ namespace JurTests {
 				                                          name: "T"),
 				new UseOfUndeclaredType(file: "__TEST__", line: 5, name: "G"),
 
-				//new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"), //i don't want to write a column number in test
+				//new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"), //i don""t want to write a column number in test
 				new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"),
 				new UseOfUndeclaredType(file: "__TEST__", line: 11, name: "A<void(num),string[]>"),
 				new TriedToAccessFieldOnNonStruct(file: "__TEST__",

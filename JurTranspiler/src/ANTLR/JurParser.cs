@@ -41,11 +41,11 @@ public partial class JurParser : Parser {
 		LEFT_PARENT=15, RIGHT_PARENT=16, LEFT_SQUARE_PARENT=17, RIGHT_SQUARE_PARENT=18, 
 		LESS=19, LEQUAL=20, GREATER=21, GREQUAL=22, EQUAL=23, WHERE=24, NOT_EQUAL=25, 
 		NOT=26, LOGICAL_AND=27, OR=28, DECREMENT=29, INCREMENT=30, STRING_VALUE=31, 
-		NUMBER_VALUE=32, BOOL_VALUE=33, VALUE=34, NOMINAL=35, STRUCT=36, VOID=37, 
-		ANY=38, RETURN=39, IF=40, ABSTRACTION=41, MAIN=42, NEW=43, MUTABLE=44, 
-		IS=45, AND=46, DEFAULT_VALUE=47, TYPE=48, ELSE=49, FOR=50, EXTERN=51, 
-		POLY=52, ARROW=53, MEMBER=54, STATIC=55, PRIVATE=56, PRIMITIVE=57, ARITHMETIC=58, 
-		LOGIC=59, ID=60;
+		CHAR_VALUE=32, NUMBER_VALUE=33, BOOL_VALUE=34, VALUE=35, NOMINAL=36, STRUCT=37, 
+		VOID=38, ANY=39, RETURN=40, IF=41, ABSTRACTION=42, MAIN=43, NEW=44, MUTABLE=45, 
+		IS=46, AND=47, DEFAULT_VALUE=48, TYPE=49, ELSE=50, FOR=51, EXTERN=52, 
+		POLY=53, ARROW=54, MEMBER=55, STATIC=56, PRIVATE=57, PRIMITIVE=58, ARITHMETIC=59, 
+		LOGIC=60, ID=61;
 	public const int
 		RULE_program = 0, RULE_main = 1, RULE_abstraction = 2, RULE_structDeclaration = 3, 
 		RULE_inlinedType = 4, RULE_functionDeclaration = 5, RULE_constraints = 6, 
@@ -63,10 +63,10 @@ public partial class JurParser : Parser {
 		null, "':='", null, null, null, "','", "'.'", "';'", "'='", "'+'", "'-'", 
 		"'*'", "'/'", "'{'", "'}'", "'('", "')'", "'['", "']'", "'<'", "'<='", 
 		"'>'", "'>='", "'=='", "'where'", "'!='", "'!'", "'&&'", "'||'", "'--'", 
-		"'++'", null, null, null, null, "'nominal'", "'struct'", "'void'", "'any'", 
-		"'return'", "'if'", "'abstraction'", "'main'", "'new'", "'mutable'", "'is'", 
-		"'and'", "'default'", "'typeof'", "'else'", "'for'", "'extern'", "'poly'", 
-		"'->'", "'member'", "'static'", "'private'"
+		"'++'", null, null, null, null, null, "'nominal'", "'struct'", "'void'", 
+		"'any'", "'return'", "'if'", "'abstraction'", "'main'", "'new'", "'mutable'", 
+		"'is'", "'and'", "'default'", "'typeof'", "'else'", "'for'", "'extern'", 
+		"'poly'", "'->'", "'member'", "'static'", "'private'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, "LINE_COMMENT", "WHITESPACE", "NEWLINE", "COMA", "DOT", "SEMICOLON", 
@@ -74,10 +74,11 @@ public partial class JurParser : Parser {
 		"LEFT_PARENT", "RIGHT_PARENT", "LEFT_SQUARE_PARENT", "RIGHT_SQUARE_PARENT", 
 		"LESS", "LEQUAL", "GREATER", "GREQUAL", "EQUAL", "WHERE", "NOT_EQUAL", 
 		"NOT", "LOGICAL_AND", "OR", "DECREMENT", "INCREMENT", "STRING_VALUE", 
-		"NUMBER_VALUE", "BOOL_VALUE", "VALUE", "NOMINAL", "STRUCT", "VOID", "ANY", 
-		"RETURN", "IF", "ABSTRACTION", "MAIN", "NEW", "MUTABLE", "IS", "AND", 
-		"DEFAULT_VALUE", "TYPE", "ELSE", "FOR", "EXTERN", "POLY", "ARROW", "MEMBER", 
-		"STATIC", "PRIVATE", "PRIMITIVE", "ARITHMETIC", "LOGIC", "ID"
+		"CHAR_VALUE", "NUMBER_VALUE", "BOOL_VALUE", "VALUE", "NOMINAL", "STRUCT", 
+		"VOID", "ANY", "RETURN", "IF", "ABSTRACTION", "MAIN", "NEW", "MUTABLE", 
+		"IS", "AND", "DEFAULT_VALUE", "TYPE", "ELSE", "FOR", "EXTERN", "POLY", 
+		"ARROW", "MEMBER", "STATIC", "PRIVATE", "PRIMITIVE", "ARITHMETIC", "LOGIC", 
+		"ID"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -1555,7 +1556,7 @@ public partial class JurParser : Parser {
 				State = 338;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_CURLY) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << RETURN) | (1L << IF) | (1L << NEW) | (1L << MUTABLE) | (1L << FOR) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_CURLY) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << CHAR_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << RETURN) | (1L << IF) | (1L << NEW) | (1L << MUTABLE) | (1L << FOR) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
 					{
 					{
 					State = 335; statement();
@@ -1777,7 +1778,7 @@ public partial class JurParser : Parser {
 			State = 400;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_CURLY) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << RETURN) | (1L << IF) | (1L << NEW) | (1L << MUTABLE) | (1L << FOR) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_CURLY) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << CHAR_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << RETURN) | (1L << IF) | (1L << NEW) | (1L << MUTABLE) | (1L << FOR) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
 				{
 				{
 				State = 397; statement();
@@ -1866,6 +1867,7 @@ public partial class JurParser : Parser {
 		public ITerminalNode NUMBER_VALUE() { return GetToken(JurParser.NUMBER_VALUE, 0); }
 		public ITerminalNode STRING_VALUE() { return GetToken(JurParser.STRING_VALUE, 0); }
 		public ITerminalNode BOOL_VALUE() { return GetToken(JurParser.BOOL_VALUE, 0); }
+		public ITerminalNode CHAR_VALUE() { return GetToken(JurParser.CHAR_VALUE, 0); }
 		public PrimitiveValueContext(ExpressionContext context) { CopyFrom(context); }
 	}
 	public partial class FunctionCallContext : ExpressionContext {
@@ -2009,7 +2011,7 @@ public partial class JurParser : Parser {
 				State = 406;
 				((PrimitiveValueContext)_localctx).value = TokenStream.LT(1);
 				_la = TokenStream.LA(1);
-				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRING_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE))) != 0)) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STRING_VALUE) | (1L << CHAR_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE))) != 0)) ) {
 					((PrimitiveValueContext)_localctx).value = ErrorHandler.RecoverInline(this);
 				}
 				else {
@@ -2045,6 +2047,7 @@ public partial class JurParser : Parser {
 				case LEFT_PARENT:
 				case NOT:
 				case STRING_VALUE:
+				case CHAR_VALUE:
 				case NUMBER_VALUE:
 				case BOOL_VALUE:
 				case VOID:
@@ -2106,6 +2109,7 @@ public partial class JurParser : Parser {
 				case LEFT_PARENT:
 				case NOT:
 				case STRING_VALUE:
+				case CHAR_VALUE:
 				case NUMBER_VALUE:
 				case BOOL_VALUE:
 				case VOID:
@@ -2170,7 +2174,7 @@ public partial class JurParser : Parser {
 				State = 460;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << NEW) | (1L << MUTABLE) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << CHAR_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << NEW) | (1L << MUTABLE) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
 					{
 					State = 452; expression(0);
 					State = 457;
@@ -2453,7 +2457,7 @@ public partial class JurParser : Parser {
 						State = 553;
 						ErrorHandler.Sync(this);
 						_la = TokenStream.LA(1);
-						if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << NEW) | (1L << MUTABLE) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
+						if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SUBTRACT) | (1L << LEFT_PARENT) | (1L << NOT) | (1L << STRING_VALUE) | (1L << CHAR_VALUE) | (1L << NUMBER_VALUE) | (1L << BOOL_VALUE) | (1L << VOID) | (1L << ANY) | (1L << NEW) | (1L << MUTABLE) | (1L << ARROW) | (1L << PRIMITIVE) | (1L << ID))) != 0)) {
 							{
 							State = 545; expression(0);
 							State = 550;
@@ -2536,7 +2540,7 @@ public partial class JurParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '>', '\x237', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '?', '\x237', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
 		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
@@ -2655,7 +2659,7 @@ public partial class JurParser : Parser {
 		'\a', '\x10', '\x232', '\n', '\x10', '\f', '\x10', '\xE', '\x10', '\x235', 
 		'\v', '\x10', '\x3', '\x10', '\x2', '\x4', '\x18', '\x1E', '\x11', '\x2', 
 		'\x4', '\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x14', '\x16', 
-		'\x18', '\x1A', '\x1C', '\x1E', '\x2', '\a', '\x3', '\x2', '!', '#', '\x3', 
+		'\x18', '\x1A', '\x1C', '\x1E', '\x2', '\a', '\x3', '\x2', '!', '$', '\x3', 
 		'\x2', '\r', '\xE', '\x3', '\x2', '\v', '\f', '\x3', '\x2', '\x15', '\x18', 
 		'\x4', '\x2', '\x19', '\x19', '\x1B', '\x1B', '\x2', '\x29B', '\x2', '$', 
 		'\x3', '\x2', '\x2', '\x2', '\x4', ')', '\x3', '\x2', '\x2', '\x2', '\x6', 
@@ -2672,9 +2676,9 @@ public partial class JurParser : Parser {
 		'\x2', '\x2', '$', '\"', '\x3', '\x2', '\x2', '\x2', '$', '%', '\x3', 
 		'\x2', '\x2', '\x2', '%', '\'', '\x3', '\x2', '\x2', '\x2', '&', '$', 
 		'\x3', '\x2', '\x2', '\x2', '\'', '(', '\a', '\x2', '\x2', '\x3', '(', 
-		'\x3', '\x3', '\x2', '\x2', '\x2', ')', '*', '\a', ',', '\x2', '\x2', 
+		'\x3', '\x3', '\x2', '\x2', '\x2', ')', '*', '\a', '-', '\x2', '\x2', 
 		'*', '+', '\x5', '\x1A', '\xE', '\x2', '+', '\x5', '\x3', '\x2', '\x2', 
-		'\x2', ',', '-', '\a', '+', '\x2', '\x2', '-', '.', '\a', '\"', '\x2', 
+		'\x2', ',', '-', '\a', ',', '\x2', '\x2', '-', '.', '\a', '#', '\x2', 
 		'\x2', '.', '\x33', '\a', '\xF', '\x2', '\x2', '/', '\x32', '\x5', '\f', 
 		'\a', '\x2', '\x30', '\x32', '\x5', '\b', '\x5', '\x2', '\x31', '/', '\x3', 
 		'\x2', '\x2', '\x2', '\x31', '\x30', '\x3', '\x2', '\x2', '\x2', '\x32', 
@@ -2682,18 +2686,18 @@ public partial class JurParser : Parser {
 		'\x2', '\x33', '\x34', '\x3', '\x2', '\x2', '\x2', '\x34', '\x36', '\x3', 
 		'\x2', '\x2', '\x2', '\x35', '\x33', '\x3', '\x2', '\x2', '\x2', '\x36', 
 		'\x37', '\a', '\x10', '\x2', '\x2', '\x37', '\a', '\x3', '\x2', '\x2', 
-		'\x2', '\x38', ':', '\a', '%', '\x2', '\x2', '\x39', '\x38', '\x3', '\x2', 
+		'\x2', '\x38', ':', '\a', '&', '\x2', '\x2', '\x39', '\x38', '\x3', '\x2', 
 		'\x2', '\x2', '\x39', ':', '\x3', '\x2', '\x2', '\x2', ':', ';', '\x3', 
-		'\x2', '\x2', '\x2', ';', '<', '\a', '&', '\x2', '\x2', '<', 'G', '\a', 
-		'>', '\x2', '\x2', '=', '>', '\a', '\x15', '\x2', '\x2', '>', '\x43', 
-		'\a', '>', '\x2', '\x2', '?', '@', '\a', '\a', '\x2', '\x2', '@', '\x42', 
-		'\a', '>', '\x2', '\x2', '\x41', '?', '\x3', '\x2', '\x2', '\x2', '\x42', 
+		'\x2', '\x2', '\x2', ';', '<', '\a', '\'', '\x2', '\x2', '<', 'G', '\a', 
+		'?', '\x2', '\x2', '=', '>', '\a', '\x15', '\x2', '\x2', '>', '\x43', 
+		'\a', '?', '\x2', '\x2', '?', '@', '\a', '\a', '\x2', '\x2', '@', '\x42', 
+		'\a', '?', '\x2', '\x2', '\x41', '?', '\x3', '\x2', '\x2', '\x2', '\x42', 
 		'\x45', '\x3', '\x2', '\x2', '\x2', '\x43', '\x41', '\x3', '\x2', '\x2', 
 		'\x2', '\x43', '\x44', '\x3', '\x2', '\x2', '\x2', '\x44', '\x46', '\x3', 
 		'\x2', '\x2', '\x2', '\x45', '\x43', '\x3', '\x2', '\x2', '\x2', '\x46', 
 		'H', '\a', '\x17', '\x2', '\x2', 'G', '=', '\x3', '\x2', '\x2', '\x2', 
 		'G', 'H', '\x3', '\x2', '\x2', '\x2', 'H', 'I', '\x3', '\x2', '\x2', '\x2', 
-		'I', 'T', '\a', '\xF', '\x2', '\x2', 'J', 'L', '\a', ':', '\x2', '\x2', 
+		'I', 'T', '\a', '\xF', '\x2', '\x2', 'J', 'L', '\a', ';', '\x2', '\x2', 
 		'K', 'J', '\x3', '\x2', '\x2', '\x2', 'K', 'L', '\x3', '\x2', '\x2', '\x2', 
 		'L', 'M', '\x3', '\x2', '\x2', '\x2', 'M', 'O', '\x5', '\x12', '\n', '\x2', 
 		'N', 'P', '\a', '\t', '\x2', '\x2', 'O', 'N', '\x3', '\x2', '\x2', '\x2', 
@@ -2703,19 +2707,19 @@ public partial class JurParser : Parser {
 		'T', 'R', '\x3', '\x2', '\x2', '\x2', 'T', 'U', '\x3', '\x2', '\x2', '\x2', 
 		'U', 'W', '\x3', '\x2', '\x2', '\x2', 'V', 'T', '\x3', '\x2', '\x2', '\x2', 
 		'W', 'X', '\a', '\x10', '\x2', '\x2', 'X', '\t', '\x3', '\x2', '\x2', 
-		'\x2', 'Y', 'Z', '\a', '/', '\x2', '\x2', 'Z', '\\', '\x5', '\x18', '\r', 
-		'\x2', '[', ']', '\a', '\t', '\x2', '\x2', '\\', '[', '\x3', '\x2', '\x2', 
-		'\x2', '\\', ']', '\x3', '\x2', '\x2', '\x2', ']', '\v', '\x3', '\x2', 
-		'\x2', '\x2', '^', '`', '\a', ':', '\x2', '\x2', '_', '^', '\x3', '\x2', 
-		'\x2', '\x2', '_', '`', '\x3', '\x2', '\x2', '\x2', '`', '\x63', '\x3', 
-		'\x2', '\x2', '\x2', '\x61', '\x64', '\x5', '\x18', '\r', '\x2', '\x62', 
-		'\x64', '\a', '\'', '\x2', '\x2', '\x63', '\x61', '\x3', '\x2', '\x2', 
-		'\x2', '\x63', '\x62', '\x3', '\x2', '\x2', '\x2', '\x64', '\x65', '\x3', 
-		'\x2', '\x2', '\x2', '\x65', 'p', '\a', '>', '\x2', '\x2', '\x66', 'g', 
-		'\a', '\x15', '\x2', '\x2', 'g', 'l', '\a', '>', '\x2', '\x2', 'h', 'i', 
-		'\a', '\a', '\x2', '\x2', 'i', 'k', '\a', '>', '\x2', '\x2', 'j', 'h', 
-		'\x3', '\x2', '\x2', '\x2', 'k', 'n', '\x3', '\x2', '\x2', '\x2', 'l', 
-		'j', '\x3', '\x2', '\x2', '\x2', 'l', 'm', '\x3', '\x2', '\x2', '\x2', 
+		'\x2', 'Y', 'Z', '\a', '\x30', '\x2', '\x2', 'Z', '\\', '\x5', '\x18', 
+		'\r', '\x2', '[', ']', '\a', '\t', '\x2', '\x2', '\\', '[', '\x3', '\x2', 
+		'\x2', '\x2', '\\', ']', '\x3', '\x2', '\x2', '\x2', ']', '\v', '\x3', 
+		'\x2', '\x2', '\x2', '^', '`', '\a', ';', '\x2', '\x2', '_', '^', '\x3', 
+		'\x2', '\x2', '\x2', '_', '`', '\x3', '\x2', '\x2', '\x2', '`', '\x63', 
+		'\x3', '\x2', '\x2', '\x2', '\x61', '\x64', '\x5', '\x18', '\r', '\x2', 
+		'\x62', '\x64', '\a', '(', '\x2', '\x2', '\x63', '\x61', '\x3', '\x2', 
+		'\x2', '\x2', '\x63', '\x62', '\x3', '\x2', '\x2', '\x2', '\x64', '\x65', 
+		'\x3', '\x2', '\x2', '\x2', '\x65', 'p', '\a', '?', '\x2', '\x2', '\x66', 
+		'g', '\a', '\x15', '\x2', '\x2', 'g', 'l', '\a', '?', '\x2', '\x2', 'h', 
+		'i', '\a', '\a', '\x2', '\x2', 'i', 'k', '\a', '?', '\x2', '\x2', 'j', 
+		'h', '\x3', '\x2', '\x2', '\x2', 'k', 'n', '\x3', '\x2', '\x2', '\x2', 
+		'l', 'j', '\x3', '\x2', '\x2', '\x2', 'l', 'm', '\x3', '\x2', '\x2', '\x2', 
 		'm', 'o', '\x3', '\x2', '\x2', '\x2', 'n', 'l', '\x3', '\x2', '\x2', '\x2', 
 		'o', 'q', '\a', '\x17', '\x2', '\x2', 'p', '\x66', '\x3', '\x2', '\x2', 
 		'\x2', 'p', 'q', '\x3', '\x2', '\x2', '\x2', 'q', 'r', '\x3', '\x2', '\x2', 
@@ -2729,15 +2733,15 @@ public partial class JurParser : Parser {
 		'\x12', '\x2', '\x2', '~', '\x80', '\x5', '\xE', '\b', '\x2', '\x7F', 
 		'~', '\x3', '\x2', '\x2', '\x2', '\x7F', '\x80', '\x3', '\x2', '\x2', 
 		'\x2', '\x80', '\x81', '\x3', '\x2', '\x2', '\x2', '\x81', '\xF9', '\x5', 
-		'\x1C', '\xF', '\x2', '\x82', '\x84', '\a', ':', '\x2', '\x2', '\x83', 
+		'\x1C', '\xF', '\x2', '\x82', '\x84', '\a', ';', '\x2', '\x2', '\x83', 
 		'\x82', '\x3', '\x2', '\x2', '\x2', '\x83', '\x84', '\x3', '\x2', '\x2', 
 		'\x2', '\x84', '\x87', '\x3', '\x2', '\x2', '\x2', '\x85', '\x88', '\x5', 
-		'\x18', '\r', '\x2', '\x86', '\x88', '\a', '\'', '\x2', '\x2', '\x87', 
+		'\x18', '\r', '\x2', '\x86', '\x88', '\a', '(', '\x2', '\x2', '\x87', 
 		'\x85', '\x3', '\x2', '\x2', '\x2', '\x87', '\x86', '\x3', '\x2', '\x2', 
 		'\x2', '\x88', '\x89', '\x3', '\x2', '\x2', '\x2', '\x89', '\x94', '\a', 
-		'>', '\x2', '\x2', '\x8A', '\x8B', '\a', '\x15', '\x2', '\x2', '\x8B', 
-		'\x90', '\a', '>', '\x2', '\x2', '\x8C', '\x8D', '\a', '\a', '\x2', '\x2', 
-		'\x8D', '\x8F', '\a', '>', '\x2', '\x2', '\x8E', '\x8C', '\x3', '\x2', 
+		'?', '\x2', '\x2', '\x8A', '\x8B', '\a', '\x15', '\x2', '\x2', '\x8B', 
+		'\x90', '\a', '?', '\x2', '\x2', '\x8C', '\x8D', '\a', '\a', '\x2', '\x2', 
+		'\x8D', '\x8F', '\a', '?', '\x2', '\x2', '\x8E', '\x8C', '\x3', '\x2', 
 		'\x2', '\x2', '\x8F', '\x92', '\x3', '\x2', '\x2', '\x2', '\x90', '\x8E', 
 		'\x3', '\x2', '\x2', '\x2', '\x90', '\x91', '\x3', '\x2', '\x2', '\x2', 
 		'\x91', '\x93', '\x3', '\x2', '\x2', '\x2', '\x92', '\x90', '\x3', '\x2', 
@@ -2754,22 +2758,22 @@ public partial class JurParser : Parser {
 		'\x3', '\x2', '\x2', '\x2', '\xA1', '\xA3', '\a', '\x12', '\x2', '\x2', 
 		'\xA2', '\xA4', '\x5', '\xE', '\b', '\x2', '\xA3', '\xA2', '\x3', '\x2', 
 		'\x2', '\x2', '\xA3', '\xA4', '\x3', '\x2', '\x2', '\x2', '\xA4', '\xA5', 
-		'\x3', '\x2', '\x2', '\x2', '\xA5', '\xA6', '\a', '\x37', '\x2', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\xA5', '\xA6', '\a', '\x38', '\x2', '\x2', 
 		'\xA6', '\xA8', '\x5', '\x1E', '\x10', '\x2', '\xA7', '\xA9', '\a', '\t', 
 		'\x2', '\x2', '\xA8', '\xA7', '\x3', '\x2', '\x2', '\x2', '\xA8', '\xA9', 
 		'\x3', '\x2', '\x2', '\x2', '\xA9', '\xF9', '\x3', '\x2', '\x2', '\x2', 
-		'\xAA', '\xAC', '\a', ':', '\x2', '\x2', '\xAB', '\xAA', '\x3', '\x2', 
+		'\xAA', '\xAC', '\a', ';', '\x2', '\x2', '\xAB', '\xAA', '\x3', '\x2', 
 		'\x2', '\x2', '\xAB', '\xAC', '\x3', '\x2', '\x2', '\x2', '\xAC', '\xAD', 
-		'\x3', '\x2', '\x2', '\x2', '\xAD', '\xAF', '\a', '\x35', '\x2', '\x2', 
-		'\xAE', '\xB0', '\a', '\x38', '\x2', '\x2', '\xAF', '\xAE', '\x3', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\xAD', '\xAF', '\a', '\x36', '\x2', '\x2', 
+		'\xAE', '\xB0', '\a', '\x39', '\x2', '\x2', '\xAF', '\xAE', '\x3', '\x2', 
 		'\x2', '\x2', '\xAF', '\xB0', '\x3', '\x2', '\x2', '\x2', '\xB0', '\xB3', 
 		'\x3', '\x2', '\x2', '\x2', '\xB1', '\xB4', '\x5', '\x18', '\r', '\x2', 
-		'\xB2', '\xB4', '\a', '\'', '\x2', '\x2', '\xB3', '\xB1', '\x3', '\x2', 
+		'\xB2', '\xB4', '\a', '(', '\x2', '\x2', '\xB3', '\xB1', '\x3', '\x2', 
 		'\x2', '\x2', '\xB3', '\xB2', '\x3', '\x2', '\x2', '\x2', '\xB4', '\xB5', 
-		'\x3', '\x2', '\x2', '\x2', '\xB5', '\xC0', '\a', '>', '\x2', '\x2', '\xB6', 
-		'\xB7', '\a', '\x15', '\x2', '\x2', '\xB7', '\xBC', '\a', '>', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\xB5', '\xC0', '\a', '?', '\x2', '\x2', '\xB6', 
+		'\xB7', '\a', '\x15', '\x2', '\x2', '\xB7', '\xBC', '\a', '?', '\x2', 
 		'\x2', '\xB8', '\xB9', '\a', '\a', '\x2', '\x2', '\xB9', '\xBB', '\a', 
-		'>', '\x2', '\x2', '\xBA', '\xB8', '\x3', '\x2', '\x2', '\x2', '\xBB', 
+		'?', '\x2', '\x2', '\xBA', '\xB8', '\x3', '\x2', '\x2', '\x2', '\xBB', 
 		'\xBE', '\x3', '\x2', '\x2', '\x2', '\xBC', '\xBA', '\x3', '\x2', '\x2', 
 		'\x2', '\xBC', '\xBD', '\x3', '\x2', '\x2', '\x2', '\xBD', '\xBF', '\x3', 
 		'\x2', '\x2', '\x2', '\xBE', '\xBC', '\x3', '\x2', '\x2', '\x2', '\xBF', 
@@ -2786,17 +2790,17 @@ public partial class JurParser : Parser {
 		'\x2', '\xCD', '\xCF', '\a', '\x12', '\x2', '\x2', '\xCE', '\xD0', '\x5', 
 		'\xE', '\b', '\x2', '\xCF', '\xCE', '\x3', '\x2', '\x2', '\x2', '\xCF', 
 		'\xD0', '\x3', '\x2', '\x2', '\x2', '\xD0', '\xF9', '\x3', '\x2', '\x2', 
-		'\x2', '\xD1', '\xD3', '\a', ':', '\x2', '\x2', '\xD2', '\xD1', '\x3', 
+		'\x2', '\xD1', '\xD3', '\a', ';', '\x2', '\x2', '\xD2', '\xD1', '\x3', 
 		'\x2', '\x2', '\x2', '\xD2', '\xD3', '\x3', '\x2', '\x2', '\x2', '\xD3', 
-		'\xD4', '\x3', '\x2', '\x2', '\x2', '\xD4', '\xD5', '\a', '\x39', '\x2', 
-		'\x2', '\xD5', '\xD8', '\a', '\x35', '\x2', '\x2', '\xD6', '\xD9', '\x5', 
-		'\x18', '\r', '\x2', '\xD7', '\xD9', '\a', '\'', '\x2', '\x2', '\xD8', 
+		'\xD4', '\x3', '\x2', '\x2', '\x2', '\xD4', '\xD5', '\a', ':', '\x2', 
+		'\x2', '\xD5', '\xD8', '\a', '\x36', '\x2', '\x2', '\xD6', '\xD9', '\x5', 
+		'\x18', '\r', '\x2', '\xD7', '\xD9', '\a', '(', '\x2', '\x2', '\xD8', 
 		'\xD6', '\x3', '\x2', '\x2', '\x2', '\xD8', '\xD7', '\x3', '\x2', '\x2', 
 		'\x2', '\xD9', '\xDA', '\x3', '\x2', '\x2', '\x2', '\xDA', '\xDB', '\a', 
-		'>', '\x2', '\x2', '\xDB', '\xDC', '\a', '\b', '\x2', '\x2', '\xDC', '\xE7', 
-		'\a', '>', '\x2', '\x2', '\xDD', '\xDE', '\a', '\x15', '\x2', '\x2', '\xDE', 
-		'\xE3', '\a', '>', '\x2', '\x2', '\xDF', '\xE0', '\a', '\a', '\x2', '\x2', 
-		'\xE0', '\xE2', '\a', '>', '\x2', '\x2', '\xE1', '\xDF', '\x3', '\x2', 
+		'?', '\x2', '\x2', '\xDB', '\xDC', '\a', '\b', '\x2', '\x2', '\xDC', '\xE7', 
+		'\a', '?', '\x2', '\x2', '\xDD', '\xDE', '\a', '\x15', '\x2', '\x2', '\xDE', 
+		'\xE3', '\a', '?', '\x2', '\x2', '\xDF', '\xE0', '\a', '\a', '\x2', '\x2', 
+		'\xE0', '\xE2', '\a', '?', '\x2', '\x2', '\xE1', '\xDF', '\x3', '\x2', 
 		'\x2', '\x2', '\xE2', '\xE5', '\x3', '\x2', '\x2', '\x2', '\xE3', '\xE1', 
 		'\x3', '\x2', '\x2', '\x2', '\xE3', '\xE4', '\x3', '\x2', '\x2', '\x2', 
 		'\xE4', '\xE6', '\x3', '\x2', '\x2', '\x2', '\xE5', '\xE3', '\x3', '\x2', 
@@ -2817,32 +2821,32 @@ public partial class JurParser : Parser {
 		'\x83', '\x3', '\x2', '\x2', '\x2', '\xF8', '\xAB', '\x3', '\x2', '\x2', 
 		'\x2', '\xF8', '\xD2', '\x3', '\x2', '\x2', '\x2', '\xF9', '\r', '\x3', 
 		'\x2', '\x2', '\x2', '\xFA', '\xFB', '\a', '\x1A', '\x2', '\x2', '\xFB', 
-		'\x100', '\x5', '\x10', '\t', '\x2', '\xFC', '\xFD', '\a', '\x30', '\x2', 
+		'\x100', '\x5', '\x10', '\t', '\x2', '\xFC', '\xFD', '\a', '\x31', '\x2', 
 		'\x2', '\xFD', '\xFF', '\x5', '\x10', '\t', '\x2', '\xFE', '\xFC', '\x3', 
 		'\x2', '\x2', '\x2', '\xFF', '\x102', '\x3', '\x2', '\x2', '\x2', '\x100', 
 		'\xFE', '\x3', '\x2', '\x2', '\x2', '\x100', '\x101', '\x3', '\x2', '\x2', 
 		'\x2', '\x101', '\xF', '\x3', '\x2', '\x2', '\x2', '\x102', '\x100', '\x3', 
 		'\x2', '\x2', '\x2', '\x103', '\x104', '\x5', '\x18', '\r', '\x2', '\x104', 
-		'\x105', '\a', '/', '\x2', '\x2', '\x105', '\x106', '\x5', '\x18', '\r', 
-		'\x2', '\x106', '\x11', '\x3', '\x2', '\x2', '\x2', '\x107', '\x109', 
-		'\a', '.', '\x2', '\x2', '\x108', '\x107', '\x3', '\x2', '\x2', '\x2', 
+		'\x105', '\a', '\x30', '\x2', '\x2', '\x105', '\x106', '\x5', '\x18', 
+		'\r', '\x2', '\x106', '\x11', '\x3', '\x2', '\x2', '\x2', '\x107', '\x109', 
+		'\a', '/', '\x2', '\x2', '\x108', '\x107', '\x3', '\x2', '\x2', '\x2', 
 		'\x108', '\x109', '\x3', '\x2', '\x2', '\x2', '\x109', '\x10A', '\x3', 
 		'\x2', '\x2', '\x2', '\x10A', '\x10B', '\x5', '\x18', '\r', '\x2', '\x10B', 
-		'\x10C', '\a', '>', '\x2', '\x2', '\x10C', '\x13', '\x3', '\x2', '\x2', 
-		'\x2', '\x10D', '\x10F', '\a', '.', '\x2', '\x2', '\x10E', '\x10D', '\x3', 
+		'\x10C', '\a', '?', '\x2', '\x2', '\x10C', '\x13', '\x3', '\x2', '\x2', 
+		'\x2', '\x10D', '\x10F', '\a', '/', '\x2', '\x2', '\x10E', '\x10D', '\x3', 
 		'\x2', '\x2', '\x2', '\x10E', '\x10F', '\x3', '\x2', '\x2', '\x2', '\x10F', 
 		'\x110', '\x3', '\x2', '\x2', '\x2', '\x110', '\x111', '\x5', '\x18', 
-		'\r', '\x2', '\x111', '\x112', '\a', '>', '\x2', '\x2', '\x112', '\x113', 
+		'\r', '\x2', '\x111', '\x112', '\a', '?', '\x2', '\x2', '\x112', '\x113', 
 		'\a', '\n', '\x2', '\x2', '\x113', '\x114', '\x5', '\x1E', '\x10', '\x2', 
-		'\x114', '\x15', '\x3', '\x2', '\x2', '\x2', '\x115', '\x117', '\a', '.', 
+		'\x114', '\x15', '\x3', '\x2', '\x2', '\x2', '\x115', '\x117', '\a', '/', 
 		'\x2', '\x2', '\x116', '\x115', '\x3', '\x2', '\x2', '\x2', '\x116', '\x117', 
 		'\x3', '\x2', '\x2', '\x2', '\x117', '\x118', '\x3', '\x2', '\x2', '\x2', 
-		'\x118', '\x119', '\a', '>', '\x2', '\x2', '\x119', '\x11A', '\a', '\x3', 
+		'\x118', '\x119', '\a', '?', '\x2', '\x2', '\x119', '\x11A', '\a', '\x3', 
 		'\x2', '\x2', '\x11A', '\x11B', '\x5', '\x1E', '\x10', '\x2', '\x11B', 
 		'\x17', '\x3', '\x2', '\x2', '\x2', '\x11C', '\x11D', '\b', '\r', '\x1', 
-		'\x2', '\x11D', '\x13A', '\a', '(', '\x2', '\x2', '\x11E', '\x13A', '\a', 
-		';', '\x2', '\x2', '\x11F', '\x13A', '\a', '>', '\x2', '\x2', '\x120', 
-		'\x121', '\a', '>', '\x2', '\x2', '\x121', '\x122', '\a', '\x15', '\x2', 
+		'\x2', '\x11D', '\x13A', '\a', ')', '\x2', '\x2', '\x11E', '\x13A', '\a', 
+		'<', '\x2', '\x2', '\x11F', '\x13A', '\a', '?', '\x2', '\x2', '\x120', 
+		'\x121', '\a', '?', '\x2', '\x2', '\x121', '\x122', '\a', '\x15', '\x2', 
 		'\x2', '\x122', '\x127', '\x5', '\x18', '\r', '\x2', '\x123', '\x124', 
 		'\a', '\a', '\x2', '\x2', '\x124', '\x126', '\x5', '\x18', '\r', '\x2', 
 		'\x125', '\x123', '\x3', '\x2', '\x2', '\x2', '\x126', '\x129', '\x3', 
@@ -2850,7 +2854,7 @@ public partial class JurParser : Parser {
 		'\x128', '\x3', '\x2', '\x2', '\x2', '\x128', '\x12A', '\x3', '\x2', '\x2', 
 		'\x2', '\x129', '\x127', '\x3', '\x2', '\x2', '\x2', '\x12A', '\x12B', 
 		'\a', '\x17', '\x2', '\x2', '\x12B', '\x13A', '\x3', '\x2', '\x2', '\x2', 
-		'\x12C', '\x12D', '\a', '\'', '\x2', '\x2', '\x12D', '\x136', '\a', '\x11', 
+		'\x12C', '\x12D', '\a', '(', '\x2', '\x2', '\x12D', '\x136', '\a', '\x11', 
 		'\x2', '\x2', '\x12E', '\x133', '\x5', '\x18', '\r', '\x2', '\x12F', '\x130', 
 		'\a', '\a', '\x2', '\x2', '\x130', '\x132', '\x5', '\x18', '\r', '\x2', 
 		'\x131', '\x12F', '\x3', '\x2', '\x2', '\x2', '\x132', '\x135', '\x3', 
@@ -2884,12 +2888,12 @@ public partial class JurParser : Parser {
 		'\x154', '\x152', '\x3', '\x2', '\x2', '\x2', '\x154', '\x155', '\x3', 
 		'\x2', '\x2', '\x2', '\x155', '\x157', '\x3', '\x2', '\x2', '\x2', '\x156', 
 		'\x154', '\x3', '\x2', '\x2', '\x2', '\x157', '\x18D', '\a', '\x10', '\x2', 
-		'\x2', '\x158', '\x159', '\a', '*', '\x2', '\x2', '\x159', '\x15A', '\x5', 
+		'\x2', '\x158', '\x159', '\a', '+', '\x2', '\x2', '\x159', '\x15A', '\x5', 
 		'\x1E', '\x10', '\x2', '\x15A', '\x15D', '\x5', '\x1A', '\xE', '\x2', 
-		'\x15B', '\x15C', '\a', '\x33', '\x2', '\x2', '\x15C', '\x15E', '\x5', 
+		'\x15B', '\x15C', '\a', '\x34', '\x2', '\x2', '\x15C', '\x15E', '\x5', 
 		'\x1A', '\xE', '\x2', '\x15D', '\x15B', '\x3', '\x2', '\x2', '\x2', '\x15D', 
 		'\x15E', '\x3', '\x2', '\x2', '\x2', '\x15E', '\x18D', '\x3', '\x2', '\x2', 
-		'\x2', '\x15F', '\x166', '\a', '\x34', '\x2', '\x2', '\x160', '\x163', 
+		'\x2', '\x15F', '\x166', '\a', '\x35', '\x2', '\x2', '\x160', '\x163', 
 		'\x5', '\x14', '\v', '\x2', '\x161', '\x163', '\x5', '\x16', '\f', '\x2', 
 		'\x162', '\x160', '\x3', '\x2', '\x2', '\x2', '\x162', '\x161', '\x3', 
 		'\x2', '\x2', '\x2', '\x163', '\x164', '\x3', '\x2', '\x2', '\x2', '\x164', 
@@ -2901,7 +2905,7 @@ public partial class JurParser : Parser {
 		'\x169', '\x3', '\x2', '\x2', '\x2', '\x16B', '\x16C', '\x3', '\x2', '\x2', 
 		'\x2', '\x16C', '\x16D', '\x3', '\x2', '\x2', '\x2', '\x16D', '\x16E', 
 		'\x5', '\x1A', '\xE', '\x2', '\x16E', '\x18D', '\x3', '\x2', '\x2', '\x2', 
-		'\x16F', '\x171', '\a', ')', '\x2', '\x2', '\x170', '\x172', '\x5', '\x1E', 
+		'\x16F', '\x171', '\a', '*', '\x2', '\x2', '\x170', '\x172', '\x5', '\x1E', 
 		'\x10', '\x2', '\x171', '\x170', '\x3', '\x2', '\x2', '\x2', '\x171', 
 		'\x172', '\x3', '\x2', '\x2', '\x2', '\x172', '\x174', '\x3', '\x2', '\x2', 
 		'\x2', '\x173', '\x175', '\a', '\t', '\x2', '\x2', '\x174', '\x173', '\x3', 
@@ -2940,7 +2944,7 @@ public partial class JurParser : Parser {
 		'\x2', '\x199', '\x19B', '\x5', '\x12', '\n', '\x2', '\x19A', '\x199', 
 		'\x3', '\x2', '\x2', '\x2', '\x19A', '\x19B', '\x3', '\x2', '\x2', '\x2', 
 		'\x19B', '\x19C', '\x3', '\x2', '\x2', '\x2', '\x19C', '\x19F', '\a', 
-		'\x37', '\x2', '\x2', '\x19D', '\x1A0', '\x5', '\x1C', '\xF', '\x2', '\x19E', 
+		'\x38', '\x2', '\x2', '\x19D', '\x1A0', '\x5', '\x1C', '\xF', '\x2', '\x19E', 
 		'\x1A0', '\x5', '\x1E', '\x10', '\x2', '\x19F', '\x19D', '\x3', '\x2', 
 		'\x2', '\x2', '\x19F', '\x19E', '\x3', '\x2', '\x2', '\x2', '\x1A0', '\x1FA', 
 		'\x3', '\x2', '\x2', '\x2', '\x1A1', '\x1AA', '\a', '\x11', '\x2', '\x2', 
@@ -2952,12 +2956,12 @@ public partial class JurParser : Parser {
 		'\x1A9', '\x1A7', '\x3', '\x2', '\x2', '\x2', '\x1AA', '\x1A2', '\x3', 
 		'\x2', '\x2', '\x2', '\x1AA', '\x1AB', '\x3', '\x2', '\x2', '\x2', '\x1AB', 
 		'\x1AC', '\x3', '\x2', '\x2', '\x2', '\x1AC', '\x1AD', '\a', '\x12', '\x2', 
-		'\x2', '\x1AD', '\x1B0', '\a', '\x37', '\x2', '\x2', '\x1AE', '\x1B1', 
+		'\x2', '\x1AD', '\x1B0', '\a', '\x38', '\x2', '\x2', '\x1AE', '\x1B1', 
 		'\x5', '\x1C', '\xF', '\x2', '\x1AF', '\x1B1', '\x5', '\x1E', '\x10', 
 		'\x2', '\x1B0', '\x1AE', '\x3', '\x2', '\x2', '\x2', '\x1B0', '\x1AF', 
 		'\x3', '\x2', '\x2', '\x2', '\x1B1', '\x1FA', '\x3', '\x2', '\x2', '\x2', 
-		'\x1B2', '\x1B6', '\a', '>', '\x2', '\x2', '\x1B3', '\x1B4', '\a', '\x15', 
-		'\x2', '\x2', '\x1B4', '\x1B5', '\a', '\x36', '\x2', '\x2', '\x1B5', '\x1B7', 
+		'\x1B2', '\x1B6', '\a', '?', '\x2', '\x2', '\x1B3', '\x1B4', '\a', '\x15', 
+		'\x2', '\x2', '\x1B4', '\x1B5', '\a', '\x37', '\x2', '\x2', '\x1B5', '\x1B7', 
 		'\a', '\x17', '\x2', '\x2', '\x1B6', '\x1B3', '\x3', '\x2', '\x2', '\x2', 
 		'\x1B6', '\x1B7', '\x3', '\x2', '\x2', '\x2', '\x1B7', '\x1C3', '\x3', 
 		'\x2', '\x2', '\x2', '\x1B8', '\x1B9', '\a', '\x15', '\x2', '\x2', '\x1B9', 
@@ -2980,15 +2984,15 @@ public partial class JurParser : Parser {
 		'\x2', '\x2', '\x2', '\x1CF', '\x1D0', '\x3', '\x2', '\x2', '\x2', '\x1D0', 
 		'\x1FA', '\a', '\x12', '\x2', '\x2', '\x1D1', '\x1D2', '\x5', '\x18', 
 		'\r', '\x2', '\x1D2', '\x1D3', '\a', '\b', '\x2', '\x2', '\x1D3', '\x1D4', 
-		'\a', '\x31', '\x2', '\x2', '\x1D4', '\x1FA', '\x3', '\x2', '\x2', '\x2', 
+		'\a', '\x32', '\x2', '\x2', '\x1D4', '\x1FA', '\x3', '\x2', '\x2', '\x2', 
 		'\x1D5', '\x1D6', '\x5', '\x18', '\r', '\x2', '\x1D6', '\x1D7', '\a', 
-		'\b', '\x2', '\x2', '\x1D7', '\x1D8', '\a', '\x32', '\x2', '\x2', '\x1D8', 
-		'\x1FA', '\x3', '\x2', '\x2', '\x2', '\x1D9', '\x1DA', '\a', '-', '\x2', 
+		'\b', '\x2', '\x2', '\x1D7', '\x1D8', '\a', '\x33', '\x2', '\x2', '\x1D8', 
+		'\x1FA', '\x3', '\x2', '\x2', '\x2', '\x1D9', '\x1DA', '\a', '.', '\x2', 
 		'\x2', '\x1DA', '\x1ED', '\x5', '\x18', '\r', '\x2', '\x1DB', '\x1DC', 
-		'\a', '\xF', '\x2', '\x2', '\x1DC', '\x1DD', '\a', '>', '\x2', '\x2', 
+		'\a', '\xF', '\x2', '\x2', '\x1DC', '\x1DD', '\a', '?', '\x2', '\x2', 
 		'\x1DD', '\x1DE', '\a', '\n', '\x2', '\x2', '\x1DE', '\x1DF', '\x5', '\x1E', 
 		'\x10', '\x2', '\x1DF', '\x1E6', '\x3', '\x2', '\x2', '\x2', '\x1E0', 
-		'\x1E1', '\a', '\a', '\x2', '\x2', '\x1E1', '\x1E2', '\a', '>', '\x2', 
+		'\x1E1', '\a', '\a', '\x2', '\x2', '\x1E1', '\x1E2', '\a', '?', '\x2', 
 		'\x2', '\x1E2', '\x1E3', '\a', '\n', '\x2', '\x2', '\x1E3', '\x1E5', '\x5', 
 		'\x1E', '\x10', '\x2', '\x1E4', '\x1E0', '\x3', '\x2', '\x2', '\x2', '\x1E5', 
 		'\x1E8', '\x3', '\x2', '\x2', '\x2', '\x1E6', '\x1E4', '\x3', '\x2', '\x2', 
@@ -2999,7 +3003,7 @@ public partial class JurParser : Parser {
 		'\x1EF', '\x3', '\x2', '\x2', '\x2', '\x1ED', '\x1EB', '\x3', '\x2', '\x2', 
 		'\x2', '\x1ED', '\x1EE', '\x3', '\x2', '\x2', '\x2', '\x1EE', '\x1FA', 
 		'\x3', '\x2', '\x2', '\x2', '\x1EF', '\x1ED', '\x3', '\x2', '\x2', '\x2', 
-		'\x1F0', '\x1FA', '\a', '>', '\x2', '\x2', '\x1F1', '\x1F2', '\a', '\x11', 
+		'\x1F0', '\x1FA', '\a', '?', '\x2', '\x2', '\x1F1', '\x1F2', '\a', '\x11', 
 		'\x2', '\x2', '\x1F2', '\x1F3', '\x5', '\x1E', '\x10', '\x2', '\x1F3', 
 		'\x1F4', '\a', '\x12', '\x2', '\x2', '\x1F4', '\x1FA', '\x3', '\x2', '\x2', 
 		'\x2', '\x1F5', '\x1F6', '\a', '\x1C', '\x2', '\x2', '\x1F6', '\x1FA', 
@@ -3024,9 +3028,9 @@ public partial class JurParser : Parser {
 		'\x5', '\x1E', '\x10', '\x5', '\x20A', '\x20B', '\f', '\x3', '\x2', '\x2', 
 		'\x20B', '\x20C', '\a', '\x1E', '\x2', '\x2', '\x20C', '\x232', '\x5', 
 		'\x1E', '\x10', '\x4', '\x20D', '\x20E', '\f', '\x11', '\x2', '\x2', '\x20E', 
-		'\x20F', '\a', '\b', '\x2', '\x2', '\x20F', '\x213', '\a', '>', '\x2', 
+		'\x20F', '\a', '\b', '\x2', '\x2', '\x20F', '\x213', '\a', '?', '\x2', 
 		'\x2', '\x210', '\x211', '\a', '\x15', '\x2', '\x2', '\x211', '\x212', 
-		'\a', '\x36', '\x2', '\x2', '\x212', '\x214', '\a', '\x17', '\x2', '\x2', 
+		'\a', '\x37', '\x2', '\x2', '\x212', '\x214', '\a', '\x17', '\x2', '\x2', 
 		'\x213', '\x210', '\x3', '\x2', '\x2', '\x2', '\x213', '\x214', '\x3', 
 		'\x2', '\x2', '\x2', '\x214', '\x220', '\x3', '\x2', '\x2', '\x2', '\x215', 
 		'\x216', '\a', '\x15', '\x2', '\x2', '\x216', '\x21B', '\x5', '\x18', 
@@ -3048,7 +3052,7 @@ public partial class JurParser : Parser {
 		'\x2', '\x22B', '\x22C', '\x3', '\x2', '\x2', '\x2', '\x22C', '\x22D', 
 		'\x3', '\x2', '\x2', '\x2', '\x22D', '\x232', '\a', '\x12', '\x2', '\x2', 
 		'\x22E', '\x22F', '\f', '\xE', '\x2', '\x2', '\x22F', '\x230', '\a', '\b', 
-		'\x2', '\x2', '\x230', '\x232', '\a', '>', '\x2', '\x2', '\x231', '\x1FB', 
+		'\x2', '\x2', '\x230', '\x232', '\a', '?', '\x2', '\x2', '\x231', '\x1FB', 
 		'\x3', '\x2', '\x2', '\x2', '\x231', '\x1FE', '\x3', '\x2', '\x2', '\x2', 
 		'\x231', '\x201', '\x3', '\x2', '\x2', '\x2', '\x231', '\x204', '\x3', 
 		'\x2', '\x2', '\x2', '\x231', '\x207', '\x3', '\x2', '\x2', '\x2', '\x231', 
