@@ -118,7 +118,7 @@ ARROW: '->';
 MEMBER: 'member';
 STATIC: 'static';
 PRIVATE: 'private';
-PRIMITIVE: 'num' | 'string' | 'bool' ;
+PRIMITIVE: 'num' | 'string' | 'bool' | 'char' ;
 
 
 fragment DIGIT  : '0'..'9' ;

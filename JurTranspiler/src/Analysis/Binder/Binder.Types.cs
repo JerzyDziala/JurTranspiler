@@ -79,10 +79,16 @@ namespace JurTranspiler.Analysis.Binder {
                 var parameters = functionPointerType.Parameters.Select(BindType);
                 return new FunctionPointerType(returnType, parameters);
             }
-            if (syntax is PrimitiveTypeSyntax) {
-                if (syntax.Name == "string") return new PrimitiveType(PrimitiveKind.STRING);
-                else if (syntax.Name == "num") return new PrimitiveType(PrimitiveKind.NUM);
-                else if (syntax.Name == "bool") return new PrimitiveType(PrimitiveKind.BOOL);
+            if (syntax is PrimitiveTypeSyntax)
+            {
+                return syntax.Name switch
+                {
+                    "string" => new PrimitiveType(PrimitiveKind.STRING),
+                    "num" => new PrimitiveType(PrimitiveKind.NUM),
+                    "bool" => new PrimitiveType(PrimitiveKind.BOOL),
+                    "char" => new PrimitiveType(PrimitiveKind.CHAR),
+                    var x => throw new Exception("unsupported primitive type with name: #{x}")
+                };
             }
             if (syntax is StructTypeSyntax structTypeSyntax) {
                 var matchingBoundTypes = symbols.OpenStructsBinding

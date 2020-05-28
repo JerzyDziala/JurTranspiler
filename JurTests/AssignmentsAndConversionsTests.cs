@@ -1,60 +1,59 @@
+using System.IO;
 using JurTranspiler;
 using JurTranspiler.Analysis.errors;
 using JurTranspiler.Analysis.errors.bases;
 using NUnit.Framework;
 
 namespace JurTests {
-
-	[TestFixture]
-	public class AssignmentsAndConversionsTests {
-
-		[Test]
-		[Parallelizable]
-		public void AssigningUndeclaredTypeToUndeclaredTypeError() {
-			var code = @"
+    [TestFixture]
+    public class AssignmentsAndConversionsTests {
+        [Test]
+        [Parallelizable]
+        public void AssigningUndeclaredTypeToUndeclaredTypeError() {
+            var code = @"
                         main {
                             A a = new B;
                         }
 ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new UseOfUndeclaredType(file: "__TEST__", line: 3, name: "A"),
-				new UseOfUndeclaredType(file: "__TEST__", line: 3, name: "B"),
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 3,
-				                                  leftName: "A",
-				                                  rightName: "B"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new UseOfUndeclaredType(file: "__TEST__", line: 3, name: "A"),
+                new UseOfUndeclaredType(file: "__TEST__", line: 3, name: "B"),
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 3,
+                    leftName: "A",
+                    rightName: "B"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		public void AssigningNumToStringAndBoolToStringError() {
-			var code = @"
+        [Test]
+        public void AssigningNumToStringAndBoolToStringError() {
+            var code = @"
                         main {
                             mutable string a = 5;
                             a = true;
                         }
 ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new TypeMismatchInAssignmentError("__TEST__",
-				                                  3,
-				                                  "string",
-				                                  "num"),
-				new TypeMismatchInAssignmentError("__TEST__",
-				                                  4,
-				                                  "string",
-				                                  "bool"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new TypeMismatchInAssignmentError("__TEST__",
+                    3,
+                    "string",
+                    "num"),
+                new TypeMismatchInAssignmentError("__TEST__",
+                    4,
+                    "string",
+                    "bool"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		public void AssigningUndeclaredToUndeclaredNoErrors() {
-			var code = @"
+        [Test]
+        public void AssigningUndeclaredToUndeclaredNoErrors() {
+            var code = @"
                         main {
                            A a =
                            new A;
@@ -62,21 +61,21 @@ namespace JurTests {
                            new A[];
                         }
 ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new UseOfUndeclaredType(file: "__TEST__", line: 3, name: "A"),
-				new UseOfUndeclaredType(file: "__TEST__", line: 4, name: "A"),
-				new UseOfUndeclaredType(file: "__TEST__", line: 5, name: "A"),
-				new UseOfUndeclaredType(file: "__TEST__", line: 6, name: "A"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new UseOfUndeclaredType(file: "__TEST__", line: 3, name: "A"),
+                new UseOfUndeclaredType(file: "__TEST__", line: 4, name: "A"),
+                new UseOfUndeclaredType(file: "__TEST__", line: 5, name: "A"),
+                new UseOfUndeclaredType(file: "__TEST__", line: 6, name: "A"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void SomeValidAssignmentsNoErrors() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void SomeValidAssignmentsNoErrors() {
+            var code = @"
         		abstraction 0 {
         		    struct Entity<T> {
                         T id;
@@ -104,16 +103,16 @@ namespace JurTests {
                     Entity<num>(Person, NamedEntity<Person>) f2 = f1;
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void SomeInvalidAssignments() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void SomeInvalidAssignments() {
+            var code = @"
         		abstraction 0 {
         		    struct Entity<T> {
                         T id;
@@ -141,37 +140,37 @@ namespace JurTests {
                     void(Entity<string>) f = f3;
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 18,
-				                                  leftName: "Entity<Any>",
-				                                  rightName: "Person"),
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 19,
-				                                  leftName: "Person",
-				                                  rightName: "NamedEntity<string>"),
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 20,
-				                                  leftName: "Person[]",
-				                                  rightName: "Any[]"),
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 23,
-				                                  leftName: "NamedEntity<num>(Entity<string>,Entity<Person>)",
-				                                  rightName: "Entity<num>(Person,NamedEntity<Person>)"),
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 26,
-				                                  leftName: "void(Entity<string>)",
-				                                  rightName: "void(Person)"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 18,
+                    leftName: "Entity<Any>",
+                    rightName: "Person"),
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 19,
+                    leftName: "Person",
+                    rightName: "NamedEntity<string>"),
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 20,
+                    leftName: "Person[]",
+                    rightName: "Any[]"),
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 23,
+                    leftName: "NamedEntity<num>(Entity<string>,Entity<Person>)",
+                    rightName: "Entity<num>(Person,NamedEntity<Person>)"),
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 26,
+                    leftName: "void(Entity<string>)",
+                    rightName: "void(Person)"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void SimpleFieldAssignment() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void SimpleFieldAssignment() {
+            var code = @"
         		abstraction 0 {
         		    struct A {
                         mutable string a;
@@ -182,16 +181,16 @@ namespace JurTests {
                     x.a = ""jur"";
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void FieldAccessError() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void FieldAccessError() {
+            var code = @"
         		abstraction 0 {
         		    struct A {
                     }
@@ -201,21 +200,49 @@ namespace JurTests {
                     x.a = ""jur"";
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new NoMatchingFieldFound(file: "__TEST__",
-				                         line: 8,
-				                         fieldName: "a",
-				                         typeName: "A")
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new NoMatchingFieldFound(file: "__TEST__",
+                    line: 8,
+                    fieldName: "a",
+                    typeName: "A")
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void AmbiguousFieldAccess() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void PrimitiveLiterals() {
+            var code = @"
+        		main {
+					num x = 5;	        		    
+					string y = ""true"";
+					char z = 'x';	        		    
+					bool f = true;
+					string h = 'x';
+					char o = ""x"";
+					string p = """";
+        		}
+        ";
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 7,
+                    leftName: "string",
+                    rightName: "char"),
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 8,
+                    leftName: "char",
+                    rightName: "string")
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+
+        [Test]
+        [Parallelizable]
+        public void AmbiguousFieldAccess() {
+            var code = @"
         		abstraction 0 {
         		    struct A {
                         mutable string a;
@@ -227,23 +254,24 @@ namespace JurTests {
                     x.a = ""jur"";
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new AmbiguousFieldReference(file: "__TEST__",
-				                            line: 10,
-				                            fieldName: "a",
-				                            typeName: "A"),
-				new MultipleFieldsWithTheSameName(new Location[] { new Location("__TEST__", 4), new Location("__TEST__", 5) },
-				                                  "a"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new AmbiguousFieldReference(file: "__TEST__",
+                    line: 10,
+                    fieldName: "a",
+                    typeName: "A"),
+                new MultipleFieldsWithTheSameName(
+                    new Location[] {new Location("__TEST__", 4), new Location("__TEST__", 5)},
+                    "a"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void FieldAccessJoinedField() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void FieldAccessJoinedField() {
+            var code = @"
         		abstraction 0 {
         		    struct A {
                         mutable A a;
@@ -263,16 +291,16 @@ namespace JurTests {
                     x.a = x;
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void FieldAccessGeneric() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void FieldAccessGeneric() {
+            var code = @"
         		abstraction 0 {
         		    struct A<T,G> {
                         mutable T g;
@@ -285,16 +313,16 @@ namespace JurTests {
                     a.g2 = true;
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void FieldAccessGenericError() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void FieldAccessGenericError() {
+            var code = @"
         		abstraction 0 {
         		    struct A<T,G> {
                         mutable T g;
@@ -307,21 +335,21 @@ namespace JurTests {
                     a.g2 = new A<void(num),string[]>;
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new TypeMismatchInAssignmentError(file: "__TEST__",
-				                                  line: 11,
-				                                  leftName: "bool",
-				                                  rightName: "A<void(num),string[]>"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new TypeMismatchInAssignmentError(file: "__TEST__",
+                    line: 11,
+                    leftName: "bool",
+                    rightName: "A<void(num),string[]>"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void FieldAccessGenericInvalidDeclaration() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void FieldAccessGenericInvalidDeclaration() {
+            var code = @"
         		abstraction 0 {
         		    struct A<T,T> {
                         T g;
@@ -334,32 +362,33 @@ namespace JurTests {
                     a.g2 = new A<void(num),string[]>;
         		}
         ";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] {
-				new MultipleTypeParametersWithTheSameName(locations: new Location[] { new Location("__TEST__", 3), new Location("__TEST__", 3) },
-				                                          name: "T"),
-				new UseOfUndeclaredType(file: "__TEST__", line: 5, name: "G"),
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] {
+                new MultipleTypeParametersWithTheSameName(
+                    locations: new Location[] {new Location("__TEST__", 3), new Location("__TEST__", 3)},
+                    name: "T"),
+                new UseOfUndeclaredType(file: "__TEST__", line: 5, name: "G"),
 
-				//new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"), //i don""t want to write a column number in test
-				new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"),
-				new UseOfUndeclaredType(file: "__TEST__", line: 11, name: "A<void(num),string[]>"),
-				new TriedToAccessFieldOnNonStruct(file: "__TEST__",
-				                                  line: 10,
-				                                  fieldName: "g",
-				                                  typeName: "A<string,bool>"),
-				new TriedToAccessFieldOnNonStruct(file: "__TEST__",
-				                                  line: 11,
-				                                  fieldName: "g2",
-				                                  typeName: "A<string,bool>"),
-			};
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+                //new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"), //i don""t want to write a column number in test
+                new UseOfUndeclaredType(file: "__TEST__", line: 9, name: "A<string,bool>"),
+                new UseOfUndeclaredType(file: "__TEST__", line: 11, name: "A<void(num),string[]>"),
+                new TriedToAccessFieldOnNonStruct(file: "__TEST__",
+                    line: 10,
+                    fieldName: "g",
+                    typeName: "A<string,bool>"),
+                new TriedToAccessFieldOnNonStruct(file: "__TEST__",
+                    line: 11,
+                    fieldName: "g2",
+                    typeName: "A<string,bool>"),
+            };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void ComplexGenericBugRegressionTest() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void ComplexGenericBugRegressionTest() {
+            var code = @"
                 main {
                     x := new A<bool>;
                     x.a = new B<A<string>>;
@@ -377,16 +406,16 @@ namespace JurTests {
 
                 }";
 
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void AnotherComplexGenericBugRegressionTest() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void AnotherComplexGenericBugRegressionTest() {
+            var code = @"
                 main {
 
                 }
@@ -406,16 +435,16 @@ namespace JurTests {
                     }
                 }";
 
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
 
 
-		[Test]
-		[Parallelizable]
-		public void ComplexCodeGenerationGenericsBug() {
-			var code = @"
+        [Test]
+        [Parallelizable]
+        public void ComplexCodeGenerationGenericsBug() {
+            var code = @"
                 main {
                     fun<num>();
                 }
@@ -438,11 +467,9 @@ namespace JurTests {
                         T field1;
                     }
                 }";
-			var (errors, _) = Compiler.Compile(code);
-			var expectedErrors = new Error[] { };
-			CollectionAssert.AreEquivalent(expectedErrors, errors);
-		}
-
-	}
-
+            var (errors, _) = Compiler.Compile(code);
+            var expectedErrors = new Error[] { };
+            CollectionAssert.AreEquivalent(expectedErrors, errors);
+        }
+    }
 }

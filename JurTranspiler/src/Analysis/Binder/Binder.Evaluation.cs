@@ -119,7 +119,7 @@ namespace JurTranspiler.Analysis.Binder {
 				               _ => throw new Exception("Invalid Type Expression Type")
 				               };
 			if (typeType == null) {
-				throw new Exception("You forgot to add the runtime library");
+				throw new Exception("you need the runtime library for reflection features to work");
 			}
 			return typeType;
 		}
@@ -219,8 +219,8 @@ namespace JurTranspiler.Analysis.Binder {
 
 		private IType BindExpressionCore(PrimitiveValueSyntax syntax) {
 			return syntax switch {
-				       _ when syntax.Value.StartsWith("'") && syntax.Value.EndsWith("'") && syntax.Value.Length == 1 => new PrimitiveType(PrimitiveKind.CHAR),
-				       _ when syntax.Value.StartsWith("\"") && syntax.Value.EndsWith("\"") && syntax.Value.Length > 1 => new PrimitiveType(PrimitiveKind.STRING),
+				       _ when syntax.Value.StartsWith("'") && syntax.Value.EndsWith("'") => new PrimitiveType(PrimitiveKind.CHAR),
+				       _ when syntax.Value.StartsWith("\"") && syntax.Value.EndsWith("\"") => new PrimitiveType(PrimitiveKind.STRING),
 				       _ when double.TryParse(syntax.Value, out var _) => new PrimitiveType(PrimitiveKind.NUM),
 				       _ when syntax.Value == "true" || syntax.Value == "false" => new PrimitiveType(PrimitiveKind.BOOL),
 				       _ => throw new Exception("WTF")
